@@ -31,6 +31,8 @@ if [ ! -f $file ]; then
     # Preguntar al usuario por las variables de entorno
     echo "Configuración de variables de entorno para Flask:"
     read -p "Puerto de la aplicación (por defecto 5000): " FLASK_PORT
+    read -p "Nombre de usuario de la base de datos: " DATABASE_USER
+    read -p "Contraseña del usuario para la base de datos: " DATABASE_PASSWORD
 
     # Definir valores por defecto si el usuario no ingresa nada
     FLASK_PORT=${FLASK_PORT:-5000}
@@ -41,6 +43,12 @@ if [ ! -f $file ]; then
 
     # Variables de Flask
     export FLASK_PORT = ${FLASK_PORT}
+
+    # Variables de la Base de Datos
+    export DATABASE_PATH = ${path}/src/database/
+    export DATABASE_NAME = poems_blog
+    export DATABASE_USER = ${DATABASE_USER}
+    export DATABASE_PASSWORD = ${DATABASE_PASSWORD}
 EOF
     echo "Archivo .env creado satisfactoriamente."
 fi
