@@ -12,7 +12,7 @@ class Poem(db.Model):
   content = db.Column(db.Text, nullable=False) #Contenido extenso del poema
 
   author = db.relationship('User', back_populates='poems')
-  ratings = db.relationship('Rating', back_populates='rating', cascade='all, delete-orphan')
+  ratings = db.relationship('Rating', back_populates='poem', cascade='all, delete-orphan')
   
   #Convertir objeto a JSON
   def to_json(self):
