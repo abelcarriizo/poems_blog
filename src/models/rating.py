@@ -15,8 +15,8 @@ class Rating(db.Model):
   poem = db.relationship('Poem', back_populates='ratings')
   
   # Valida que las estrellas estén entre 1 y 5 antes de asignar el valor
-  @validates('estrellas')
-  def validate_estrellas(self, key, value):
+  @validates('stars')
+  def validate_stars(self, key, value):
     if value < 1 or value > 5:
       raise ValueError("El valor de 'estrellas' debe estar entre 1 y 5")
     return value
@@ -28,7 +28,8 @@ class Rating(db.Model):
       "author_id": self.author_id,
       "poem_id": self.poem_id,
       "date_created": self.date_created.isoformat(),
-      "comment": self.content
+      "stars": self.stars,
+      "comment": self.comment
       }
     return rating_json
   
@@ -39,5 +40,7 @@ class Rating(db.Model):
     author_id = rating_json.get("author_id")
     poem_id = rating_json.get("poem_id")
     date_created = rating_json.get("date_created")
-    comment = rating_json.get("content")
-    return Rating(id=id, author_id=author_id, poem_id=poem_id, date_created=date_created, comment=comment)
+    stars = rating_json.get("stars")
+    comment = rating_json.get("comment")
+    return Rating(id=id, author_id=author_id, poem_id=poem_id, date_created=date_created, stars=stars, comment=comment)
+  
