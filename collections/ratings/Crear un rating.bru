@@ -1,0 +1,20 @@
+meta {
+  name: Crear un rating
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}/ratings
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "author_id": 1,
+      "poem_id": 6,
+      "comment": "A thought-provoking poem about dreams",
+      "stars": 2
+    }
+}
