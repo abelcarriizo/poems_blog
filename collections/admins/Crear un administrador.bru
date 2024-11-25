@@ -1,0 +1,23 @@
+meta {
+  name: Crear un administrador
+  type: http
+  seq: 3
+}
+
+post {
+  url: {{URL}}/admins
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "firstname": "Abel",
+      "lastname": "Carrizo",
+      "username": "abel_carrizo",
+      "gender": "male",
+      "description": "Lover of poetry and literature.",
+      "email": "john.doe@example.com",
+      "password": "hashedpassword123"
+    }
+}
