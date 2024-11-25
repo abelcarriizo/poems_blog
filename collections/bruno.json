@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "poems_blog",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}
