@@ -1,0 +1,21 @@
+meta {
+  name: Actualizar un poema
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{URL}}/poem/41
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "title": "Oda a la soledad",
+      "author_id": 2,
+      "genre": "Ficcion ",
+      "description": "Reflexión sobre la soledad humana",
+      "content": "En la quietud de la noche, el alma se encuentra consigo misma..."
+    }
+}
