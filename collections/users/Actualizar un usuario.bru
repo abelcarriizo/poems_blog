@@ -1,0 +1,22 @@
+meta {
+  name: Actualizar un usuario
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{URL}}/user/22
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "firstname": "Miguel",
+    "lastname": "Jaan",
+    "username": "migue_jaan",
+    "gender": "male",
+    "description": "Lover of poetry and literature.",
+    "email": "john.doe@example.com"
+  }
+}
