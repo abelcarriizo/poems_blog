@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{URL}}/poems
+  url: {{URL}}/poems?page=2
   body: none
   auth: none
+}
+
+params:query {
+  page: 2
 }
