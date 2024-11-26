@@ -31,7 +31,7 @@ def create_app():
   
   #Recursos por ID
   api.add_resource(resources.UserResource, '/user/<int:id>')
-  api.add_resource(resources.AdminResource, '/admin/<int:admin_id>')
+  api.add_resource(resources.AdminResource, '/admin/<int:id>')
   api.add_resource(resources.PoemResource, '/poem/<int:id>')
   api.add_resource(resources.RatingResource, '/rating/<int:id>')
 
