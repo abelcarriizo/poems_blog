@@ -1,0 +1,16 @@
+meta {
+  name: Obtener ratings de un poema específico
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{URL}}/ratings?page=1&poem_id=6
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  poem_id: 6
+}

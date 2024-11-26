@@ -1,0 +1,16 @@
+meta {
+  name: Obtener poemas del mas nuevo al mas viejo
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{URL}}/poems?page=1&sort=newest
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  sort: newest
+}

@@ -1,0 +1,16 @@
+meta {
+  name: Obtener ratings de un usuario específico
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{URL}}/ratings?page=1&user_id=6
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  user_id: 6
+}
