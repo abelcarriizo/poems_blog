@@ -25,8 +25,26 @@ class Admin(Resource):
     
 class Admins(Resource):
   def get(self):
-    admins = db.session.query(AdminModel).all()
-    return jsonify([admin.to_json() for admin in admins])
+    # Obtener parámetros de paginación de la solicitud
+    page = request.args.get('page', 1, type=int) # Numero de página, por defecto 1
+    per_page = request.args.get('per_page', 10, type=int) # Elementos por página, por defecto 10
+    
+    # Realizar la consulta a la base de datos con paginación
+    admins = AdminModel.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    # Formatear la respuesta con los datos paginados
+    data = {
+      'total': admins.total,  # Total de elementos
+      'pages': admins.pages,  # Total de páginas
+      'current_page': admins.page,  # Página actual
+      'next_page': admins.next_num,  # Siguiente número de página
+      'prev_page': admins.prev_num,  # Número de página anterior
+      'has_next': admins.has_next,  # ¿Hay una página siguiente?
+      'has_prev': admins.has_prev,  # ¿Hay una página anterior?
+      'items': [admin.to_json() for admin in admins.items]  # Elementos en la página actual
+      }
+    
+    return jsonify(data)
   
   def post(self):
     admin = AdminModel.from_json(request.get_json())

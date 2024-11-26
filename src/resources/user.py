@@ -26,8 +26,26 @@ class User(Resource):
   
 class Users(Resource):
   def get(self):
-    users = db.session.query(UserModel).all()
-    return jsonify([user.to_json() for user in users])
+    # Obtener parámetros de paginación de la solicitud
+    page = request.args.get('page', 1, type=int) # Numero de página, por defecto 1
+    per_page = request.args.get('per_page', 10, type=int) # Elementos por página, por defecto 10
+    
+    # Realizar la consulta a la base de datos con paginación
+    users = UserModel.query.paginate(page=page, per_page=per_page, error_out=False)
+    
+    # Formatear la respuesta con los datos paginados
+    data = {
+      'total': users.total,  # Total de elementos
+      'pages': users.pages,  # Total de páginas
+      'current_page': users.page,  # Página actual
+      'next_page': users.next_num,  # Siguiente número de página
+      'prev_page': users.prev_num,  # Número de página anterior
+      'has_next': users.has_next,  # ¿Hay una página siguiente?
+      'has_prev': users.has_prev,  # ¿Hay una página anterior?
+      'items': [user.to_json() for user in users.items]  # Elementos en la página actual
+      }
+    
+    return jsonify(data)
   
   def post(self):
     user = UserModel.from_json(request.get_json())
