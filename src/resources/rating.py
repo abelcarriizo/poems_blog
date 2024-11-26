@@ -1,5 +1,8 @@
 from .. import db
 from src.models import RatingModel
+from src.utils import paginate
+from src.utils import sort_ratings_newest_to_oldest, sort_ratings_oldest_to_newest
+from src.utils import filter_ratings_by_user, filter_ratings_by_poem
 
 from flask import jsonify, request
 from flask_restful import Resource
@@ -7,9 +10,6 @@ from flask_restful import Resource
 class Rating(Resource):
   def get(self, id):
     rating = db.session.query(RatingModel).get_or_404(id)
-    
-    print(rating)
-    
     return rating.to_json()
   
   def put(self, id):
@@ -28,27 +28,28 @@ class Rating(Resource):
     return '', 204
   
 class Ratings(Resource):
-  def get(self, poem_id):
-    # Obtener parámetros de paginación de la solicitud
-    page = request.args.get('page', 1, type=int) # Numero de página, por defecto 1
-    per_page = request.args.get('per_page', 10, type=int) # Elementos por página, por defecto 10
-    
-    # Realizar la consulta a la base de datos con paginación
-    ratings = db.session.query(RatingModel).filter_by(poem_id=poem_id).order_by(RatingModel.date_created).paginate(page=page, per_page=per_page, error_out=False)
-    
-    # Formatear la respuesta con los datos paginados
-    data = {
-      'total': ratings.total,  # Total de elementos
-      'pages': ratings.pages,  # Total de páginas
-      'current_page': ratings.page,  # Página actual
-      'next_page': ratings.next_num,  # Siguiente número de página
-      'prev_page': ratings.prev_num,  # Número de página anterior
-      'has_next': ratings.has_next,  # ¿Hay una página siguiente?
-      'has_prev': ratings.has_prev,  # ¿Hay una página anterior?
-      'items': [rating.to_json() for rating in ratings.items]  # Elementos en la página actual
-      }
-    
-    return jsonify(data)
+  def get(self):
+    query = db.session.query(RatingModel)    
+    # Filtrar por parámetros opcionales en la URL
+    user_id = request.args.get('user_id', type=int)
+    poem_id = request.args.get('poem_id', type=int)
+    sort_order = request.args.get('sort', 'newest')  # 'newest' o 'oldest'
+
+    # Aplicar filtraciones
+    if user_id:
+      query = filter_ratings_by_user(user_id, query)
+    if poem_id:
+      query = filter_ratings_by_poem(poem_id, query)
+
+    # Ordenar los resultados
+    if sort_order == 'newest':
+      query = sort_ratings_newest_to_oldest(query, RatingModel)
+    elif sort_order == 'oldest':
+      query = sort_ratings_oldest_to_newest(query, RatingModel)
+
+    # Paginación
+    paginated_data = paginate(query)
+    return jsonify(paginated_data)
   
   def post(self):
     rating = RatingModel.from_json(request.get_json())

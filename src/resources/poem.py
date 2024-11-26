@@ -1,5 +1,8 @@
 from .. import db
 from src.models import PoemModel
+from src.utils import paginate
+from src.utils import sort_ratings_newest_to_oldest, sort_ratings_oldest_to_newest
+from src.utils import filter_poem_by_user
 
 from flask import jsonify, request
 from flask_restful import Resource
@@ -26,26 +29,24 @@ class Poem(Resource):
 
 class Poems(Resource):
   def get(self):
-    # Obtener parámetros de paginación de la solicitud
-    page = request.args.get('page', 1, type=int)  # Número de página, por defecto 1
-    per_page = request.args.get('per_page', 10, type=int)  # Elementos por página, por defecto 10
+    query = db.session.query(PoemModel)    
+    # Filtrar por parámetros opcionales en la URL
+    user_id = request.args.get('user_id', type=int)
+    sort_order = request.args.get('sort', 'newest')  # 'newest' o 'oldest'
 
-    # Realizar la consulta a la base de datos con paginación
-    poems = PoemModel.query.paginate(page=page, per_page=per_page, error_out=False)
+    # Aplicar filtraciones
+    if user_id:
+      query = filter_poem_by_user(user_id, query)
 
-    # Formatear la respuesta con los datos paginados
-    data = {
-      'total': poems.total,  # Total de elementos
-      'pages': poems.pages,  # Total de páginas
-      'current_page': poems.page,  # Página actual
-      'next_page': poems.next_num,  # Siguiente número de página
-      'prev_page': poems.prev_num,  # Número de página anterior
-      'has_next': poems.has_next,  # ¿Hay una página siguiente?
-      'has_prev': poems.has_prev,  # ¿Hay una página anterior?
-      'items': [poem.to_json() for poem in poems.items]  # Elementos en la página actual
-      }
+    # Ordenar los resultados
+    if sort_order == 'newest':
+      query = sort_ratings_newest_to_oldest(query, PoemModel)
+    elif sort_order == 'oldest':
+      query = sort_ratings_oldest_to_newest(query, PoemModel)
 
-    return jsonify(data)
+    # Paginación
+    paginated_data = paginate(query)
+    return jsonify(paginated_data)
   
   def post(self):
     poem = PoemModel.from_json(request.get_json())
