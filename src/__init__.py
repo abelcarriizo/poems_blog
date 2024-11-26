@@ -26,8 +26,7 @@ def create_app():
   api.add_resource(resources.UsersResource, '/users')
   api.add_resource(resources.AdminsResource, '/admins')
   api.add_resource(resources.PoemsResource, '/poems')
-  # */ratings* se utilizara para crear ratings. */ratings/poem* se utilizara para obtener todos los ratings de un poema.
-  api.add_resource(resources.RatingsResource, '/ratings', '/ratings/poem/<int:poem_id>')
+  api.add_resource(resources.RatingsResource, '/ratings')
   
   #Recursos por ID
   api.add_resource(resources.UserResource, '/user/<int:id>')
