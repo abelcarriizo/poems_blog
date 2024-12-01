@@ -6,12 +6,15 @@ from src.utils import filter_poem_by_user
 
 from flask import jsonify, request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 
 class Poem(Resource):
+  @jwt_required(optional=True)
   def get(self, id):
     poem = db.session.query(PoemModel).get_or_404(id)
     return poem.to_json()
   
+  @jwt_required()
   def put(self, id):
     poem = db.session.query(PoemModel).get_or_404(id)
     data = request.get_json().items()
@@ -21,6 +24,7 @@ class Poem(Resource):
     db.session.commit()
     return poem.to_json(), 201
   
+  @jwt_required()
   def delete(self, id):
     poem = db.session.query(PoemModel).get_or_404(id)
     db.session.delete(poem)
@@ -28,7 +32,9 @@ class Poem(Resource):
     return '', 204
 
 class Poems(Resource):
-  def get(self):
+  @jwt_required(optional=True)
+  def get(self):   
+    # Filtrar por parámetros opcionales en la URL
     query = db.session.query(PoemModel)    
     # Filtrar por parámetros opcionales en la URL
     user_id = request.args.get('user_id', type=int)
@@ -48,6 +54,7 @@ class Poems(Resource):
     paginated_data = paginate(query)
     return jsonify(paginated_data)
   
+  @jwt_required()
   def post(self):
     poem = PoemModel.from_json(request.get_json())
     db.session.add(poem)

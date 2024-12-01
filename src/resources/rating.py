@@ -6,12 +6,15 @@ from src.utils import filter_ratings_by_user, filter_ratings_by_poem
 
 from flask import jsonify, request
 from flask_restful import Resource
+from flask_jwt_extended import jwt_required
 
 class Rating(Resource):
+  @jwt_required(optional=True)
   def get(self, id):
     rating = db.session.query(RatingModel).get_or_404(id)
     return rating.to_json()
   
+  @jwt_required()
   def put(self, id):
     rating = db.session.query(RatingModel).get_or_404(id)
     data = request.get_json().items()
@@ -21,6 +24,7 @@ class Rating(Resource):
     db.session.commit()
     return rating.to_json(), 201
   
+  @jwt_required()
   def delete(self, id):
     rating = db.session.query(RatingModel).get_or_404(id)
     db.session.delete(rating)
@@ -28,6 +32,7 @@ class Rating(Resource):
     return '', 204
   
 class Ratings(Resource):
+  @jwt_required(optional=True)
   def get(self):
     query = db.session.query(RatingModel)    
     # Filtrar por parámetros opcionales en la URL
@@ -50,7 +55,8 @@ class Ratings(Resource):
     # Paginación
     paginated_data = paginate(query)
     return jsonify(paginated_data)
-  
+
+  @jwt_required()
   def post(self):
     rating = RatingModel.from_json(request.get_json())
     db.session.add(rating)
