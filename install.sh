@@ -24,7 +24,7 @@ pip install --upgrade pip
 # Instalar los requisitos del proyecto desde requirements.txt
 pip install -r requirements.txt
 
-#Comprobacion variables de entorno
+# Comprobación del archivo .env
 file=.env
 path=$(pwd)
 if [ ! -f $file ]; then
@@ -33,22 +33,30 @@ if [ ! -f $file ]; then
     read -p "Puerto de la aplicación (por defecto 5000): " FLASK_PORT
     read -p "Nombre de usuario de la base de datos: " DATABASE_USER
     read -p "Contraseña del usuario para la base de datos: " DATABASE_PASSWORD
+    read -p "Clave secreta para JWT (se generará aleatoriamente si se deja vacío): " JWT_SECRET_KEY
+    read -p "Duración del token JWT en segundos (por defecto 3600s): " JWT_ACCESS_TOKEN_EXPIRES
 
     # Definir valores por defecto si el usuario no ingresa nada
     FLASK_PORT=${FLASK_PORT:-5000}
+    JWT_SECRET_KEY=${JWT_SECRET_KEY:-$(openssl rand -base64 32)}
+    JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES:-3600}
 
     # Escribir las variables en el archivo .env
     cat >.env <<EOF
-    # Archivo .env generado automáticamente para configuración de Flask
+# Archivo .env generado automáticamente para configuración de Flask
 
-    # Variables de Flask
-    export FLASK_PORT = ${FLASK_PORT}
+# Variables de Flask
+export FLASK_PORT=${FLASK_PORT}
 
-    # Variables de la Base de Datos
-    export DATABASE_PATH = ${path}/src/database/
-    export DATABASE_NAME = poems_blog
-    export DATABASE_USER = ${DATABASE_USER}
-    export DATABASE_PASSWORD = ${DATABASE_PASSWORD}
+# Variables de la Base de Datos
+export DATABASE_NAME=poems_blog
+export DATABASE_USER=${DATABASE_USER}
+export DATABASE_PASSWORD=${DATABASE_PASSWORD}
+
+# Variables de JWT
+export JWT_SECRET_KEY=${JWT_SECRET_KEY}
+export JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+
 EOF
     echo "Archivo .env creado satisfactoriamente."
 fi
