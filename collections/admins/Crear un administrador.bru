@@ -7,17 +7,23 @@ meta {
 post {
   url: {{URL}}/admins
   body: json
-  auth: none
+  auth: bearer
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA4MTAxMiwianRpIjoiNWU1MWE5YzMtYTE3OS00MzNlLWJhNmMtMzE4MWMzMGNlNjdmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwODEwMTIsImNzcmYiOiI1Yzk0YzYzOS1jNzcyLTQ4OGQtYTNiMS1hMjk0MDUyMjBhZTgiLCJleHAiOjE3MzMwODQ2MTIsInJvbGUiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFiZWxjYXJyaXpvQGV4YW1wbGUuY29tIn0.iZ-mKCs7-sKeRm8cP-r6BwEQFsNs50fkHMO3xkb8R_E
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA4MTAxMiwianRpIjoiNWU1MWE5YzMtYTE3OS00MzNlLWJhNmMtMzE4MWMzMGNlNjdmIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwODEwMTIsImNzcmYiOiI1Yzk0YzYzOS1jNzcyLTQ4OGQtYTNiMS1hMjk0MDUyMjBhZTgiLCJleHAiOjE3MzMwODQ2MTIsInJvbGUiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFiZWxjYXJyaXpvQGV4YW1wbGUuY29tIn0.iZ-mKCs7-sKeRm8cP-r6BwEQFsNs50fkHMO3xkb8R_E
 }
 
 body:json {
     {
-      "firstname": "Abel",
-      "lastname": "Carrizo",
-      "username": "abel_carrizo",
-      "gender": "male",
-      "description": "Lover of poetry and literature.",
-      "email": "john.doe@example.com",
+      "firstname": "Esteban",
+      "lastname": "Quito",
+      "username": "esteban_quito",
+      "email": "estebanquito@example.com",
       "password": "hashedpassword123"
     }
 }
