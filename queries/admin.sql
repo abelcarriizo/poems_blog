@@ -1,0 +1,2 @@
+INSERT INTO Admins (firstname, lastname, username, email, password) VALUES
+('Abel', 'Carrizo', 'abelcarrizo', 'abelcarrizo@example.com', 'scrypt:32768:8:1$LNNTTfw2Y3SZcyxk$a850ec3b146d109411c32b77599b29edc3f9ceef1f103257fb69007f234d8f0c1353ddd9ed683cdfba4671ec772b4e21f1cf34f68f187972be2fb22db9d766cd');
