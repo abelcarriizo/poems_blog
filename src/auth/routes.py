@@ -1,8 +1,9 @@
+from .. import db
+from src.models import UserModel, AdminModel
+from src.mail.functions import sendMail
+
 from flask import Blueprint, request
 from flask_jwt_extended import create_access_token
-from src.models import UserModel
-from src.models import AdminModel
-from .. import db
 
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 
@@ -56,6 +57,14 @@ def register():
     if UserModel.query.filter_by(email=user.email).first():
         return {'message': 'Email already in use'}, 409
     
-    db.session.add(user)
-    db.session.commit()
+    try:
+        db.session.add(user)
+        db.session.commit()
+        # Enviar Mail de Bienvenida
+        sent = sendMail([user.email], "Welcome!", 'register', user=user)
+        if sent != True:
+            return {'message': 'Error sending email'}, 500  # Manejo de error si el envío falla
+    except Exception as error:
+        db.session.rollback()
+        return str(error), 409
     return user.to_json(), 201
