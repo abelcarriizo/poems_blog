@@ -36,6 +36,12 @@ if [ ! -f $file ]; then
     read -p "Clave secreta para JWT (se generará aleatoriamente si se deja vacío): " JWT_SECRET_KEY
     read -p "Duración del token JWT en segundos (por defecto 3600s): " JWT_ACCESS_TOKEN_EXPIRES
 
+    # Preguntar por las variables de correo electrónico
+    echo "Configuración del correo electrónico:"
+    read -p "Dirección de correo (MAIL_USERNAME): " MAIL_USERNAME
+    read -p "Contraseña del correo (MAIL_PASSWORD): " MAIL_PASSWORD
+    read -p "Nombre del remitente (FLASKY_MAIL_SENDER): " FLASKY_MAIL_SENDER
+
     # Definir valores por defecto si el usuario no ingresa nada
     FLASK_PORT=${FLASK_PORT:-5000}
     JWT_SECRET_KEY=${JWT_SECRET_KEY:-$(openssl rand -base64 32)}
@@ -56,6 +62,14 @@ export DATABASE_PASSWORD=${DATABASE_PASSWORD}
 # Variables de JWT
 export JWT_SECRET_KEY=${JWT_SECRET_KEY}
 export JWT_ACCESS_TOKEN_EXPIRES=${JWT_ACCESS_TOKEN_EXPIRES}
+
+# Configuración de correo electrónico
+export MAIL_SERVER=smtp.gmail.com
+export MAIL_PORT=587
+export MAIL_USE_TLS=True
+export MAIL_USERNAME=${MAIL_USERNAME}
+export MAIL_PASSWORD=${MAIL_PASSWORD}
+export FLASKY_MAIL_SENDER=Poems Blog <${FLASKY_MAIL_SENDER}>
 
 EOF
     echo "Archivo .env creado satisfactoriamente."
