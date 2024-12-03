@@ -1,0 +1,7 @@
+Bienvenido {{user.firstname}} {{user.lastname}} a Poems Blog!
+Gracias por registrarte en nuestro sistema.
+Descubre el lugar donde las palabras cobran vida:
+📜 Publica tus poemas y deja que el mundo conozca tu talento.
+🌟 Descubre joyas ocultas en cada rincón de nuestra comunidad.
+💬 Conéctate con otros artistas, comparte ideas y construye relaciones creativas.
+📈 Mejora tu escritura con comentarios constructivos y reconocimiento de tus pares.
