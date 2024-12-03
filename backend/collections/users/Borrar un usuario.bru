@@ -1,0 +1,19 @@
+meta {
+  name: Borrar un usuario
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{URL}}/user/43
+  body: none
+  auth: bearer
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA5NTExNiwianRpIjoiZTM3NDcyYzctY2EwOS00OTBkLTg3MTUtOWIzNzA4NzIxZDM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwOTUxMTYsImNzcmYiOiIwZWNmNDBmNy05OGY5LTQ5YmItOGU3MC0xZmY1ZTYwMjMxMDgiLCJleHAiOjE3MzMwOTg3MTYsInJvbGUiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFiZWxjYXJyaXpvQGV4YW1wbGUuY29tIn0.4rwKMLKbPVSaL9ccw3v45pkpwV_y_YMjb4Ap8rVdwG4
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA5NTExNiwianRpIjoiZTM3NDcyYzctY2EwOS00OTBkLTg3MTUtOWIzNzA4NzIxZDM0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwOTUxMTYsImNzcmYiOiIwZWNmNDBmNy05OGY5LTQ5YmItOGU3MC0xZmY1ZTYwMjMxMDgiLCJleHAiOjE3MzMwOTg3MTYsInJvbGUiOiJhZG1pbiIsImlkIjoxLCJlbWFpbCI6ImFiZWxjYXJyaXpvQGV4YW1wbGUuY29tIn0.4rwKMLKbPVSaL9ccw3v45pkpwV_y_YMjb4Ap8rVdwG4
+}

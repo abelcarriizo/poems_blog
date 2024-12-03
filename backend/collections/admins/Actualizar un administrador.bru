@@ -1,0 +1,23 @@
+meta {
+  name: Actualizar un administrador
+  type: http
+  seq: 5
+}
+
+put {
+  url: {{URL}}/admin/1
+  body: json
+  auth: none
+}
+
+body:json {
+    {
+      "firstname": "Abel",
+      "lastname": "Carrizo",
+      "username": "abel_carrizo",
+      "gender": "male",
+      "description": "Administrador del Sistema",
+      "email": "abel.carrizo@example.com",
+      "password": "hashedpassword123"
+    }
+}

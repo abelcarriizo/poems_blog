@@ -1,0 +1,23 @@
+meta {
+  name: Obtener Poemas
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{URL}}/poems?page=2
+  body: none
+  auth: bearer
+}
+
+params:query {
+  page: 2
+}
+
+headers {
+  Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA3ODEwMiwianRpIjoiOWM1OTNmMGItMjU1Yi00YzkyLTlkYTEtNWU1NzM2MTE2MjU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwNzgxMDIsImNzcmYiOiJhODU3YzJjYS0zMmIzLTQyNmUtOWE3MC1iNzEyZWViZDY1NTIiLCJleHAiOjE3MzMwODE3MDIsInJvbGUiOiJ1c2VyIiwiaWQiOjEsImVtYWlsIjoianVhbi5wQGV4YW1wbGUuY29tIn0.SWY-mPH8vm6-Se8Ci16N8rg8Q-4s7hmh9067h0ZWSTU
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTczMzA3ODEwMiwianRpIjoiOWM1OTNmMGItMjU1Yi00YzkyLTlkYTEtNWU1NzM2MTE2MjU0IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3MzMwNzgxMDIsImNzcmYiOiJhODU3YzJjYS0zMmIzLTQyNmUtOWE3MC1iNzEyZWViZDY1NTIiLCJleHAiOjE3MzMwODE3MDIsInJvbGUiOiJ1c2VyIiwiaWQiOjEsImVtYWlsIjoianVhbi5wQGV4YW1wbGUuY29tIn0.SWY-mPH8vm6-Se8Ci16N8rg8Q-4s7hmh9067h0ZWSTU
+}

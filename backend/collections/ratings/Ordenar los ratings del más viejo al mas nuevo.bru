@@ -1,0 +1,16 @@
+meta {
+  name: Ordenar los ratings del más viejo al mas nuevo
+  type: http
+  seq: 9
+}
+
+get {
+  url: {{URL}}/ratings?page=1&sort=oldest
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  sort: oldest
+}
