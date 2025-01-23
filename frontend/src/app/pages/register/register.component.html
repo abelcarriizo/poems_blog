@@ -1,0 +1,58 @@
+<div class="container-fluid">
+  <!-- Columna izquierda -->
+  <div class="col-left">
+    <h1>Poems Blog/</h1>
+    <button>DESCUBRE POEMAS</button>
+  </div>
+
+  <!-- Columna derecha -->
+  <div class="col-right">
+    <h2>¡Crea una cuenta!</h2>
+    <form [formGroup]="registerForm" (ngSubmit)="submit()">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Nombre"
+        formControlName="name"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Apellido"
+        formControlName="lastName"
+      />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Usuario"
+        formControlName="username"
+      />
+      <select class="form-control" formControlName="gender">
+        <option value="">Género</option>
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+      </select>
+      <textarea
+        class="form-control"
+        placeholder="Descripción"
+        formControlName="description"
+      ></textarea>
+      <input
+        type="email"
+        class="form-control"
+        placeholder="Correo"
+        formControlName="email"
+      />
+      <input
+        type="password"
+        class="form-control"
+        placeholder="Contraseña"
+        formControlName="password"
+      />
+      <button type="submit" class="btn btn-dark w-100">
+        REGISTRARME
+      </button>
+    </form>
+  </div>
+</div>
