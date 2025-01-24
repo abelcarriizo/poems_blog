@@ -9,7 +9,11 @@ export class PoemsService {
   private apiUrl = 'http://localhost:5000/poems';
 
   constructor(private http: HttpClient) {}
-
+  getPoemById(id: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/poems/${id}`);
+  }
+  
+  
   getPoems(params: { page?: number; per_page?: number; user_id?: number; sort?: string }): Observable<any> {
     let queryParams = new HttpParams();
 

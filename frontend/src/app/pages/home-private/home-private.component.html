@@ -1,18 +1,52 @@
-<div class="container-fluid vh-100 d-flex">
-    <!-- Columna izquierda -->
-    <div class="col-md-3 bg-light text-center d-flex flex-column justify-content-center align-items-center">
-      <h1 class="display-4">Bienvenido, {{ username }}!</h1>
-      <button class="btn btn-outline-secondary mt-3" (click)="logout()">CERRAR SESIÓN</button>
-      <footer class="mt-auto text-muted small">
-        ©2024 POEMS BLOG/ EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.
-      </footer>
+<div class="container-fluid vh-100">
+  <div class="row h-100">
+    <!-- Barra lateral izquierda -->
+    <div class="col-md-2 d-flex flex-column align-items-center py-4">
+      <div class="user-avatar mb-4">
+        <img src="path/to/avatar.jpg" alt="User Avatar" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+      </div>
+      <nav class="nav flex-column text-center w-100">
+        <a href="#" class="nav-link text-dark mb-3">
+          <i class="bi bi-house-door-fill"></i> Inicio
+        </a>
+        <a href="#" class="nav-link text-dark mb-3">
+          <i class="bi bi-bookmark-fill"></i> Mis Poemas
+        </a>
+        <a href="#" class="nav-link text-dark mb-3">
+          <i class="bi bi-gear-fill"></i> Ajustes
+        </a>
+      </nav>
+      <button class="btn btn-danger mt-auto w-75">Cerrar Sesión</button>
     </div>
-  
-    <!-- Columna derecha -->
-    <div class="col-md-9 bg-white p-5">
-      <h2 class="text-center mb-4">Tus Poemas</h2>
-      <!-- Componente de lista de poemas -->
-      <app-poems-list [userId]="userId"></app-poems-list>
+
+    <!-- Contenido principal -->
+    <div class="col-md-10 bg-light p-4">
+      <h1 class="text-center mb-4">POEMS BLOG/</h1>
+      <div class="search-bar mb-4">
+        <input
+          type="text"
+          class="form-control form-control-lg"
+          placeholder="Buscar poemas..."
+          (input)="onSearch($event)"
+        />
+      </div>
+      <div class="row g-3">
+        <!-- Aquí se mostrarán los poemas -->
+        <div class="col-md-4" *ngFor="let poem of poems">
+          <div class="card shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title">{{ poem.title }}</h5>
+              <p class="card-text">{{ poem.description }}</p>
+              <p class="card-text text-muted">
+                <small>Autor: {{ poem.author || 'Desconocido' }}</small>
+              </p>
+              <p class="card-text text-muted">
+                <small>Creado: {{ poem.date_created | date }}</small>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div>

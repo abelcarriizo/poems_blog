@@ -1,24 +1,69 @@
-.container-fluid {
-    height: 100vh;
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+}
+
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.nav-link {
+  font-size: 1.2rem;
+  padding: 10px 0;
+}
+
+.nav-link i {
+  margin-right: 10px;
+}
+.col-md-2 {
+  background-color: #FBF4BD; /* Cambia el color aquí */
+  color: #000; /* Cambia el color del texto, si es necesario */
+}
+
+
+.btn-danger {
+  width: 100%;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+.search-bar input {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+@media (max-width: 768px) {
+  .col-md-2 {
+    display: none;
   }
-  
-  .col-md-3 {
-    background-color: #faf4eb;
+
+  .col-md-10 {
+    padding: 1rem;
   }
-  
-  .col-md-9 {
-    background-color: #ffffff;
-  }
-  
-  button {
-    border-radius: 20px;
-    padding: 10px 20px;
-  }
-  
-  footer {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.8rem;
-    color: #888;
-  }
-  
+}

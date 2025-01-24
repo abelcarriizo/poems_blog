@@ -1,5 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { PoemsService } from '../../services/poems.service';
+import { Router } from '@angular/router';
+import id from '@angular/common/locales/id';
 
 @Component({
   selector: 'app-poems-list',
@@ -15,12 +17,15 @@ export class PoemsListComponent {
   totalPages = 1;
   filteredPoems: any[] = []; // Poemas filtrados
 
-  constructor(private poemsService: PoemsService) {}
+  constructor(private poemsService: PoemsService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadPoems();
   }
-
+  goToDetail(id: number): void {
+    this.router.navigate([`/poems`]); // Navega al detalle del poema
+  }
+  
   loadPoems(): void {
     const params: any = {
       page: this.currentPage,

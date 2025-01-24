@@ -1,10 +1,30 @@
-<div class="container-fluid vh-100 d-flex">
-    <!-- Columna izquierda -->
-    <div class="col-md-3 bg-light text-center d-flex flex-column justify-content-center align-items-center">
-      <h1 class="display-4">Poems Blog/</h1>
-      <button class="btn btn-outline-secondary mt-3">DESCUBRE POEMAS</button>
-      <footer class="mt-auto text-muted small">
-        ©2024 POEMS BLOG/ EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.
-      </footer>
+<div class="container-fluid vh-100 d-flex flex-column bg-light">
+  <!-- Navegación -->
+  <header class="d-flex justify-content-between align-items-center p-3">
+    <h1 class="display-5 fw-bold">Poems Blog/</h1>
+    <nav>
+      <a href="#" class="me-4 text-dark text-decoration-none" routerLink="/login">INICIAR SESIÓN</a>
+      <a href="#" class="text-dark text-decoration-none" routerLink="/register">REGISTRARSE</a>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <div class="row flex-grow-1 align-items-center justify-content-center">
+    <!-- Texto y botón -->
+    <div class="col-md-6 text-content text-start ps-5">
+      <h2 class="display-4 fw-bold mb-4">Poems Blog/</h2>
+      <ul class="list-unstyled fs-5">
+        <li>• Publica tus poemas.</li>
+        <li>• Descubre joyas ocultas.</li>
+        <li>• Conéctate con artistas.</li>
+        <li>• Mejora tu escritura.</li>
+      </ul>
+      <button class="btn btn-outline-secondary btn-lg mt-3" (click)="navigateToPoems()">DESCUBRE POEMAS</button>
     </div>
+
+    <!-- Imagen -->
+    <div class="col-md-6 text-center">
+      <img src="assets/writing-image.png" alt="Escribiendo" class="img-fluid" style="max-height: 400px;" />
+    </div>
+  </div>
 </div>

@@ -1,0 +1,41 @@
+<div class="container-fluid vh-100 d-flex">
+  <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light text-center p-5">
+    <h1 class="display-3">Poems Blog/</h1>
+    <button class="btn btn-outline-secondary btn-lg mt-3" (click)="navigateToPoems()">DESCUBRE POEMAS</button>
+    <footer class="mt-auto text-muted small">
+      ©2024 POEMS BLOG/ EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.
+    </footer>
+  </div>
+
+  <div class="col-md-6 bg-warning d-flex flex-column justify-content-center align-items-center p-5">
+    <h2 class="mb-4">¡BIENVENIDO!</h2>
+    <form class="w-75" (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo</label>
+        <input
+          [(ngModel)]="email"
+          name="email"
+          type="email"
+          id="email"
+          class="form-control"
+          placeholder="Correo"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Contraseña</label>
+        <input
+          [(ngModel)]="password"
+          name="password"
+          type="password"
+          id="password"
+          class="form-control"
+          placeholder="Contraseña"
+        />
+      </div>
+      <button type="submit" class="btn btn-dark w-100">INICIAR SESIÓN</button>
+      <button type="button" (click)="adminLogin()" class="btn btn-outline-dark w-100 mt-3">
+        INICIAR SESIÓN COMO ADMIN
+      </button>
+    </form>
+  </div>
+</div>
