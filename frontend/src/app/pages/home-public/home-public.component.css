@@ -1,24 +1,30 @@
-.container-fluid {
-    height: 100vh;
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #f8f9fa;
+  margin: 0;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card-title {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+}
+
+@media (max-width: 768px) {
+  .card {
+    margin: 0 auto;
   }
-  
-  .col-md-3 {
-    background-color: #faf4eb;
-  }
-  
-  .col-md-9 {
-    background-color: #ffffff;
-  }
-  
-  button {
-    border-radius: 20px;
-    padding: 10px 20px;
-  }
-  
-  footer {
-    position: absolute;
-    bottom: 10px;
-    font-size: 0.8rem;
-    color: #888;
-  }
-  
+}

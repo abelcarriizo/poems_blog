@@ -1,7 +1,26 @@
-<div class="container-fluid vh-100 d-flex">
-  <!-- Columna derecha -->
-  <div class="col-md-9 bg-white p-5">
-    <!-- Componente de lista de poemas -->
-    <app-poems-list></app-poems-list>
+<div class="container mt-4">
+  <h1 class="text-center mb-4">Poems Blog/</h1>
+
+  <!-- Grid de poemas -->
+  <div class="row g-3">
+    <div class="col-md-4" *ngFor="let poem of poems">
+      <div class="card shadow-sm" style="cursor: pointer;">
+        <div class="card-body">
+          <h5 class="card-title">{{ poem.title }}</h5>
+          <p class="card-text">{{ poem.description }}</p>
+          <p class="card-text text-muted">
+            <small>Autor: {{ poem.author || 'Desconocido' }}</small>
+          </p>
+          <p class="card-text text-muted">
+            <small>Creado: {{ poem.date_created | date:'dd/MM/yyyy' }}</small>
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Pie de página -->
+  <footer class="mt-5 text-center text-muted small">
+    ©2024 POEMS BLOG/ EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.
+  </footer>
 </div>

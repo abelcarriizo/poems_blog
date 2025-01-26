@@ -13,6 +13,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { PoemDetailComponent } from './pages/poem-detail/poem-detail.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { RateComponent } from './pages/rate/rate.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +28,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
     PoemDetailComponent,
     DashboardComponent,
     ProfileComponent,
+    RateComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,

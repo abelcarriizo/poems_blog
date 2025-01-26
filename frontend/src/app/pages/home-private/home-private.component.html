@@ -32,21 +32,22 @@
       </div>
       <div class="row g-3">
         <!-- Aquí se mostrarán los poemas -->
-        <div class="col-md-4" *ngFor="let poem of poems">
-          <div class="card shadow-sm">
-            <div class="card-body">
-              <h5 class="card-title">{{ poem.title }}</h5>
-              <p class="card-text">{{ poem.description }}</p>
-              <p class="card-text text-muted">
-                <small>Autor: {{ poem.author || 'Desconocido' }}</small>
-              </p>
-              <p class="card-text text-muted">
-                <small>Creado: {{ poem.date_created | date }}</small>
-              </p>
+        <div class="row g-3">
+          <div class="col-md-4" *ngFor="let poem of filteredPoems">
+            <div class="card shadow-sm" (click)="goToDetail(poem.id)" style="cursor: pointer;">
+              <div class="card-body">
+                <h5 class="card-title">{{ poem.title }}</h5>
+                <p class="card-text">{{ poem.description }}</p>
+                <p class="card-text text-muted">
+                  <small>Autor: {{ poem.author || 'Desconocido' }}</small>
+                </p>
+                <p class="card-text text-muted">
+                  <small>Creado: {{ poem.date_created | date }}</small>
+                </p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        
   </div>
 </div>

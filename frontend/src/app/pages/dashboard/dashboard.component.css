@@ -1,0 +1,31 @@
+.container-fluid {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  .bg-warning {
+    background-color: #fdf3c6;
+  }
+  
+  .bg-light {
+    background-color: #f9f9f9;
+  }
+  
+  h1 {
+    font-weight: 700;
+  }
+  
+  p {
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .border {
+    border: 1px solid #ddd;
+  }
+  
+  footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+  }
+  

@@ -7,10 +7,11 @@ import { Observable } from 'rxjs';
 })
 export class PoemsService {
   private apiUrl = 'http://localhost:5000/poems';
+  private Url = 'http://localhost:5000/poem';
 
   constructor(private http: HttpClient) {}
   getPoemById(id: number): Observable<any> {
-    return this.http.get(`${this.apiUrl}/poems/${id}`);
+    return this.http.get(`${this.Url}/${id}`);
   }
   
   

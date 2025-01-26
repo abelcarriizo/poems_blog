@@ -1,2 +1,2 @@
 INSERT INTO Admins (firstname, lastname, username, email, password) VALUES
-('Abel', 'Carrizo', 'abelcarrizo', 'abelcarrizo@example.com', 'scrypt:32768:8:1$LNNTTfw2Y3SZcyxk$a850ec3b146d109411c32b77599b29edc3f9ceef1f103257fb69007f234d8f0c1353ddd9ed683cdfba4671ec772b4e21f1cf34f68f187972be2fb22db9d766cd');
+('Abel', 'Carrizo', 'abelcarrizo', 'abelcarrizo@example.com', 'scrypt:32768:8:1$sDx2Y3EdBfg3SpQE$eeeec72a0425da774e1836831daec98486e5606d9217e7b16cd5fb6c08217218e047945e8e71023d448d47f7dcae90453c10983a925bed6da7c6a0d6554285b4');

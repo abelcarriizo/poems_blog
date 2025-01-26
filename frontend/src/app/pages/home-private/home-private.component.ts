@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth.service';
 import { PoemsService } from '../../services/poems.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home-private',
@@ -14,13 +15,16 @@ export class HomePrivateComponent {
   poems: any[] = []; // Lista de poemas original
   filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
 
-  constructor(private authService: AuthService, private poemsService: PoemsService) {}
+  constructor(private authService: AuthService, private poemsService: PoemsService, private router: Router) {}
 
   ngOnInit(): void {
     this.username = this.authService.getUsername(); // Obtiene el nombre de usuario desde el token
     this.loadPoems();
   }
-
+  goToDetail(poemId: number): void {
+    this.router.navigate(['/poems', poemId]); // Redirige al detalle del poema con el id
+  }
+  
   loadPoems(): void {
     this.poemsService.getPoems({ page: 1, per_page: 12 }).subscribe(
       (response) => {

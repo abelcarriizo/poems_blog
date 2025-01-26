@@ -1,38 +1,56 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PoemsService } from '../../services/poems.service';
+import { RatingsService } from '../../services/rating.service';
 
 @Component({
   selector: 'app-poem-detail',
   standalone: false,
-  
   templateUrl: './poem-detail.component.html',
   styleUrls: ['./poem-detail.component.css']
 })
 export class PoemDetailComponent implements OnInit {
-  poem: any;
+  poem: any = null; // Almacena los detalles del poema
+  ratings: any[] = []; // Almacena los ratings asociados al poema
 
   constructor(
     private route: ActivatedRoute,
-    private poemsService: PoemsService
+    private poemsService: PoemsService,
+    private ratingsService: RatingsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (!isNaN(id)) {
-      this.loadPoem(id);
-    } else {
-      console.error('El ID del poema no es válido.');
+    // Obtener el ID del poema desde la URL
+    const poemId = this.route.snapshot.paramMap.get('id');
+    if (poemId) {
+      this.loadPoemDetails(+poemId); // Convertir el ID a número y cargar detalles
+      this.loadPoemRatings(+poemId); // Cargar los ratings del poema
     }
   }
-
-  loadPoem(id: number): void {
+  goToRate() {
+    this.router.navigate(['/rate']);
+  }
+  loadPoemDetails(id: number): void {
+    // Llamar al servicio para obtener los detalles del poema
     this.poemsService.getPoemById(id).subscribe(
-      (response) => {
-        this.poem = response;
+      (poem) => {
+        this.poem = poem; // Almacenar los detalles en la variable
       },
       (error) => {
         console.error('Error al cargar el poema:', error);
+      }
+    );
+  }
+
+  loadPoemRatings(id: number): void {
+    // Llamar al servicio para obtener los ratings asociados al poema
+    this.ratingsService.getRatingsByPoemId(id).subscribe(
+      (response) => {
+        this.ratings = response.items; // Almacenar los ratings
+      },
+      (error) => {
+        console.error('Error al cargar los ratings:', error);
       }
     );
   }

@@ -8,6 +8,9 @@ import { HomePublicComponent } from './pages/home-public/home-public.component';
 import { LoginComponent } from './pages/login/login.component';
 import { PoemDetailComponent } from './pages/poem-detail/poem-detail.component';
 import { PoemsListComponent } from './components/poems-list/poems-list.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
+import { RateComponent } from './pages/rate/rate.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -18,6 +21,9 @@ const routes: Routes = [
   { path: 'dashboard', component: HomePrivateComponent, canActivate: [AuthGuard] },
   { path: '', component: PoemsListComponent },
   { path: 'poems/:id', component: PoemDetailComponent },
+  { path: 'panel', component: DashboardComponent },
+  { path: 'rate', component: RateComponent },
+  { path: '**', component: NotFoundComponent },
 ];
 
 @NgModule({

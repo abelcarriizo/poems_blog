@@ -9,7 +9,7 @@ El objetivo principal es la validación y pruebas del sistema, no se recomienda 
 """
 
 #Para usuario he usado password, para el admin hashedpassword123 (por si me olvido)
-password = "hashedpassword123"
+password = "user123"
 hashed_passwords = [generate_password_hash(password)]
 
 print(hashed_passwords)
