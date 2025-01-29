@@ -1,0 +1,164 @@
+/* Global */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+  
+  /* Header */
+  .header {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  /* Sidebar */
+  .sidebar {
+    width: 80px;
+    height: 100vh;
+    background-color: #FDFBF6;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    position: fixed;
+    left: 0;
+    top: 0;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .user-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 2px solid black;
+    overflow: hidden;
+    margin-bottom: 30px;
+  }
+  
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .nav-icons {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: auto;
+    padding-bottom: 20px;
+  }
+  
+  .nav-icons i {
+    font-size: 24px;
+    color: black;
+    transition: color 0.3s;
+  }
+  
+  .nav-icons i:hover {
+    color: gray;
+  }
+  
+  /* Contenido Principal */
+  .content {
+    margin-left: 100px; /* Espacio para la sidebar */
+    padding: 20px;
+  }
+  
+  /* Poema */
+  .poem-box {
+    background-color: #FDFBF6;
+    border: 3px solid black;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .poem-title {
+    font-weight: bold;
+  }
+  
+  .poem-info {
+    background-color: black;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+  }
+  
+  .poem-content {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    font-weight: 500;
+  }
+  
+  /* Reseñas */
+  .rating-box {
+    background-color: #FDFBF6;
+    border: 3px solid black;
+    border-radius: 12px;
+    padding: 20px;
+  }
+  
+  .rating-title {
+    font-weight: bold;
+  }
+  
+  .review {
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  /* Botón */
+  .opinion-btn {
+    background-color: black;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    border: 3px solid black;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  
+  .opinion-btn:hover {
+    background-color: white;
+    color: black;
+  }
+  
+  /* Footer */
+  .footer {
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: 40px;
+  }
+  
+  /* Responsividad */
+  @media (max-width: 768px) {
+    .sidebar {
+      width: 60px;
+    }
+  
+    .content {
+      margin-left: 80px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .sidebar {
+      display: none;
+    }
+  
+    .content {
+      margin-left: 0;
+    }
+  }
+  

@@ -9,11 +9,20 @@ import { PoemsService } from '../../services/poems.service';
 })
 export class HomePublicComponent implements OnInit {
   poems: any[] = []; // Lista de poemas
+  filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
 
   constructor(private poemsService: PoemsService) {}
 
   ngOnInit(): void {
     this.loadPoems();
+  }
+  onSearch(event: Event): void {
+    const query = (event.target as HTMLInputElement).value.toLowerCase();
+    this.filteredPoems = this.poems.filter(
+      (poem) =>
+        poem.title.toLowerCase().includes(query) ||
+        poem.description.toLowerCase().includes(query)
+    );
   }
 
   loadPoems(): void {

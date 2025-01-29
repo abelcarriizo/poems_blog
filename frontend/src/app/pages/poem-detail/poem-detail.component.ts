@@ -28,9 +28,14 @@ export class PoemDetailComponent implements OnInit {
       this.loadPoemRatings(+poemId); // Cargar los ratings del poema
     }
   }
-  goToRate() {
-    this.router.navigate(['/rate']);
+  goToRate(): void {
+    if (this.poem && this.poem.id) {
+      this.router.navigate(['/rate', this.poem.id]); // Redirige a la ruta correcta
+    } else {
+      console.error('Error: No se pudo obtener el ID del poema.');
+    }
   }
+  
   loadPoemDetails(id: number): void {
     // Llamar al servicio para obtener los detalles del poema
     this.poemsService.getPoemById(id).subscribe(

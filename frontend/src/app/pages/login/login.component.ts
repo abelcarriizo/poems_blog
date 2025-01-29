@@ -11,7 +11,7 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent {
   navigateToPoems() {
-    this.router.navigate(['/homepublic']); // Cambia 'poems' a la ruta deseada
+    this.router.navigate(['/homepublic']); 
   }
   email: string = '';
   password: string = '';

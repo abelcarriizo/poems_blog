@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -8,27 +9,26 @@ import { AuthService } from '../../services/auth.service';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
 })
-
 export class RegisterComponent {
+  navigateToPoems() {
+    this.router.navigate(['/homepublic']); // Cambia 'poems' a la ruta deseada
+  }
   registerForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router) {
     this.registerForm = this.fb.group({
-      firstname: [''], // Sin validadores
-      lastname: [''],
-      username: [''],
-      gender: [''],
-      description: [''],
-      email: [''],
-      password: [''],
+      firstname: ['', [Validators.required, Validators.minLength(2)]], 
+      lastname: ['', [Validators.required, Validators.minLength(2)]],
+      username: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(15)]],
+      gender: ['', [Validators.required]],
+      description: ['', [Validators.maxLength(250)]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
-    
-    
   }
 
-  
   public submit() {
-    console.log('Registro ');
+    console.log('Registro iniciado');
     if (this.registerForm.valid) {
       const formData = this.registerForm.value;
       console.log(formData);
@@ -43,9 +43,8 @@ export class RegisterComponent {
           alert('Hubo un error al registrarte. Por favor, intenta nuevamente.');
         }
       );
-    }else{
-      alert('Registro fallido');
+    } else {
+      alert('Por favor, completa todos los campos obligatorios correctamente.');
     }
   }
 }
-

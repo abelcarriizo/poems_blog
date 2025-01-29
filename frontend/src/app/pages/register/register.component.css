@@ -1,118 +1,111 @@
 /* General */
 body, html {
-    margin: 0;
-    padding: 0;
-    font-family: 'Arial', sans-serif;
-    height: 100%;
-    display: flex;
-  }
-  
-  .container-fluid {
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-    margin: 30px;
-  }
-  
-  /* Columna izquierda */
-  .col-left {
-    background-color: #faf4eb;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 20px;
-  }
-  
-  .col-left h1 {
-    font-size: 4rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
-    color: #000000;
-  }
-  
-  .col-left button {
-    background-color: #e5dfd1;
-    color: #000000;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-  }
-  
-  .col-left button:hover {
-    background-color: #d4c9b3;
-  }
-  
-  footer {
-    margin-top: auto;
-    font-size: 0.8rem;
-    color: #777777;
-  }
-  
-  /* Columna derecha */
-  .col-right {
-    background-color: #f9edbb;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
-  }
-  
-  .col-right h2 {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    color: #000000;
-  }
-  
-  /* Formulario */
-  form {
-    width: 80%;
-    max-width: 400px;
-  }
-  
-  form .form-control {
-    width: 100%;
-    padding: 10px 15px;
-    font-size: 1rem;
-    border: 1px solid #e5dfd1;
-    border-radius: 20px;
-    margin-bottom: 1rem;
-    box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  form .form-control:focus {
-    outline: none;
-    border-color: #c9b889;
-    box-shadow: 0 0 5px rgba(201, 184, 137, 0.5);
-  }
-  
-  form button {
-    width: 100%;
-    background-color: #000000;
-    color: #ffffff;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-  
-  form button:disabled {
-    background-color: #a9a9a9;
-    cursor: not-allowed;
-  }
-  
-  form button:hover {
-    background-color: #333333;
-  }
-  
+  margin: 0;
+  padding: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100%;
+  display: flex;
+}
+
+.container-fluid {
+  display: flex;
+  flex-direction: row;
+  height: 100vh;
+  margin: 30px;
+}
+
+/* Columna izquierda */
+.col-left {
+  background-color: #faf4eb;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+}
+
+.col-left h1 {
+  font-size: 4rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  color: #000000;
+}
+
+.col-left button {
+  background-color: #e5dfd1;
+  color: #000000;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.col-left button:hover {
+  background-color: #d4c9b3;
+}
+
+/* Columna derecha */
+.col-right {
+  background-color: #f9edbb;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.col-right h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #000000;
+}
+
+/* Formulario */
+form {
+  width: 80%;
+  max-width: 400px;
+}
+
+form .form-control {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  border: 1px solid #e5dfd1;
+  border-radius: 20px;
+  margin-bottom: 1rem;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+form .form-control:focus {
+  outline: none;
+  border-color: #c9b889;
+  box-shadow: 0 0 5px rgba(201, 184, 137, 0.5);
+}
+
+form button {
+  width: 100%;
+  background-color: #000000;
+  color: #ffffff;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+form button:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+form button:hover {
+  background-color: #333333;
+}

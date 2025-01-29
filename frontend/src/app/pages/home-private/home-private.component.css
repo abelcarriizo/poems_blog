@@ -1,7 +1,11 @@
-body {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #f8f9fa;
+html, body {
+  height: 100%;
+  background-color: black !important; /* Fondo negro */
+  color: white; /* Texto en blanco para contrastar */
   margin: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .user-avatar {
@@ -66,4 +70,34 @@ body {
   .col-md-10 {
     padding: 1rem;
   }
+}
+.nav-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  width: 100%;
+  padding-bottom: 20px;
+}
+
+.nav-icons .nav-link i {
+  font-size: 24px;
+  color: black; /* Íconos en negro */
+  transition: color 0.3s ease-in-out;
+}
+
+.nav-icons .nav-link:hover i {
+  color: gray;
+}
+
+.logout-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: black; /* Ícono en negro */
+  transition: color 0.3s ease-in-out;
+}
+
+.logout-btn:hover {
+  color: rgb(0, 0, 0); /* Cambio de color al pasar el mouse */
 }

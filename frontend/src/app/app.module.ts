@@ -4,7 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { RegisterComponent } from './pages/register/register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // Importa ReactiveFormsModule
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomePrivateComponent } from './pages/home-private/home-private.component';
 import { HomePublicComponent } from './pages/home-public/home-public.component';
 import { PoemsListComponent } from './components/poems-list/poems-list.component';
@@ -15,6 +15,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { RateComponent } from './pages/rate/rate.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
+import { AuthInterceptor } from './interceptors/auth.service';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,11 @@ import { NotFoundComponent } from './pages/not-found/not-found.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

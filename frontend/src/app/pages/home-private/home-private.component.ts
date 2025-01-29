@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HomePrivateComponent {
   username: string | null = null; // Nombre del usuario
+  userId: number | null = null; // ID del usuario actual
   poems: any[] = []; // Lista de poemas original
   filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
 
@@ -19,12 +20,22 @@ export class HomePrivateComponent {
 
   ngOnInit(): void {
     this.username = this.authService.getUsername(); // Obtiene el nombre de usuario desde el token
+    this.userId = this.authService.getUserId(); // Obtiene el ID del usuario
     this.loadPoems();
   }
+
   goToDetail(poemId: number): void {
     this.router.navigate(['/poems', poemId]); // Redirige al detalle del poema con el id
   }
-  
+
+  goToProfile(): void {
+    if (this.userId !== null) {
+      this.router.navigate(['/profile', this.userId]); // Redirige al perfil del usuario con su ID
+    } else {
+      console.error('No se encontró un ID de usuario.');
+    }
+  }
+
   loadPoems(): void {
     this.poemsService.getPoems({ page: 1, per_page: 12 }).subscribe(
       (response) => {
@@ -50,4 +61,5 @@ export class HomePrivateComponent {
     this.authService.logout();
     // Redirige al usuario a la página de inicio de sesión
     window.location.href = '/login';
-  }}
+  }
+}
