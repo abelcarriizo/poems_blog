@@ -10,6 +10,8 @@ import { PoemsService } from '../../services/poems.service';
 export class HomePublicComponent implements OnInit {
   poems: any[] = []; // Lista de poemas
   filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
+  currentPage: number = 1; // Página actual
+  totalPages: number = 1; // Total de páginas disponibles
 
   constructor(private poemsService: PoemsService) {}
 
@@ -24,16 +26,37 @@ export class HomePublicComponent implements OnInit {
         poem.description.toLowerCase().includes(query)
     );
   }
+  goToNextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.loadPoems(this.currentPage + 1);
+    }
+  }
 
-  loadPoems(): void {
-    this.poemsService.getPoems({ page: 1, per_page: 12 }).subscribe(
+  goToPreviousPage(): void {
+    if (this.currentPage > 1) {
+      this.loadPoems(this.currentPage - 1);
+    }
+  }
+
+  loadPoems(page: number = 1): void {
+    console.log(`🚀 Cargando poemas - Página: ${page}`);
+  
+    this.poemsService.getPoems({ page, per_page: 9 }).subscribe(
       (response) => {
-        this.poems = response.items; // Almacena los poemas en la lista
+        if (!response || !response.items) {
+          console.error("⚠️ Respuesta inválida del servidor:", response);
+          return;
+        }
+  
+        console.log(`✅ Poemas cargados: ${response.items.length}, Página: ${page}`);
+        this.poems = response.items;
+        this.filteredPoems = this.poems;
+        this.currentPage = response.current_page;
+        this.totalPages = response.pages;
       },
       (error) => {
-        console.error('Error al cargar los poemas:', error);
+        console.error("❌ Error al cargar los poemas:", error);
       }
     );
   }
-
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class PoemsService {
   private apiUrl = 'http://localhost:5000/poems';
   private Url = 'http://localhost:5000/poem';
-
+  private baseUrl= 'http://localhost:5000';
   constructor(private http: HttpClient) {}
   getPoemById(id: number): Observable<any> {
     return this.http.get(`${this.Url}/${id}`);
@@ -25,4 +25,77 @@ export class PoemsService {
 
     return this.http.get<any>(this.apiUrl, { params: queryParams });
   }
+
+  /**
+   * Obtiene todos los poemas de un usuario específico.
+   */
+  getPoemsByUser(userId: number, page: number = 1): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get(`${this.baseUrl}/poems?page=${page}&author_id=${userId}`, { headers }).pipe(
+      catchError(error => {
+        console.error('❌ Error obteniendo poemas:', error);
+        return throwError(() => new Error('No se pudieron cargar los poemas.'));
+      })
+    );
+  }
+  
+  /**
+   * Crea un nuevo poema.
+   */
+  createPoem(poemData: { title: string, description: string, content: string }): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.post(this.apiUrl, poemData, { headers }).pipe(
+      catchError(error => {
+        console.error('Error creando poema:', error);
+        return throwError(() => new Error('No se pudo crear el poema.'));
+      })
+    );
+  }
+
+  /**
+   * Actualiza un poema existente.
+   */
+  updatePoem(poemId: number, updatedPoem: { title?: string, description?: string, content?: string }): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.put(`${this.Url}/${poemId}`, updatedPoem, { headers }).pipe(
+      catchError(error => {
+        console.error('Error actualizando el poema:', error);
+        return throwError(() => new Error('No se pudo actualizar el poema.'));
+      })
+    );
+  }
+
+  /**
+   * Elimina un poema por su ID.
+   */
+  deletePoem(poemId: number): Observable<any> {
+    const token = sessionStorage.getItem('token');
+    let headers = new HttpHeaders();
+
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
+
+    return this.http.delete(`${this.Url}/${poemId}`, { headers }).pipe(
+      catchError(error => {
+        console.error('Error eliminando el poema:', error);
+        return throwError(() => new Error('No se pudo eliminar el poema.'));
+      })
+    );
+  }
 }
+

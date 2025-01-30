@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class AuthService {
    * @returns true si el usuario está autenticado y el token no ha expirado, false en caso contrario.
    */
   isLoggedIn(): boolean {
-    const token = localStorage.getItem(this.tokenKey);
+    const token = sessionStorage.getItem(this.tokenKey);
     return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
@@ -27,20 +27,22 @@ export class AuthService {
    * @returns El ID del usuario o null si no está disponible.
    */
   getUserId(): number | null {
-    const token = localStorage.getItem(this.tokenKey);
+    const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken?.user_id || null; // Cambia "user_id" según tu token
+      console.log('Token decodificado:', decodedToken); // 🔍 Verificación
+      return decodedToken?.id ? Number(decodedToken.id) : null;
     }
     return null;
   }
+  
 
   /**
    * Obtiene el nombre de usuario decodificando el token.
    * @returns El nombre de usuario o null si no está disponible.
    */
   getUsername(): string | null {
-    const token = localStorage.getItem(this.tokenKey);
+    const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
       return decodedToken?.username || null; // Cambia "username" según tu token
@@ -49,10 +51,11 @@ export class AuthService {
   }
 
   /**
-   * Elimina el token del almacenamiento para cerrar sesión.
+   * Elimina el token y el ID del usuario del sessionStorage para cerrar sesión.
    */
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem(this.tokenKey);
+    sessionStorage.removeItem('userId');
   }
 
   /**
@@ -72,29 +75,59 @@ export class AuthService {
    * Realiza el inicio de sesión enviando las credenciales al backend.
    * @param credentials Contiene el correo y contraseña del usuario.
    * @returns Observable con la respuesta del servidor.
-   */ // Método para login de usuario
+   */
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, credentials);
   }
 
-  // Método para login de administrador
+  /**
+   * Realiza el inicio de sesión para administradores.
+   * @param credentials Contiene el correo y contraseña del administrador.
+   * @returns Observable con la respuesta del servidor.
+   */
   adminLogin(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login/admin`, credentials);
   }
 
   /**
-   * Almacena el token JWT en el almacenamiento local.
+   * Almacena el token JWT y el ID del usuario en sessionStorage.
    * @param token El token JWT devuelto por el backend.
    */
   saveToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    sessionStorage.setItem(this.tokenKey, token);
+  
+    try {
+      const decodedToken = this.jwtHelper.decodeToken(token);
+      console.log("Token decodificado:", decodedToken); // 🔍 Verificar datos
+  
+      const userId = decodedToken?.id || decodedToken?.user_id; // 🔹 Ajuste aquí
+      if (userId) {
+        sessionStorage.setItem('userId', userId.toString());
+      } else {
+        console.error('Error: userId no encontrado en el token');
+      }
+    } catch (error) {
+      console.error('Error al decodificar el token:', error);
+    }
   }
-
+  
+  
   /**
-   * Obtiene el token JWT almacenado.
+   * Obtiene el token JWT almacenado en sessionStorage.
    * @returns El token JWT o null si no está almacenado.
    */
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return sessionStorage.getItem(this.tokenKey);
   }
+  getUserData(): Observable<any> {
+    const userId = this.getUserId();
+    return this.http.get(`http://localhost:5000/user/${userId}`).pipe(
+      catchError(error => {
+        console.error('Error obteniendo datos del usuario:', error);
+        return throwError(() => new Error('No se pudo obtener la información del usuario.'));
+      })
+    );
+  }
+  
+  
 }

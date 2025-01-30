@@ -26,7 +26,7 @@ body {
   position: fixed;
   left: 0;
   top: 0;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 2px 0 5px rgba(206, 206, 206, 0.1);
 }
 
 .user-avatar {

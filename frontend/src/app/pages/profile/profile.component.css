@@ -1,0 +1,57 @@
+.profile-container {
+    display: flex;
+    height: 100vh;
+    background-color: black;
+    color: #000;
+  }
+  
+  .profile-sidebar {
+    width: 25%;
+    background-color: #f5f1e5;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .user-avatar img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+  }
+  
+  .username {
+    font-weight: bold;
+  }
+  
+  .profile-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .search-bar input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: none;
+    border-radius: 5px;
+  }
+  
+  .poem-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+  }
+  
+  .poem-card {
+    background-color: #f5f1e5;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .poem-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+  

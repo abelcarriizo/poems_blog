@@ -16,6 +16,12 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { RateComponent } from './pages/rate/rate.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { AuthInterceptor } from './interceptors/auth.service';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CreatePoemComponent } from './pages/create-poem/create-poem.component';
+import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
+import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminPoemsComponent } from './pages/admin-poems/admin-poems.component';
+import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +37,12 @@ import { AuthInterceptor } from './interceptors/auth.service';
     ProfileComponent,
     RateComponent,
     NotFoundComponent,
+    SidebarComponent,
+    CreatePoemComponent,
+    UserSettingsComponent,
+    AdminUsersComponent,
+    AdminPoemsComponent,
+    AdminRatingsComponent,
   ],
   imports: [
     BrowserModule,

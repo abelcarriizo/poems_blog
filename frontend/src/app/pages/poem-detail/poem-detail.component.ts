@@ -12,7 +12,8 @@ import { RatingsService } from '../../services/rating.service';
 export class PoemDetailComponent implements OnInit {
   poem: any = null; // Almacena los detalles del poema
   ratings: any[] = []; // Almacena los ratings asociados al poema
-
+  hoverRating: number = 0; 
+  averageRating: number = 0; // Promedio calculado en el frontend
   constructor(
     private route: ActivatedRoute,
     private poemsService: PoemsService,
@@ -46,6 +47,15 @@ export class PoemDetailComponent implements OnInit {
         console.error('Error al cargar el poema:', error);
       }
     );
+  }
+  // 🔥 Calcula el promedio de estrellas en el frontend
+  calculateAverageRating(): void {
+    if (this.ratings.length === 0) {
+      this.averageRating = 0;
+      return;
+    }
+    const sum = this.ratings.reduce((total, rating) => total + rating.stars, 0);
+    this.averageRating = parseFloat((sum / this.ratings.length).toFixed(2));
   }
 
   loadPoemRatings(id: number): void {

@@ -1,0 +1,162 @@
+/* Ajustes generales */
+body {
+  background-color: black;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  display: flex;
+}
+
+.container-fluid {
+  background-color: black;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 20px;
+}
+
+h1 {
+  color: white;
+  font-weight: bold;
+  font-size: 32px;
+  text-align: center;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 120px;
+  height: 100vh;
+  background: #f5f1e5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  position: relative;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+  flex-shrink: 0;
+}
+
+.main-content {
+  margin-left: 120px;
+  flex-grow: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 120px);
+  justify-content: flex-start;
+  align-items: center;
+  padding-top: 60px;
+}
+
+.user-avatar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: #d9d9c3;
+  overflow: hidden;
+  margin-top: 20px;
+}
+
+.user-avatar img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+}
+
+.nav-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  margin-bottom: 50px;
+}
+
+.nav-icons i {
+  font-size: 30px;
+  color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, color 0.2s;
+}
+
+.nav-icons i:hover {
+  transform: scale(1.2);
+  color: #444;
+}
+
+/* Formulario */
+.form-group {
+  background-color: #F5F1E5;
+  padding: 20px;
+  border-radius: 15px;
+  border: 3px solid black;
+  margin-bottom: 30px;
+  width: 90%;
+}
+
+.form-group label {
+  font-weight: bold;
+  display: block;
+  font-size: 20px;
+}
+
+.form-control {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  font-size: 20px;
+}
+
+textarea.form-control {
+  resize: none;
+}
+
+/* Botón de Guardar */
+.btn-save {
+  background-color: #F5F1E5;
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  padding: 18px;
+  border-radius: 10px;
+  border: 3px solid black;
+  transition: 0.3s ease-in-out;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90%;
+}
+
+.btn-save:hover {
+  background-color: #E0DAC4;
+  transform: scale(1.05);
+}
+
+.btn-save i {
+  font-size: 26px;
+  margin-right: 10px;
+}
+
+/* Ajustes de contenedores */
+.col-md-10 {
+  background-color: black;
+  padding: 60px;
+  border-radius: 15px;
+  width: 90%;
+}
+
+/* Footer */
+.footer {
+  color: white;
+  text-align: center;
+  padding: 15px 0;
+  font-size: 16px;
+}

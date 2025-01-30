@@ -1,121 +1,144 @@
-/* General */
-body, html {
-  margin: 0;
-  padding: 0;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #ffffff;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
 
-.container {
-  width: 90%;
-  max-width: 1400px;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  padding: 20px;
-  background-color: #ffffff;
-}
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: #ffffff;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
 
-/* Header */
-.header {
-  background-color: black;
-  color: white;
-  padding: 20px;
-  text-align: left;
-  font-size: 1.5rem;
-  font-weight: bold;
-  width: 100%;
-  border-radius: 0px 0px 20 20;
-}
+    .container {
+      width: 90%;
+      max-width: 1400px;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 20px;
+      background-color: #ffffff;
+    }
 
-/* Footer */
-.footer {
-  background-color: black;
-  color: white;
-  padding: 20px;
-  text-align: center;
-  font-size: 0.9rem;
-  width: 100%;
-  border-radius: 20 20 0px 0px;
-  margin-top: auto;
-}
+    /* Header */
+    .header {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      text-align: left;
+      font-size: 1.5rem;
+      font-weight: bold;
+      width: 100%;
+      border-radius: 0px 0px 20px 20px;
+    }
 
-/* Buscador */
-.search-container {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin: 20px 0;
-}
+    /* Footer */
+    .footer {
+      background-color: black;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      font-size: 0.9rem;
+      width: 100%;
+      border-radius: 20px 20px 0px 0px;
+      margin-top: auto;
+    }
 
-.search-container input {
-  width: 100%;
-  max-width: 800px;
-  padding: 12px;
-  font-size: 1rem;
-  border: 2px solid #ccc;
-  border-radius: 30px;
-  text-align: left;
-}
-
-/* Contenedor de poemas */
-.poems-container {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  width: 100%;
-  padding: 20px;
-}
-
-.poem-card {
-  background-color: #FFFFFF;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease-in-out;
-  border: 2px solid #ffffff;
-  cursor: pointer;
-}
-
-.poem-card:hover {
-  transform: translateY(-5px);
-}
-
-.poem-card h3 {
-  font-size: 1.4rem;
-  font-weight: bold;
-  margin-bottom: 10px;
-  color: #333;
-}
-
-.poem-card p {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.poem-card .poem-footer {
-  display: flex;
-  justify-content: space-between;
-  font-size: 0.9rem;
-  color: #777;
-  margin-top: 10px;
-}
-
-@media (max-width: 1024px) {
-  .poems-container {
-      grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-@media (max-width: 768px) {
-  .poems-container {
-      grid-template-columns: repeat(1, 1fr);
-  }
-  .search-container {
+    /* Buscador */
+    .search-bar {
+      display: flex;
       justify-content: center;
-  }
-}
+      width: 100%;
+      margin: 20px 0;
+    }
+
+    .search-bar input {
+      width: 100%;
+      max-width: 800px;
+      padding: 12px;
+      font-size: 1rem;
+      border: 2px solid #ccc;
+      border-radius: 30px;
+      text-align: left;
+    }
+
+    /* Contenedor de poemas */
+    .poems-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+      padding: 20px;
+    }
+
+    .poem-card {
+      background-color: #F5F1E5;
+      padding: 20px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease-in-out;
+      border: 2px solid #ffffff;
+      cursor: pointer;
+    }
+
+    .poem-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .poem-card h3 {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #333;
+    }
+
+    .poem-card p {
+      font-size: 0.9rem;
+      color: #555;
+    }
+
+    .poem-card .poem-footer {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.9rem;
+      color: #777;
+      margin-top: 10px;
+    }
+
+    /* Paginación */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .pagination button {
+      background-color: black;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      margin: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .pagination button:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+
+    @media (max-width: 1024px) {
+      .poems-container {
+          grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .poems-container {
+          grid-template-columns: repeat(1, 1fr);
+      }
+      .search-bar {
+          justify-content: center;
+      }
+    }
