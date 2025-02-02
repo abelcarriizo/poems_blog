@@ -5,7 +5,7 @@ from flask_restful import Api
 from flask_sqlalchemy import SQLAlchemy
 from flask_jwt_extended import JWTManager
 from flask_mail import Mail
-from flask_migrate import Migrate  # Importar Flask-Migrate
+from flask_migrate import Migrate
 
 api = Api()  # Inicializa API de Flask Restful
 db = SQLAlchemy()  # Inicializa SQLAlchemy
@@ -29,6 +29,9 @@ def create_app():
     migrate = Migrate(app, db)
 
     import src.resources as resources
+    from src.resources.admin import AdminStats
+
+
 
     # Carga los recursos en la API
     api.add_resource(resources.UsersResource, '/users')
@@ -40,6 +43,7 @@ def create_app():
     api.add_resource(resources.AdminResource, '/admin/<int:id>')
     api.add_resource(resources.PoemResource, '/poem/<int:id>')
     api.add_resource(resources.RatingResource, '/rating/<int:id>')
+    api.add_resource(AdminStats, '/admin/stats') 
 
     api.init_app(app)  # Carga la aplicación en la API de Flask Restful
 
@@ -50,8 +54,9 @@ def create_app():
 
     # Importar y registrar el Blueprint de autenticación
     from src.auth.routes import auth
+    from src.resources.user import users
     app.register_blueprint(auth)
-
+    app.register_blueprint(users, url_prefix='/users')
     # Configuración de mail
     app.config['MAIL_HOSTNAME'] = os.getenv('MAIL_HOSTNAME')
     app.config['MAIL_SERVER'] = os.getenv('MAIL_SERVER')

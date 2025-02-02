@@ -1,34 +1,31 @@
+.container-fluid {
+  background-color: #000;
+  color: #fff;
+  font-family: 'Arial', sans-serif;
+}
+
 .profile-box, .desc-box, .stats-box, .security-box {
-    background-color: #f5f1e5;
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  
-  .profile-img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid black;
-  }
-  
-  .btn-save {
-    background-color: #f5f1e5;
-    color: black;
-    font-weight: bold;
-    border: 2px solid black;
-    transition: 0.3s ease-in-out;
-  }
-  
-  .btn-save:hover {
-    background-color: #e0dac4;
-    transform: scale(1.05);
-  }
-  
-  .btn-danger {
-    background-color: red;
-    color: white;
-    font-weight: bold;
-  }
-  
+  width: 100%;
+  padding: 20px;
+  background-color: #F8F6F2;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.profile-img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.btn-save {
+  background-color: #d6d6d6;
+  color: black;
+  border-radius: 10px;
+}
+
+.btn-danger {
+  background-color: #FF5C5C;
+  color: white;
+  font-weight: bold;
+}

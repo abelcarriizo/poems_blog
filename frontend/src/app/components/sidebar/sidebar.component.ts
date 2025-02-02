@@ -11,7 +11,21 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent {
   constructor(private router: Router, private authService: AuthService) {}
+  user: any = {};  
 
+  ngOnInit(): void {
+    this.getUserData();
+  }
+
+  getUserData(): void {
+    this.authService.getUserData().subscribe(
+      (data) => {
+        this.user = data;
+        console.log(' Usuario logueado:', this.user);
+      },
+      (error) => console.error(' Error obteniendo datos del usuario:', error)
+    );
+  }
   navigateTo(route: string): void {
     this.router.navigate([`/${route}`]);
   }

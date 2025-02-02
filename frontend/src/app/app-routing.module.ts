@@ -15,6 +15,8 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { CreatePoemComponent } from './pages/create-poem/create-poem.component';
 import { UserSettingsComponent } from './pages/user-settings/user-settings.component';
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
+import { AdminPoemsComponent } from './pages/admin-poems/admin-poems.component';
+import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.component';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -32,6 +34,8 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'settings', component: UserSettingsComponent },
   { path: 'users', component: AdminUsersComponent },
+  { path: 'poems-users', component: AdminPoemsComponent },
+  { path: 'rate-users', component: AdminRatingsComponent },
   { path: '**', component: NotFoundComponent }
 
 ];

@@ -1,1 +1,62 @@
-<p>admin-ratings works!</p>
+<div class="container">
+    <div class="search-bar mb-4">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="BUSCAR RATINGS"
+        (input)="onSearch($event)"
+      />
+    </div>
+  
+    <div *ngIf="filteredRatings.length === 0" class="text-center text-muted">
+        No hay ratings disponibles.
+      </div>
+      
+      <div class="ratings-container">
+        <div *ngFor="let rating of filteredRatings" class="rating-card">
+          <h3><strong>Estrellas: {{ rating.stars }}</strong></h3>
+          <p>{{ rating.comment }}</p>
+          <div class="rating-footer">
+            <span>Autor: {{ rating.author_name || 'Anónimo' }}</span>
+            <span>Creado: {{ rating.date_created | date:'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="actions">
+            <i class="fas fa-edit" (click)="openEditRatingModal(rating)"></i>
+            <i class="fas fa-trash-alt text-danger" (click)="confirmDeleteRating(rating.id)"></i>
+          </div>
+        </div>
+      </div>
+      
+  
+    <!-- Paginación -->
+    <div class="pagination d-flex justify-content-center mt-4">
+      <button class="btn btn-dark mx-2" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+        ⬅ Anterior
+      </button>
+      <span class="align-self-center">Página {{ currentPage }} de {{ totalPages }}</span>
+      <button class="btn btn-dark mx-2" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+        Siguiente ➡
+      </button>
+    </div>
+  </div>
+  
+  <!-- Modal para Editar Rating -->
+  <div class="modal fade" id="editRatingModal" tabindex="-1" aria-labelledby="editRatingModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Rating</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="number" class="form-control mb-2" [(ngModel)]="selectedRating.stars" placeholder="Estrellas" min="1" max="5">
+          <textarea class="form-control" rows="4" [(ngModel)]="selectedRating.comment" placeholder="Comentario"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="updateRating()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

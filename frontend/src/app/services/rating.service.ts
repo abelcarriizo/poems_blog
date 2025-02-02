@@ -12,6 +12,10 @@ export class RatingsService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  getRatings(params: { page: number; per_page: number; sort?: string }) {
+    return this.http.get<any>(`${this.baseUrl}`, { params });
+  }
+  
   /**
    * Obtiene las calificaciones de un poema por su ID con paginación.
    */

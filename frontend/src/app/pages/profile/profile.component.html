@@ -1,73 +1,99 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuario</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="profile.component.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="header">POEMS BLOG/ PERFIL DE USUARIO</div>
+  <div class="header">POEMS BLOG / PERFIL DE USUARIO</div>
   
-  <div class="d-flex">
-    <app-sidebar></app-sidebar>
-    
-    <div class="container-fluid d-flex flex-column align-items-start p-4" style="margin-left: 120px; max-width: 90vw;">
-      <div class="profile-box p-4 bg-light border rounded w-100 text-center">
-        <img [src]="user.avatar || 'assets/avatar.png'" alt="User Avatar" class="profile-avatar mb-3">
-        <h3 class="profile-name text-dark">{{ user.username || 'Usuario' }}</h3>
-        <p class="profile-bio text-dark">{{ user.bio || 'No hay biografía disponible.' }}</p>
-        <p class="fw-bold text-dark">POEMAS: {{ poems.length }}</p>
+  <div class="container-fluid d-flex">
+    <!-- Sidebar con perfil -->
+    <div class="profile-box p-4">
+      <img [src]="getUserImage()" alt="User Image" class="profile-img">
+      <h3 class="profile-name">{{ user.username || 'Usuario' }}</h3>
+      <p class="profile-bio">{{ user.description || 'No hay biografía disponible.' }}</p>
+      <p class="fw-bold">POEMAS: {{ poems.length }}</p>
+    </div>
+
+    <!-- Contenido principal -->
+    <div class="content flex-grow-1 p-4">
+      <!-- Barra de búsqueda -->
+      <div class="search-bar mb-3">
+        <input type="text" class="form-control search-input" placeholder="BUSCAR POEMAS" (input)="onSearch($event)">
       </div>
 
-      <div class="ratings-container d-flex justify-content-between mt-3">
-        <button class="btn btn-dark w-50 me-2" (click)="viewPoems()">POEMAS</button>
-        <button class="btn btn-dark w-50" (click)="viewRatings()">RATINGS</button>
+      <!-- Botones de selección -->
+      <div class="btn-group w-100">
+        <button class="btn btn-toggle" [class.active]="viewing === 'poems'" (click)="viewPoems()">POEMAS</button>
+        <button class="btn btn-toggle" [class.active]="viewing === 'ratings'" (click)="viewRatings()">RATINGS</button>
       </div>
-      
+
       <!-- Sección de Poemas -->
-      <div *ngIf="viewing === 'poems'" class="poems-section mt-3 w-100">
-        <h3 class="mb-3 text-light">Mis Poemas</h3>
+      <div *ngIf="viewing === 'poems'" class="poems-section mt-3">
         <div class="row g-3">
           <div class="col-md-6" *ngFor="let poem of poems">
-            <div class="poem-card p-3 bg-light border rounded">
-              <h5 class="text-dark">{{ poem.title }}</h5>
-              <p class="text-dark">{{ poem.description }}</p>
-              <div class="d-flex justify-content-end gap-2">
-                <i class="fas fa-edit" (click)="editPoem(poem)"></i>
-
+            <div class="poem-card">
+              <h5>{{ poem.title }}</h5>
+              <p>{{ poem.description }}</p>
+              <p class="text-muted">Autor: {{ user.username }}</p>
+              <p class="text-muted">Creado: {{ poem.created_at | date:'dd/MM/yyyy' }}</p>
+              <div class="actions">
+                <i class="fas fa-edit" (click)="openEditPoemModal(poem)"></i>
+                <i class="fas fa-trash text-danger" (click)="confirmDeletePoem(poem.id)"></i>
               </div>
             </div>
           </div>
         </div>
       </div>
-      
+
       <!-- Sección de Ratings -->
-      <div *ngIf="viewing === 'ratings'" class="ratings-section mt-3 w-100">
-        <h3 class="mb-3 text-light">Mis Ratings</h3>
+      <div *ngIf="viewing === 'ratings'" class="ratings-section mt-3">
         <div class="row g-3">
           <div class="col-md-6" *ngFor="let rating of ratings">
-            <div class="rating-card p-3 bg-light border rounded">
-              <h5 class="text-dark">🌟 {{ rating.stars }}</h5>
-              <p class="text-dark">{{ rating.comment }}</p>
+            <div class="rating-card">
+              <h5>🌟 {{ rating.stars }}</h5>
+              <p>{{ rating.comment }}</p>
               <p class="text-muted">Poema ID: {{ rating.poem_id }}</p>
               <p class="text-muted">Fecha: {{ rating.date_created | date:'short' }}</p>
-              <div class="d-flex justify-content-end gap-2">
-                <i class="fas fa-edit" (click)="editRating(rating)"></i>
-
+              <div class="actions">
+                <i class="fas fa-edit" (click)="openEditRatingModal(rating)"></i>
+                <i class="fas fa-trash text-danger" (click)="confirmDeleteRating(rating.id)"></i>
               </div>
             </div>
           </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- MODAL PARA EDITAR POEMA -->
+  <div class="modal fade" id="editPoemModal" tabindex="-1" aria-labelledby="editPoemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Poema</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-2" [(ngModel)]="selectedPoem.title" placeholder="Título">
+          <textarea class="form-control" rows="4" [(ngModel)]="selectedPoem.description" placeholder="Descripción"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="updatePoem()">Guardar Cambios</button>
         </div>
       </div>
     </div>
   </div>
-  
-  <!-- Footer -->
+
   <div class="footer">©2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</div>
 
-  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

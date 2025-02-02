@@ -7,3 +7,8 @@ html, body {
   display: flex;
   flex-direction: column;
 }
+.bi {
+  display: inline-block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}

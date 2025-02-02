@@ -9,6 +9,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class AuthService {
   private baseUrl = 'http://localhost:5000/auth'; // URL base para los endpoints del backend
   private tokenKey = 'token'; // Clave para almacenar el token en localStorage
+  private url = 'http://localhost:5000/user'; 
   private jwtHelper = new JwtHelperService(); // Instancia para manejar JWT
 
   constructor(private http: HttpClient) {}
@@ -86,30 +87,39 @@ export class AuthService {
    * @returns Observable con la respuesta del servidor.
    */
   adminLogin(credentials: { email: string; password: string }): Observable<any> {
-    return this.http.post(`${this.baseUrl}/login/admin`, credentials);
+    return this.http.post(`${this.baseUrl}/login/admin`, credentials).pipe(
+      catchError(error => {
+        console.error("❌ Error en la solicitud de adminLogin:", error);
+        return throwError(() => new Error("Error en la autenticación del administrador"));
+      })
+    );
   }
+  
 
   /**
    * Almacena el token JWT y el ID del usuario en sessionStorage.
    * @param token El token JWT devuelto por el backend.
    */
   saveToken(token: string): void {
+    console.log("🔹 Guardando token en sessionStorage:", token);
     sessionStorage.setItem(this.tokenKey, token);
   
     try {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log("Token decodificado:", decodedToken); // 🔍 Verificar datos
+      console.log("🔍 Token decodificado:", decodedToken);
   
-      const userId = decodedToken?.id || decodedToken?.user_id; // 🔹 Ajuste aquí
+      const userId = decodedToken?.id || decodedToken?.sub;
       if (userId) {
         sessionStorage.setItem('userId', userId.toString());
+        console.log("✅ userId almacenado:", userId);
       } else {
-        console.error('Error: userId no encontrado en el token');
+        console.error('❌ Error: userId no encontrado en el token');
       }
     } catch (error) {
-      console.error('Error al decodificar el token:', error);
+      console.error('❌ Error al decodificar el token:', error);
     }
   }
+  
   
   
   /**
@@ -119,14 +129,31 @@ export class AuthService {
   getToken(): string | null {
     return sessionStorage.getItem(this.tokenKey);
   }
+
   getUserData(): Observable<any> {
     const userId = this.getUserId();
-    return this.http.get(`http://localhost:5000/user/${userId}`).pipe(
+    const token = sessionStorage.getItem('token');  // 🔹 Obtener el token JWT
+  
+    if (!token) {
+      console.error('❌ No hay token disponible');
+      return throwError(() => new Error('No hay token disponible.'));
+    }
+  
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+  
+    return this.http.get(`${this.url}/${userId}`, { headers }).pipe(
       catchError(error => {
-        console.error('Error obteniendo datos del usuario:', error);
+        console.error('❌ Error obteniendo datos del usuario:', error);
         return throwError(() => new Error('No se pudo obtener la información del usuario.'));
       })
     );
+  }
+  
+  uploadProfileImage(userId: number, imageFile: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', imageFile);
+  
+    return this.http.post<any>(`${this.baseUrl}/${userId}/upload-image`, formData);
   }
   
   

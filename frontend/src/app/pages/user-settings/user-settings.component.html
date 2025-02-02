@@ -1,53 +1,53 @@
-<div class="container-fluid vh-100">
-    <div class="row h-100">
-      <!-- FOTO DE PERFIL -->
-      <div class="col-md-3 d-flex flex-column align-items-center">
-        <div class="profile-box">
-          <img src="{{ userData.profileImage || 'assets/avatar.jpg' }}" class="profile-img">
-          <input type="file" class="form-control mt-2" (change)="uploadImage($event)">
-          <button class="btn btn-save w-100 mt-2" (click)="saveChanges()">GUARDAR</button>
-        </div>
-  
-        <!-- DESCRIPCIÓN -->
-        <div class="desc-box mt-4">
-          <label>DESCRIPCIÓN:</label>
-          <textarea class="form-control" [(ngModel)]="userData.description"></textarea>
-          <button class="btn btn-save w-100 mt-2" (click)="saveChanges()">GUARDAR</button>
-        </div>
-      </div>
-  
-      <!-- INFORMACIÓN PERSONAL -->
-      <div class="col-md-6 text-center">
-        <h2>INFORMACIÓN PERSONAL</h2>
-        <input type="text" class="form-control mb-2" [(ngModel)]="userData.name" placeholder="Nombre">
-        <input type="text" class="form-control mb-2" [(ngModel)]="userData.lastName" placeholder="Apellido">
-        <input type="text" class="form-control mb-2" [(ngModel)]="userData.username" placeholder="Usuario">
-        <input type="text" class="form-control mb-2" [(ngModel)]="userData.gender" placeholder="Género (opcional)">
-        <input type="email" class="form-control mb-2" [(ngModel)]="userData.email" placeholder="Correo">
+<div class="container-fluid vh-100 bg-dark text-light p-4">
+  <div class="row h-100">
+    <!-- FOTO DE PERFIL -->
+    <div class="col-md-3 d-flex flex-column align-items-center">
+      <div class="profile-box text-center p-3 bg-light text-dark rounded">
+        <h3>FOTO DE PERFIL</h3>
+        <img [src]="userData.profileImage || 'assets/avatar.jpg'" class="profile-img rounded-circle">
+        <input type="file" (change)="uploadImage($event)" accept="image/*">
         <button class="btn btn-save w-100 mt-2" (click)="saveChanges()">GUARDAR</button>
       </div>
-  
-      <!-- DATOS ADICIONALES -->
-      <div class="col-md-3">
-        <div class="stats-box">
-          <p>POEMAS</p>
-          <h3>9</h3>
-        </div>
-        <div class="stats-box">
-          <p>RATINGS</p>
-          <h3>10</h3>
-        </div>
-  
-        <!-- SEGURIDAD -->
-        <div class="security-box mt-3">
-          <label>SEGURIDAD:</label>
-          <input type="password" class="form-control" [(ngModel)]="userData.password" placeholder="Contraseña">
-          <button class="btn btn-save w-100 mt-2" (click)="updatePassword()">GUARDAR</button>
-        </div>
-  
-        <!-- BOTÓN ELIMINAR USUARIO -->
-        <button class="btn btn-danger w-100 mt-3" (click)="deleteUser()">ELIMINAR USUARIO</button>
+
+      <!-- DESCRIPCIÓN -->
+      <div class="desc-box mt-4 p-3 bg-light text-dark rounded">
+        <h4>DESCRIPCIÓN</h4>
+        <textarea class="form-control" [(ngModel)]="userData.description"></textarea>
+        <button class="btn btn-save w-100 mt-2" (click)="saveChanges()">GUARDAR</button>
       </div>
     </div>
+
+    <!-- INFORMACIÓN PERSONAL -->
+    <div class="col-md-6 text-center">
+      <h2 class="mb-4">INFORMACIÓN PERSONAL</h2>
+      <input type="text" class="form-control mb-2" [(ngModel)]="userData.name" placeholder="Nombre">
+      <input type="text" class="form-control mb-2" [(ngModel)]="userData.lastName" placeholder="Apellido">
+      <input type="text" class="form-control mb-2" [(ngModel)]="userData.username" placeholder="Usuario">
+      <input type="text" class="form-control mb-2" [(ngModel)]="userData.gender" placeholder="Género (opcional)">
+      <input type="email" class="form-control mb-2" [(ngModel)]="userData.email" placeholder="Correo">
+      <button class="btn btn-save w-100 mt-2" (click)="saveChanges()">GUARDAR</button>
+    </div>
+
+    <!-- DATOS ADICIONALES -->
+    <div class="col-md-3">
+      <div class="stats-box bg-light text-dark text-center p-3 rounded">
+        <p class="mb-1">POEMAS</p>
+        <h3>9</h3>
+      </div>
+      <div class="stats-box bg-light text-dark text-center p-3 rounded mt-3">
+        <p class="mb-1">RATINGS</p>
+        <h3>10</h3>
+      </div>
+
+      <!-- SEGURIDAD -->
+      <div class="security-box bg-light text-dark p-3 rounded mt-3">
+        <h4>SEGURIDAD:</h4>
+        <input type="password" class="form-control" [(ngModel)]="userData.password" placeholder="Contraseña">
+        <button class="btn btn-save w-100 mt-2" (click)="updatePassword()">GUARDAR</button>
+      </div>
+
+      <!-- ELIMINAR USUARIO -->
+      <button class="btn btn-danger w-100 mt-3" (click)="deleteUser()">ELIMINAR USUARIO</button>
+    </div>
   </div>
-  
+</div>

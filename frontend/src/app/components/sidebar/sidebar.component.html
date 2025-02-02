@@ -1,16 +1,27 @@
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
 <div class="sidebar">
-  <div class="user-avatar">
-    <img src="assets/avatar.jpg" alt="User Avatar" class="img-fluid rounded-circle" (click)="goToProfile()">
+  <div class="user-avatar" (click)="navigateTo('profile')">
+    <img [src]="user.image_url || 'assets/default_avatar.png'" alt="User Avatar" class="img-fluid rounded-circle">
   </div>
+  
   <div class="nav-icons">
     <a (click)="navigateTo('create-poem')">
-      <i class="bi bi-pencil-fill"></i>
+      <i class="fas fa-pencil-alt"></i>
     </a>
     <a routerLink="/settings">
-      <i class="bi bi-gear-fill"></i>
+      <i class="fas fa-cog"></i>
     </a>
+    <i class="bi bi-house"></i>
+
     <button class="logout-btn" (click)="logout()">
-      <i class="bi bi-power"></i>
+      <i class="fas fa-power-off"></i>
     </button>
   </div>
 </div>
+
+
+
+

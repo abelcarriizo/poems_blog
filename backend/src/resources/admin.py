@@ -1,5 +1,10 @@
+from flask_jwt_extended import jwt_required
+
+from src.models.poem import Poem
+from src.models.rating import Rating
+from src.models.user import User
 from .. import db
-from src.models import AdminModel
+from src.models.admin import Admin as AdminModel
 from src.utils import paginate
 from src.auth.decorators import admin_required
 
@@ -36,9 +41,25 @@ class Admins(Resource):
     data = paginate(query)
     return jsonify(data)
   
-  @admin_required
+  
   def post(self):
     admin = AdminModel.from_json(request.get_json())
     db.session.add(admin)
     db.session.commit()
     return admin.to_json(), 201
+
+class AdminStats(Resource):
+    @jwt_required()
+    def get(self):
+        """🔹 Retorna las estadísticas de la plataforma."""
+        total_users = User.query.count()
+        total_poems = Poem.query.count()
+        total_ratings = Rating.query.count()
+        total_admins = db.session.query(AdminModel).count()  
+
+        return jsonify({
+            "total_users": total_users,
+            "total_poems": total_poems,
+            "total_ratings": total_ratings,
+            "total_admins": total_admins
+        })

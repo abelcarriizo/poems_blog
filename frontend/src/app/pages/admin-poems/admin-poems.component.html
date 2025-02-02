@@ -1,1 +1,57 @@
-<p>admin-poems works!</p>
+<div class="container">
+    <div class="search-bar mb-4">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Buscar poemas..."
+        (input)="onSearch($event)"
+      />
+    </div>
+  
+    <div class="poems-container">
+      <div *ngFor="let poem of filteredPoems" class="poem-card">
+        <h3>{{ poem.title }}</h3>
+        <p>{{ poem.description }}</p>
+        <div class="poem-footer">
+          <span>Autor: {{ poem.author || 'Desconocido' }}</span>
+          <span>Creado: {{ poem.date_created | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="actions">
+          <i class="fas fa-edit" (click)="openEditPoemModal(poem)"></i>
+          <i class="fas fa-trash-alt text-danger" (click)="confirmDeletePoem(poem.id)"></i>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Paginación -->
+    <div class="pagination d-flex justify-content-center mt-4">
+      <button class="btn btn-dark mx-2" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
+        ⬅ Anterior
+      </button>
+      <span class="align-self-center">Página {{ currentPage }} de {{ totalPages }}</span>
+      <button class="btn btn-dark mx-2" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
+        Siguiente ➡
+      </button>
+    </div>
+  </div>
+  
+  <!-- Modal para Editar Poema -->
+  <div class="modal fade" id="editPoemModal" tabindex="-1" aria-labelledby="editPoemModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Editar Poema</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <input type="text" class="form-control mb-2" [(ngModel)]="selectedPoem.title" placeholder="Título">
+          <textarea class="form-control" rows="4" [(ngModel)]="selectedPoem.description" placeholder="Descripción"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="updatePoem()">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

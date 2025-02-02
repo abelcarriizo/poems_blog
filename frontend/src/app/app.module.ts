@@ -22,6 +22,7 @@ import { UserSettingsComponent } from './pages/user-settings/user-settings.compo
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminPoemsComponent } from './pages/admin-poems/admin-poems.component';
 import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.compo
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [    {
     provide: HTTP_INTERCEPTORS,

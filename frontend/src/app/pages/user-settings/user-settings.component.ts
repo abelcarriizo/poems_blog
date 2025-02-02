@@ -77,9 +77,8 @@ export class UserSettingsComponent {
         (error) => console.error('❌ Error al eliminar usuario:', error)
       );
     }
-  }
-  uploadImage(event: any): void {
-    const file = event.target.files[0]; // Obtener el archivo seleccionado
+  }uploadImage(event: any): void {
+    const file: File = event.target.files[0];
   
     if (!file) {
       alert('⚠ No se seleccionó ninguna imagen.');
@@ -87,12 +86,15 @@ export class UserSettingsComponent {
     }
   
     const formData = new FormData();
-    formData.append('profileImage', file);
+    formData.append('image', file); 
+  
+    console.log("📤 Enviando imagen:", file.name); 
   
     this.userService.uploadProfileImage(this.userId!, formData).subscribe(
       (response) => {
+        console.log("✅ Respuesta de la API:", response);
         alert('✅ Imagen actualizada con éxito.');
-        this.userData.profileImage = response.imageUrl; // Actualizar la imagen en la UI
+        this.userData.profileImage = response.image_url;
       },
       (error) => {
         console.error('❌ Error al subir imagen:', error);
@@ -101,4 +103,5 @@ export class UserSettingsComponent {
     );
   }
   
+
 }
