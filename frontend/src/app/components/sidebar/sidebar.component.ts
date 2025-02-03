@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class SidebarComponent {
   constructor(private router: Router, private authService: AuthService) {}
   user: any = {};  
+  userImageUrl: string = 'static/uploads/default-profile.png';
 
   ngOnInit(): void {
     this.getUserData();

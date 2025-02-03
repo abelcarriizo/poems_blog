@@ -7,6 +7,7 @@ app = create_app()
 
 # Habilitar CORS para la aplicación
 CORS(app, resources={r"/*": {"origins": "*"}})  # Permite todas las solicitudes
+CORS(app, resources={r"/static/uploads/*": {"origins": "*"}})
 
 # Inicializar Flask-Migrate
 migrate = Migrate(app, db)

@@ -22,7 +22,8 @@
   
     <div class="users-container">
       <div *ngFor="let user of filteredUsers" class="user-card text-center">
-        <img [src]="user.avatar || 'assets/default-avatar.png'" alt="User Avatar" class="user-avatar">
+        <img [src]="user.image_url" alt="Imagen de perfil">
+
         <h5 class="user-name">{{ user.username }}</h5>
       </div>
     </div>

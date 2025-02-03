@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
@@ -6,13 +6,12 @@ import { UserService } from '../../services/user.service';
 @Component({
   selector: 'app-user-settings',
   standalone: false,
-  
   templateUrl: './user-settings.component.html',
-  styleUrl: './user-settings.component.css'
+  styleUrls: ['./user-settings.component.css']
 })
-export class UserSettingsComponent {
+export class UserSettingsComponent implements OnInit {
   userId: number | null = null;
-  userData: any = {
+  user: any = {
     name: '',
     lastName: '',
     username: '',
@@ -20,13 +19,17 @@ export class UserSettingsComponent {
     email: '',
     password: '',
     description: '',
-    profileImage: ''
+    image_url: ''
   };
+
+  selectedFile: File | null = null;
+  userImageUrl: string = 'static/uploads/default-profile.png'; // Imagen por defecto
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cdRef: ChangeDetectorRef // ⬅️ Importamos ChangeDetectorRef para manejar cambios en la UI
   ) {}
 
   ngOnInit(): void {
@@ -42,25 +45,33 @@ export class UserSettingsComponent {
   loadUserData(): void {
     this.userService.getUserById(this.userId!).subscribe(
       (data) => {
-        this.userData = data;
+        this.user= data;
+        this.updateUserImage(); // ⬅️ Asegurar que la imagen se actualiza correctamente
       },
       (error) => console.error('❌ Error al cargar usuario:', error)
     );
   }
 
-  saveChanges(): void {
-    this.userService.updateUser(this.userId!, this.userData).subscribe(
+  saveUserInfo(): void {
+    this.userService.updateUser(this.userId!, this.user).subscribe(
       () => alert('✅ Datos actualizados con éxito.'),
       (error) => console.error('❌ Error al actualizar:', error)
     );
   }
 
+  saveDescription(): void {
+    this.userService.updateUser(this.userId!, { descripcion: this.user.descripcion }).subscribe(
+      () => alert('✅ Descripción guardada.'),
+      (error) => console.error('❌ Error al actualizar la descripción:', error)
+    );
+  }
+
   updatePassword(): void {
-    if (!this.userData.password) {
+    if (!this.user.password) {
       alert('⚠ Debes ingresar una nueva contraseña.');
       return;
     }
-    this.userService.updateUser(this.userId!, { password: this.userData.password }).subscribe(
+    this.userService.updateUser(this.userId!, { password: this.user.password }).subscribe(
       () => alert('✅ Contraseña actualizada.'),
       (error) => console.error('❌ Error al actualizar contraseña:', error)
     );
@@ -77,31 +88,62 @@ export class UserSettingsComponent {
         (error) => console.error('❌ Error al eliminar usuario:', error)
       );
     }
-  }uploadImage(event: any): void {
-    const file: File = event.target.files[0];
+  }
+
+  // ⬇⬇⬇ FUNCIONES PARA SUBIR Y MOSTRAR IMAGEN ⬇⬇⬇
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+  uploadImage(): void {
+    if (!this.selectedFile) {
+      alert("⚠ Por favor selecciona un archivo.");
+      return;
+    }
   
-    if (!file) {
-      alert('⚠ No se seleccionó ninguna imagen.');
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      alert("⚠ Error: No se encontró el ID del usuario.");
       return;
     }
   
     const formData = new FormData();
-    formData.append('image', file); 
+    formData.append('file', this.selectedFile);
   
-    console.log("📤 Enviando imagen:", file.name); 
-  
-    this.userService.uploadProfileImage(this.userId!, formData).subscribe(
+    this.userService.uploadUserImage(userId, formData).subscribe(
       (response) => {
-        console.log("✅ Respuesta de la API:", response);
-        alert('✅ Imagen actualizada con éxito.');
-        this.userData.profileImage = response.image_url;
+        alert("✅ Imagen subida correctamente.");
+        
+        // 📌 Actualizamos `image_url` con el valor devuelto por Flask
+        this.user.image_url = response.image_url;
+        console.log("📸 Nueva URL de la imagen:", this.user.image_url);  // 🔥 Depuración
+  
+        this.updateUserImage();  // 🔥 Llamamos a la función para actualizar la UI
       },
-      (error) => {
-        console.error('❌ Error al subir imagen:', error);
-        alert('Hubo un error al subir la imagen.');
-      }
+      (error) => console.error("❌ Error subiendo la imagen:", error)
     );
   }
+  updateUserImage(): void {
+    if (this.user.image_url) {
+      // ✅ Verificar si la URL ya contiene "http"
+      this.userImageUrl = this.user.image_url.startsWith("http")
+        ? `${this.user.image_url}?t=${new Date().getTime()}`
+        : `http://localhost:5000${this.user.image_url}?t=${new Date().getTime()}`;
+    } else {
+      this.userImageUrl = 'assets/default-profile.png';
+    }
   
-
+    console.log("🔄 URL de la imagen actualizada:", this.userImageUrl);  // 🔥 Depuración
+    this.cdRef.detectChanges();  // Forzar actualización en Angular
+  }
+  
+  
+  
+  
+  getUserImage(): string {
+    return this.userImageUrl;
+  }
 }

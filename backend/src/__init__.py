@@ -14,7 +14,7 @@ mailsender = Mail()  # Inicializa Flask Mail
 migrate = None  # Inicializa Migrate
 
 def create_app():
-    app = Flask(__name__)  # Inicializa Flask  
+    app = Flask(__name__, static_url_path='', static_folder='static')  # Inicializa Flask  
 
     load_dotenv()  # Carga las variables de entorno
 
@@ -30,7 +30,7 @@ def create_app():
 
     import src.resources as resources
     from src.resources.admin import AdminStats
-
+    from src.resources.user import UserImageUpload
 
 
     # Carga los recursos en la API
@@ -44,6 +44,8 @@ def create_app():
     api.add_resource(resources.PoemResource, '/poem/<int:id>')
     api.add_resource(resources.RatingResource, '/rating/<int:id>')
     api.add_resource(AdminStats, '/admin/stats') 
+    api.add_resource(UserImageUpload, '/users/<int:user_id>/upload-image')
+
 
     api.init_app(app)  # Carga la aplicación en la API de Flask Restful
 

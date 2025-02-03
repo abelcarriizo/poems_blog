@@ -14,7 +14,8 @@
   <div class="container-fluid d-flex">
     <!-- Sidebar con perfil -->
     <div class="profile-box p-4">
-      <img [src]="getUserImage()" alt="User Image" class="profile-img">
+      <img [src]="user.image_url" alt="Imagen de perfil">
+
       <h3 class="profile-name">{{ user.username || 'Usuario' }}</h3>
       <p class="profile-bio">{{ user.description || 'No hay biografía disponible.' }}</p>
       <p class="fw-bold">POEMAS: {{ poems.length }}</p>

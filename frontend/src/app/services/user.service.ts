@@ -26,17 +26,8 @@ export class UserService {
   deleteUser(id: number): Observable<any> {
     return this.http.delete(`${this.url}/${id}`);
   }
-  uploadProfileImage(userId: number, formData: FormData): Observable<any> {
-    const token = this.authservice.getToken(); // Obtener el token JWT
-  
-    const headers = new HttpHeaders({
-      'Authorization': `Bearer ${token}`
-    });
-  
-    console.log("📤 Enviando imagen a:", `${this.apiUrl}/${userId}/upload-image`); // 🔍 Debug
-  
-    return this.http.post<any>(`${this.apiUrl}/${userId}/upload-image`, formData, { headers });
+  uploadUserImage(userId: number, formData: FormData): Observable<any> {
+    return this.http.post(`${this.apiUrl}/${userId}/upload-image`, formData);
   }
-  
 
 }
