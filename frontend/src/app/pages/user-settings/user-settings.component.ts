@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
+import { RatingsService } from '../../services/rating.service';
+import { PoemsService } from '../../services/poems.service';
 
 @Component({
   selector: 'app-user-settings',
@@ -21,13 +23,16 @@ export class UserSettingsComponent implements OnInit {
     description: '',
     image_url: ''
   };
-
+  poems: any[] = [];
+  ratings: any[] = [];
   selectedFile: File | null = null;
   userImageUrl: string = 'static/uploads/default-profile.png'; // Imagen por defecto
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
+    private ratingsService: RatingsService,
+    private poemsService: PoemsService,
     private router: Router,
     private cdRef: ChangeDetectorRef // ⬅️ Importamos ChangeDetectorRef para manejar cambios en la UI
   ) {}
@@ -49,6 +54,23 @@ export class UserSettingsComponent implements OnInit {
         this.updateUserImage(); // ⬅️ Asegurar que la imagen se actualiza correctamente
       },
       (error) => console.error('❌ Error al cargar usuario:', error)
+    );
+  }
+  loadUserPoems(): void {
+    this.poemsService.getPoemsbyUser(this.user.id).subscribe(
+      (response) => {
+        this.poems = response.items;
+      },
+      (error) => console.error('Error obteniendo los poemas:', error)
+    );
+  }
+
+  loadUserRatings(): void {
+    this.ratingsService.getRatingsByUserId(this.user.id).subscribe(
+      (data) => {
+        this.ratings = Array.isArray(data) ? data : [];
+      },
+      (error) => console.error('Error obteniendo ratings:', error)
     );
   }
 

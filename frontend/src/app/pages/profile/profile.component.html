@@ -14,7 +14,6 @@
   <div class="container-fluid d-flex">
     <!-- Sidebar con perfil -->
     <div class="profile-box p-4">
-      <img [src]="user.image_url" alt="Imagen de perfil">
 
       <h3 class="profile-name">{{ user.username || 'Usuario' }}</h3>
       <p class="profile-bio">{{ user.description || 'No hay biografía disponible.' }}</p>
@@ -42,7 +41,7 @@
               <h5>{{ poem.title }}</h5>
               <p>{{ poem.description }}</p>
               <p class="text-muted">Autor: {{ user.username }}</p>
-              <p class="text-muted">Creado: {{ poem.created_at | date:'dd/MM/yyyy' }}</p>
+              <p class="text-muted">Creado: {{ poem.date_created | date:'dd/MM/yyyy' }}</p>
               <div class="actions">
                 <i class="fas fa-edit" (click)="openEditPoemModal(poem)"></i>
                 <i class="fas fa-trash text-danger" (click)="confirmDeletePoem(poem.id)"></i>

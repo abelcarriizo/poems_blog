@@ -29,16 +29,13 @@ export class PoemsService {
   /**
    * Obtiene todos los poemas de un usuario específico.
    */
-  getPoemsByUser(userId: number, page: number = 1): Observable<any> {
+  getPoemsbyUser(userId: number, page: number = 1): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-  
-    return this.http.get(`${this.baseUrl}/poems?page=${page}&author_id=${userId}`, { headers }).pipe(
-      catchError(error => {
-        console.error('❌ Error obteniendo poemas:', error);
-        return throwError(() => new Error('No se pudieron cargar los poemas.'));
-      })
-    );
+    
+    const url = `${this.apiUrl}?page=${page}&user_id=${userId}`;
+
+    return this.http.get<any>(url, { headers });
   }
   
   /**

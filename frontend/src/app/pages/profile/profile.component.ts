@@ -44,9 +44,8 @@ export class ProfileComponent implements OnInit {
       (error) => console.error('Error obteniendo datos del usuario:', error)
     );
   }
-
   loadUserPoems(): void {
-    this.poemsService.getPoemsByUser(this.user.id).subscribe(
+    this.poemsService.getPoemsbyUser(this.user.id).subscribe(
       (response) => {
         this.poems = response.items;
         this.filteredPoems = this.poems; // Inicializa el filtrado con todos los poemas
