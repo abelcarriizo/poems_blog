@@ -1,47 +1,49 @@
 <div class="container-fluid vh-100 bg-dark text-light p-4">
-  <div class="row h-100">
-    <!-- FOTO DE PERFIL -->
-    <div class="profile-box text-center">
-       <img [src]="user.image_url" alt="Imagen de perfil">
+  <div class="row h-100 justify-content-center align-items-center">
 
-      
-      <input type="file" (change)="onFileSelected($event)" class="form-control mt-2">
-      <button class="btn btn-primary mt-2" (click)="uploadImage()">Subir Imagen</button>
-    </div>
-    
+    <!-- FOTO DE PERFIL -->
+    <div class="col-md-3 d-flex flex-column align-items-center">
+      <div class="container-box profile-box text-center bg-light text-dark p-4 rounded">
+        <h4>FOTO DE PERFIL</h4>
+        <img [src]="user.image_url" alt="Imagen de perfil" class="profile-pic">
+        <input type="file" (change)="onFileSelected($event)" class="form-control mt-2">
+        <button class="btn btn-primary mt-2" (click)="uploadImage()">GUARDAR</button>
+      </div>
 
       <!-- DESCRIPCIÓN -->
-      <div class="desc-box mt-4 p-3 bg-light text-dark rounded">
+      <div class="container-box desc-box text-center bg-light text-dark p-4 rounded mt-3">
         <h4>DESCRIPCIÓN</h4>
-        <textarea class="form-control" [(ngModel)]="user.description"></textarea>
+        <textarea class="form-control" rows="3" [(ngModel)]="user.description"></textarea>
         <button class="btn btn-save w-100 mt-2" (click)="saveDescription()">GUARDAR</button>
       </div>
     </div>
 
     <!-- INFORMACIÓN PERSONAL -->
-    <div class="col-md-6 text-center">
-      <h2 class="mb-4">INFORMACIÓN PERSONAL</h2>
-      <input type="text" class="form-control mb-2" [(ngModel)]="user.name" placeholder="Nombre">
-      <input type="text" class="form-control mb-2" [(ngModel)]="user.lastName" placeholder="Apellido">
-      <input type="text" class="form-control mb-2" [(ngModel)]="user.username" placeholder="Usuario">
-      <input type="text" class="form-control mb-2" [(ngModel)]="user.gender" placeholder="Género (opcional)">
-      <input type="email" class="form-control mb-2" [(ngModel)]="user.email" placeholder="Correo">
-      <button class="btn btn-save w-100 mt-2" (click)="saveUserInfo()">GUARDAR</button>
+    <div class="col-md-6 d-flex flex-column align-items-center">
+      <div class="container-box personal-box text-center bg-light text-dark p-4 rounded">
+        <h2 class="mb-4">INFORMACIÓN PERSONAL</h2>
+        <input type="text" class="form-control mb-2" [(ngModel)]="user.firstname" placeholder="Nombre">
+        <input type="text" class="form-control mb-2" [(ngModel)]="user.lastname" placeholder="Apellido">
+        <input type="text" class="form-control mb-2" [(ngModel)]="user.username" placeholder="Usuario">
+        <input type="text" class="form-control mb-2" [(ngModel)]="user.gender" placeholder="Género (opcional)">
+        <input type="email" class="form-control mb-2" [(ngModel)]="user.email" placeholder="Correo">
+        <button class="btn btn-save w-100 mt-2" (click)="saveUserInfo()">GUARDAR</button>
+      </div>
     </div>
 
-    <!-- DATOS ADICIONALES -->
-    <div class="col-md-3">
-      <div class="stats-box bg-light text-dark text-center p-3 rounded">
+    <!-- DATOS ADICIONALES Y SEGURIDAD -->
+    <div class="col-md-3 d-flex flex-column align-items-center">
+      <div class="container-box stats-box bg-light text-dark text-center p-4 rounded">
         <p class="mb-1">POEMAS</p>
         <h3>9</h3>
       </div>
-      <div class="stats-box bg-light text-dark text-center p-3 rounded mt-3">
+      <div class="container-box stats-box bg-light text-dark text-center p-4 rounded mt-3">
         <p class="mb-1">RATINGS</p>
         <h3>10</h3>
       </div>
 
       <!-- SEGURIDAD -->
-      <div class="security-box bg-light text-dark p-3 rounded mt-3">
+      <div class="container-box security-box bg-light text-dark p-4 rounded mt-3">
         <h4>SEGURIDAD:</h4>
         <input type="password" class="form-control" [(ngModel)]="user.password" placeholder="Contraseña">
         <button class="btn btn-save w-100 mt-2" (click)="updatePassword()">GUARDAR</button>
@@ -50,5 +52,6 @@
       <!-- ELIMINAR USUARIO -->
       <button class="btn btn-danger w-100 mt-3" (click)="deleteUser()">ELIMINAR USUARIO</button>
     </div>
-  </div>
 
+  </div>
+</div>

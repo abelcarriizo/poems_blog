@@ -1,31 +1,66 @@
-.container-fluid {
-  background-color: #000;
-  color: #fff;
-  font-family: 'Arial', sans-serif;
+/* Estilos generales para los contenedores */
+.container-box {
+  width: 100%;
+  max-width: 350px;
+  background: #f4efe7;
+  border-radius: 10px;
+  padding: 20px;
+  border: 2px solid #000;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
 }
 
-.profile-box, .desc-box, .stats-box, .security-box {
+/* Estilos específicos para la foto de perfil */
+.profile-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Estilos para la imagen de perfil */
+.profile-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 3px solid #000;
+  object-fit: cover;
+}
+
+/* Estilos para la caja de descripción */
+.desc-box {
   width: 100%;
-  padding: 20px;
-  background-color: #F8F6F2;
-  border-radius: 15px;
+  max-width: 300px;
+  background: #f4efe7;
   text-align: center;
 }
 
-.profile-img {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
+/* Estilos para la información personal */
+.personal-box {
+  width: 100%;
+  max-width: 450px;
 }
 
+/* Estilos para estadísticas */
+.stats-box {
+  width: 100%;
+  text-align: center;
+}
+
+/* Estilos para el cuadro de seguridad */
+.security-box {
+  width: 100%;
+  text-align: center;
+}
+
+/* Estilos para botones */
 .btn-save {
-  background-color: #d6d6d6;
-  color: black;
-  border-radius: 10px;
+  background: #ccc;
+  border: none;
+  color: #000;
 }
 
 .btn-danger {
-  background-color: #FF5C5C;
-  color: white;
+  background: #d9534f;
+  border: none;
   font-weight: bold;
 }
