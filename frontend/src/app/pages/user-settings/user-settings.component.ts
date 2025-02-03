@@ -127,17 +127,21 @@ export class UserSettingsComponent implements OnInit {
     );
   }
   updateUserImage(): void {
+    console.log("🔎 URL antes de actualizar:", this.user.image_url);
+  
     if (this.user.image_url) {
-      // ✅ Verificar si la URL ya contiene "http"
-      this.userImageUrl = this.user.image_url.startsWith("http")
-        ? `${this.user.image_url}?t=${new Date().getTime()}`
-        : `http://localhost:5000${this.user.image_url}?t=${new Date().getTime()}`;
+      // 🔹 Asegurarse de que la URL no está mal formateada
+      if (this.user.image_url.startsWith("http")) {
+        this.userImageUrl = `${this.user.image_url}?t=${new Date().getTime()}`;
+      } else {
+        this.userImageUrl = `http://localhost:5000${this.user.image_url}?t=${new Date().getTime()}`;
+      }
     } else {
-      this.userImageUrl = 'assets/default-profile.png';
+      this.userImageUrl = 'http://localhost:5000/static/uploads/default-avatar.jpg';
     }
   
-    console.log("🔄 URL de la imagen actualizada:", this.userImageUrl);  // 🔥 Depuración
-    this.cdRef.detectChanges();  // Forzar actualización en Angular
+    console.log("🔄 URL final de la imagen en Angular:", this.userImageUrl);
+    this.cdRef.detectChanges();
   }
   
   

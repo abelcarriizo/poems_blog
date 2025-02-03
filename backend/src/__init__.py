@@ -14,7 +14,12 @@ mailsender = Mail()  # Inicializa Flask Mail
 migrate = None  # Inicializa Migrate
 
 def create_app():
-    app = Flask(__name__, static_url_path='', static_folder='static')  # Inicializa Flask  
+
+    app = Flask(__name__, static_url_path='/static', static_folder='../static')
+
+    # 🔥 Verifica que la configuración de rutas está correcta
+    print("📁 Archivos estáticos servidos desde:", os.path.abspath(app.static_folder))
+  
 
     load_dotenv()  # Carga las variables de entorno
 

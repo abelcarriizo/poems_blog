@@ -100,11 +100,13 @@ class UserImageUpload(Resource):
 # 📌 Blueprint para servir imágenes correctamente
 users = Blueprint('users', __name__)
 from werkzeug.utils import safe_join
+from flask import send_from_directory
+from werkzeug.utils import safe_join
 
 @users.route('/static/uploads/<int:user_id>/<path:filename>')
 def serve_uploaded_file(user_id, filename):
     """ Servir imágenes desde static/uploads/{user_id}/ """
-    user_folder = os.path.join(os.getcwd(), 'static', 'uploads', str(user_id))
+    user_folder = os.path.join(os.getcwd(), 'backend', 'static', 'uploads', str(user_id))
     filepath = safe_join(user_folder, filename)
 
     print(f"🔎 Intentando acceder a: {filepath}")  # 🔥 Depuración
@@ -114,4 +116,3 @@ def serve_uploaded_file(user_id, filename):
         return jsonify({'message': '❌ Imagen no encontrada'}), 404
 
     return send_from_directory(user_folder, filename)
-

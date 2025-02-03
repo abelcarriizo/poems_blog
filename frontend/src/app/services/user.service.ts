@@ -27,7 +27,6 @@ export class UserService {
     return this.http.delete(`${this.url}/${id}`);
   }
   uploadUserImage(userId: number, formData: FormData): Observable<any> {
-    return this.http.post(`${this.apiUrl}/${userId}/upload-image`, formData);
+    return this.http.post<any>(`http://localhost:5000/users/${userId}/upload-image`, formData);
   }
-
 }
