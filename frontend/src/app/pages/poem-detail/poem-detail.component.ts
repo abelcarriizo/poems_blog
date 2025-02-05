@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PoemsService } from '../../services/poems.service';
 import { RatingsService } from '../../services/rating.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-poem-detail',
@@ -13,11 +14,14 @@ export class PoemDetailComponent implements OnInit {
   poem: any = null; // Almacena los detalles del poema
   ratings: any[] = []; // Almacena los ratings asociados al poema
   hoverRating: number = 0; 
-  averageRating: number = 0; // Promedio calculado en el frontend
+  averageRating: number = 0; 
+  isAdmin: boolean = false; 
+
   constructor(
     private route: ActivatedRoute,
     private poemsService: PoemsService,
     private ratingsService: RatingsService,
+    private authService: AuthService, 
     private router: Router
   ) {}
 
@@ -29,6 +33,7 @@ export class PoemDetailComponent implements OnInit {
       this.loadPoemRatings(+poemId); // Cargar los ratings del poema
     }
   }
+
   goToRate(): void {
     if (this.poem && this.poem.id) {
       this.router.navigate(['/rate', this.poem.id]); // Redirige a la ruta correcta
@@ -38,17 +43,16 @@ export class PoemDetailComponent implements OnInit {
   }
   
   loadPoemDetails(id: number): void {
-    // Llamar al servicio para obtener los detalles del poema
     this.poemsService.getPoemById(id).subscribe(
       (poem) => {
-        this.poem = poem; // Almacenar los detalles en la variable
+        this.poem = poem;
       },
       (error) => {
         console.error('Error al cargar el poema:', error);
       }
     );
   }
-  // 🔥 Calcula el promedio de estrellas en el frontend
+
   calculateAverageRating(): void {
     if (this.ratings.length === 0) {
       this.averageRating = 0;
@@ -59,10 +63,9 @@ export class PoemDetailComponent implements OnInit {
   }
 
   loadPoemRatings(id: number): void {
-    // Llamar al servicio para obtener los ratings asociados al poema
     this.ratingsService.getRatingsByPoemId(id).subscribe(
       (response) => {
-        this.ratings = response.items; // Almacenar los ratings
+        this.ratings = response.items;
       },
       (error) => {
         console.error('Error al cargar los ratings:', error);

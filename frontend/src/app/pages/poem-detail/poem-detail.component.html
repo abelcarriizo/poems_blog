@@ -30,32 +30,32 @@
 
 
         <!-- Reseñas -->
-        <div class="col-md-6 d-flex flex-column h-100">
-          <div class="rating-box p-4 bg-light border rounded flex-grow-1 w-100">
-            <h3 class="h5 font-weight-bold mb-3">RATING: {{ averageRating ? averageRating.toFixed(2) : 'N/A' }} ⭐</h3>
-            <div *ngIf="ratings.length > 0; else noRatings">
-              <div *ngFor="let rating of ratings" class="review p-3 bg-light border rounded mb-3">
-                <strong>Estrellas: {{ rating.stars }}</strong>
-                <p>{{ rating.comment }}</p>
-                <p><small><strong>Autor:</strong> {{ rating.author_name || 'Anónimo' }}</small></p>
-                <p class="text-muted small"><strong>Creado:</strong> {{ rating.date_created | date:'dd/MM/yyyy' }}</p>
+        <div *ngIf="!isAdmin">
+          <div class="col-md-6 d-flex flex-column h-100">
+            <div class="rating-box p-4 bg-light border rounded flex-grow-1 w-100">
+              <h3 class="h5 font-weight-bold mb-3">RATING: {{ averageRating ? averageRating.toFixed(2) : 'N/A' }} ⭐</h3>
+              <div *ngIf="ratings.length > 0; else noRatings">
+                <div *ngFor="let rating of ratings" class="review p-3 bg-light border rounded mb-3">
+                  <strong>Estrellas: {{ rating.stars }}</strong>
+                  <p>{{ rating.comment }}</p>
+                  <p><small><strong>Autor:</strong> {{ rating.author_name || 'Anónimo' }}</small></p>
+                  <p class="text-muted small"><strong>Creado:</strong> {{ rating.date_created | date:'dd/MM/yyyy' }}</p>
+                </div>
               </div>
+              <ng-template #noRatings>
+                <p class="text-center text-muted">No hay ratings disponibles para este poema.</p>
+              </ng-template>
+            <!-- Botón de Opinión -->
+            <div class="text-center mt-4">
+              <button class="btn opinion-btn w-100 p-3" (click)="goToRate()">DIME QUÉ PIENSAS</button>
             </div>
-            <ng-template #noRatings>
-              <p class="text-center text-muted">No hay ratings disponibles para este poema.</p>
-            </ng-template>
-          <!-- Botón de Opinión -->
-          <div class="text-center mt-4">
-            <button class="btn opinion-btn w-100 p-3" (click)="goToRate()">DIME QUÉ PIENSAS</button>
           </div>
-          </div>
-
-          </div>
+        </div>
 
         </div>
       </div>
     </div>
-
+  </div>
   
   <!-- Footer -->
   <div class="footer">©2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</div>

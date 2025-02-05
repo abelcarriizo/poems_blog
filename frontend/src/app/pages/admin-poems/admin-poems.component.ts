@@ -16,6 +16,7 @@ export class AdminPoemsComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   itemsPerPage: number = 10;
+  modalInstance: any = null;
 
   constructor(
     private poemsService: PoemsService,
@@ -35,20 +36,20 @@ export class AdminPoemsComponent implements OnInit {
 
     this.poemsService.getPoems(params).subscribe(
       (response) => {
-        console.log('📜 Respuesta de la API:', response);
+        console.log(' Respuesta de la API:', response);
 
         if (response && response.items) {
           this.poems = response.items;
           this.filteredPoems = [...this.poems];  // 🔹 Inicializar la lista filtrada con los poemas
           this.totalPages = response.pages || 1;
-          console.log('📝 Lista de poemas:', this.poems);
+          console.log(' Lista de poemas:', this.poems);
         } else {
           console.error('⚠ Respuesta inesperada:', response);
           this.poems = [];
           this.filteredPoems = [];
         }
       },
-      (error) => console.error('❌ Error al obtener los poemas:', error)
+      (error) => console.error(' Error al obtener los poemas:', error)
     );
   }
 
@@ -111,9 +112,43 @@ export class AdminPoemsComponent implements OnInit {
       () => {
         this.poems = this.poems.filter(poem => poem.id !== poemId);
         this.filteredPoems = this.filteredPoems.filter(poem => poem.id !== poemId);
-        console.log('🗑 Poema eliminado');
+        console.log(' Poema eliminado');
       },
-      (error) => console.error('❌ Error al eliminar el poema:', error)
+      (error) => console.error(' Error al eliminar el poema:', error)
     );
   }
+            /**
+     * 📌 Abre el modal con los detalles del poema
+     */
+  viewPoemDetail(poemId: number): void {
+    console.log(`🔍 Cargando detalles del poema con ID: ${poemId}`);
+    this.poemsService.getPoemById(poemId).subscribe(
+      (poem) => {
+        this.selectedPoem = poem; 
+        this.openModal();
+      },
+      (error) => console.error('Error al obtener detalles del poema:', error)
+    );
+  }
+  
+  /**
+   * 📌 Abre el modal con Bootstrap
+   */
+  openModal(): void {
+    const modalElement = document.getElementById('poemDetailModal');
+    if (modalElement) {
+      this.modalInstance = new bootstrap.Modal(modalElement);
+      this.modalInstance.show();
+    }
+  }
+  
+  /**
+   * 📌 Cierra el modal
+   */
+  closeModal(): void {
+    if (this.modalInstance) {
+      this.modalInstance.hide();
+    }
+  }
+
 }

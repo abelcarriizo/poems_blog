@@ -28,10 +28,17 @@ class User(db.Model):  # 🔹 Debe llamarse 'User' aquí
     def validate_pass(self, password):
         return check_password_hash(self.password, password)
 
-    def to_json(self):
-        base_url = "http://localhost:5000"
-        image_url = self.image_url if self.image_url else "/static/uploads/default-avatar.jpg"
 
+    def to_json(self):
+        if self.image_url and not self.image_url.startswith("/static/uploads/"):
+            # Si la imagen es un nombre de archivo (ejemplo: "foto.jpg"), agregamos el ID del usuario
+            image_path = f"/static/uploads/{self.id}/{self.image_url}"
+        elif not self.image_url or self.image_url == "/static/uploads/default-avatar.jpg":
+            # ✅ Asignar la imagen por defecto dentro de la carpeta del usuario
+            image_path = f"/static/uploads/{self.id}/default-avatar.jpg"
+        else:
+            image_path = self.image_url
+        
         return {
             "id": self.id,
             "firstname": self.firstname,
@@ -40,7 +47,7 @@ class User(db.Model):  # 🔹 Debe llamarse 'User' aquí
             "gender": self.gender,
             "description": self.description,
             "email": self.email,
-            "image_url": f"{base_url}{self.image_url}" if self.image_url else None
+            "image_url": f"http://localhost:5000{image_path}"
         }
 
     @staticmethod

@@ -16,7 +16,7 @@ export class AdminRatingsComponent implements OnInit {
   currentPage: number = 1;
   totalPages: number = 1;
   itemsPerPage: number = 10;
-
+  modalInstance: any = null;
   constructor(
     private ratingsService: RatingsService,
     private router: Router
@@ -102,4 +102,37 @@ export class AdminRatingsComponent implements OnInit {
       (error) => console.error('❌ Error al eliminar el rating:', error)
     );
   }
+    /**
+   * 📌 Abre el modal con los detalles del rating
+   */
+    viewRatingDetail(ratingId: number): void {
+      console.log(`🔍 Cargando detalles del rating con ID: ${ratingId}`);
+      this.ratingsService.getRatingsByPoemId(ratingId).subscribe(
+        (rating) => {
+          this.selectedRating = rating.items ? rating.items[0] : rating; // ✅ Almacenar el rating en selectedRating
+          this.openModal('ratingDetailModal');
+        },
+        (error) => console.error('Error al obtener detalles del rating:', error)
+      );
+    }
+  
+    /**
+     * 📌 Abre el modal con Bootstrap
+     */
+    openModal(modalId: string): void {
+      const modalElement = document.getElementById(modalId);
+      if (modalElement) {
+        this.modalInstance = new bootstrap.Modal(modalElement);
+        this.modalInstance.show();
+      }
+    }
+  
+    /**
+     * 📌 Cierra el modal
+     */
+    closeModal(): void {
+      if (this.modalInstance) {
+        this.modalInstance.hide();
+      }
+    }
 }

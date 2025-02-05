@@ -1,99 +1,72 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil de Usuario</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="profile.component.css">
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-</head>
-<body>
-  <div class="header">POEMS BLOG / PERFIL DE USUARIO</div>
-  
-  <div class="container-fluid d-flex">
-    <!-- Sidebar con perfil -->
-    <div class="profile-box p-4">
+<!-- COMPONENTE HEADER -->
+<header class="header">
+  <h1>POEMS BLOG / PERFIL DE USUARIO</h1>
+</header>
 
-      <h3 class="profile-name">{{ user.username || 'Usuario' }}</h3>
-      <p class="profile-bio">{{ user.description || 'No hay biografía disponible.' }}</p>
-      <p class="fw-bold">POEMAS: {{ poems.length }}</p>
+<div class="container-fluid d-flex">
+  <!-- Sidebar con perfil -->
+  <div class="profile-box p-4 text-center">
+    <div class="user-avatar mx-auto">
+      <img [src]="selectedUser.image_url" alt="Imagen de perfil" class="rounded-circle">
+    </div>
+    <h3 class="profile-name mt-3">{{ selectedUser.username || 'Usuario' }}</h3>
+    <p class="profile-bio">{{ selectedUser.description || 'No hay biografía disponible.' }}</p>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="content flex-grow-1 p-4" style="background-color: #f8f9fa; border-radius: 10px; padding: 20px;">
+    <!-- Barra de búsqueda -->
+    <div class="search-bar mb-3">
+      <input type="text" class="form-control search-input" placeholder="BUSCAR POEMAS" (input)="onSearch($event)">
     </div>
 
-    <!-- Contenido principal -->
-    <div class="content flex-grow-1 p-4">
-      <!-- Barra de búsqueda -->
-      <div class="search-bar mb-3">
-        <input type="text" class="form-control search-input" placeholder="BUSCAR POEMAS" (input)="onSearch($event)">
-      </div>
+    <!-- Botones de selección con contador de ratings -->
+    <div class="btn-group w-100">
+      <button class="btn btn-toggle" [class.active]="viewing === 'poems'" (click)="viewPoems()">POEMAS<span class="badge bg-dark ms-2">{{ poems.length }}</span></button>
+      <button class="btn btn-toggle position-relative" [class.active]="viewing === 'ratings'" (click)="viewRatings()">
+        RATINGS <span class="badge bg-dark ms-2">{{ ratings.length }}</span>
+      </button>
+    </div>
 
-      <!-- Botones de selección -->
-      <div class="btn-group w-100">
-        <button class="btn btn-toggle" [class.active]="viewing === 'poems'" (click)="viewPoems()">POEMAS</button>
-        <button class="btn btn-toggle" [class.active]="viewing === 'ratings'" (click)="viewRatings()">RATINGS</button>
-      </div>
-
-      <!-- Sección de Poemas -->
-      <div *ngIf="viewing === 'poems'" class="poems-section mt-3">
-        <div class="row g-3">
-          <div class="col-md-6" *ngFor="let poem of poems">
-            <div class="poem-card">
-              <h5>{{ poem.title }}</h5>
-              <p>{{ poem.description }}</p>
-              <p class="text-muted">Autor: {{ user.username }}</p>
-              <p class="text-muted">Creado: {{ poem.date_created | date:'dd/MM/yyyy' }}</p>
-              <div class="actions">
-                <i class="fas fa-edit" (click)="openEditPoemModal(poem)"></i>
-                <i class="fas fa-trash text-danger" (click)="confirmDeletePoem(poem.id)"></i>
-              </div>
+    <!-- Sección de Poemas -->
+    <div *ngIf="viewing === 'poems'" class="poems-section mt-3">
+      <div class="row g-3">
+        <div class="col-md-6" *ngFor="let poem of poems">
+          <div class="poem-card bg-white p-3 border rounded">
+            <h5>{{ poem.title }}</h5>
+            <p>{{ poem.description }}</p>
+            <p class="text-muted">Autor: {{ selectedUser.username }}</p>
+            <p class="text-muted">Creado: {{ poem.date_created | date:'dd/MM/yyyy' }}</p>
+            <div class="actions">
+              <i class="fas fa-edit" (click)="openEditPoemModal(poem)"></i>
+              <i class="fas fa-trash text-danger" (click)="confirmDeletePoem(poem.id)"></i>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Sección de Ratings -->
-      <div *ngIf="viewing === 'ratings'" class="ratings-section mt-3">
-        <div class="row g-3">
-          <div class="col-md-6" *ngFor="let rating of ratings">
-            <div class="rating-card">
-              <h5>🌟 {{ rating.stars }}</h5>
-              <p>{{ rating.comment }}</p>
-              <p class="text-muted">Poema ID: {{ rating.poem_id }}</p>
-              <p class="text-muted">Fecha: {{ rating.date_created | date:'short' }}</p>
-              <div class="actions">
-                <i class="fas fa-edit" (click)="openEditRatingModal(rating)"></i>
-                <i class="fas fa-trash text-danger" (click)="confirmDeleteRating(rating.id)"></i>
-              </div>
+    <!-- Sección de Ratings -->
+    <div *ngIf="viewing === 'ratings'" class="ratings-section mt-3">
+      <div class="row g-3">
+        <div class="col-md-6" *ngFor="let rating of ratings">
+          <div class="rating-card bg-white p-3 border rounded">
+            <h5>🌟 {{ rating.stars }}</h5>
+            <p>{{ rating.comment }}</p>
+            <p class="text-muted">Poema ID: {{ rating.poem_id }}</p>
+            <p class="text-muted">Fecha: {{ rating.date_created | date:'short' }}</p>
+            <div class="actions">
+              <i class="fas fa-edit" (click)="openEditRatingModal(rating)"></i>
+              <i class="fas fa-trash text-danger" (click)="confirmDeleteRating(rating.id)"></i>
             </div>
           </div>
         </div>
       </div>
-
     </div>
   </div>
+</div>
 
-  <!-- MODAL PARA EDITAR POEMA -->
-  <div class="modal fade" id="editPoemModal" tabindex="-1" aria-labelledby="editPoemModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Editar Poema</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <input type="text" class="form-control mb-2" [(ngModel)]="selectedPoem.title" placeholder="Título">
-          <textarea class="form-control" rows="4" [(ngModel)]="selectedPoem.description" placeholder="Descripción"></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" class="btn btn-primary" (click)="updatePoem()">Guardar Cambios</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="footer">©2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+<!-- COMPONENTE FOOTER -->
+<footer class="footer">
+  <p>&copy;2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</p>
+</footer>

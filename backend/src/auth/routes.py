@@ -6,7 +6,7 @@ from ..utils import allowed_file
 from src.models import UserModel, AdminModel
 from src.mail.functions import sendMail
 from flask import Blueprint, app, jsonify, request, send_from_directory
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, get_jwt_identity, jwt_required
 from werkzeug.utils import secure_filename 
 
 

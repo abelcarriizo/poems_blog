@@ -5,14 +5,20 @@ import { AuthService } from '../services/auth.service'; // Asegúrate de que la 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  private readonly apiUrl = 'http://localhost:5000'; // URL base del backend
+
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = this.authService.getToken(); // Obtener el token desde sessionStorage
-    const authRequired = this.requiresAuth(req.url);
 
-    if (token && authRequired) {
-      // Clonar la solicitud y agregar el encabezado Authorization con el token
+    // Si la petición es a login o register, NO agregar el token
+    if (this.isPublicEndpoint(req.url)) {
+      return next.handle(req);
+    }
+
+    // Si la petición es protegida y el usuario tiene token, agregarlo
+    if (token) {
       const clonedRequest = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`
@@ -21,22 +27,21 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle(clonedRequest);
     }
 
-    // Si la solicitud no requiere autenticación, continuar sin modificarla
+    // Si la solicitud requiere autenticación pero no hay token, continuar sin modificarla
     return next.handle(req);
   }
 
   /**
-   * Determina si la solicitud requiere autenticación o no.
-   * @param url La URL de la solicitud
-   * @returns true si la solicitud debe incluir el token, false si no lo necesita
+   * Determina si la solicitud es a un endpoint público (login o register).
    */
-  private requiresAuth(url: string): boolean {
-    const openEndpoints = [
-      '/auth/login',
-      '/auth/register',
-      '/homepublic'
+  private isPublicEndpoint(url: string): boolean {
+    const publicEndpoints = [
+      `${this.apiUrl}/auth/login`,
+      `${this.apiUrl}/auth/register`,
+      `${this.apiUrl}/homepublic`,
+      `${this.apiUrl}/home`
     ];
 
-    return !openEndpoints.some(endpoint => url.includes(endpoint));
+    return publicEndpoints.some(endpoint => url.startsWith(endpoint));
   }
 }

@@ -118,3 +118,13 @@ body {
   margin-top: 20px;
   font-size: 14px;
 }
+.user-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: #d9d9c3;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

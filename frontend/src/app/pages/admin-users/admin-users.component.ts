@@ -26,13 +26,18 @@ export class AdminUsersComponent {
     this.userService.getUsers(this.currentPage).subscribe(
       (response) => {
         console.log('👥 Usuarios recibidos:', response);
-        this.users = response.items || response; // Si la API devuelve 'items', úsalo
+        this.users = response.items || response;
         this.filteredUsers = this.users;
         this.totalPages = response.totalPages || 1;
+  
+        // 🔍 Verificar si las imágenes son correctas
+        this.filteredUsers.forEach(user => console.log(`🖼 Imagen de ${user.username}: ${user.image_url}`));
       },
       (error) => console.error('❌ Error al obtener usuarios:', error)
     );
   }
+  
+  
 
   // Filtrar usuarios en la búsqueda
   onSearch(event: Event): void {
@@ -42,11 +47,7 @@ export class AdminUsersComponent {
     );
   }
 
-  // Ver perfil de usuario
-  viewUserProfile(userId: number): void {
-    this.router.navigate([`/profile/${userId}`]);
-  }
-
+  
   // Cambiar de página
   goToPreviousPage(): void {
     if (this.currentPage > 1) {
@@ -61,4 +62,9 @@ export class AdminUsersComponent {
       this.loadUsers();
     }
   }
+  viewUserProfile(userId: number): void {
+    console.log(`🔍 Redirigiendo a /profile/${userId}`);
+    this.router.navigate([`/profile/${userId}`]);
+  }
+  
 }
