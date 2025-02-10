@@ -13,7 +13,7 @@ import * as bootstrap from 'bootstrap';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent implements OnInit {
-  selectedUser: any = {}; // ✅ Ahora esta variable almacena al usuario correcto
+  selectedUser: any = {}; 
   poems: any[] = [];
   filteredPoems: any[] = [];
   ratings: any[] = [];
@@ -38,7 +38,7 @@ export class ProfileComponent implements OnInit {
       
       if (userId) {
         console.log(`🔍 Cargando perfil del usuario con ID: ${userId}`);
-        this.getUserProfileById(Number(userId)); // ✅ Cargar perfil del usuario seleccionado
+        this.getUserProfileById(Number(userId));
       } else {
         console.log("🔍 Cargando perfil del usuario logueado.");
         this.getLoggedUserProfile();
@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserData().subscribe(
       (data) => {
         console.log("✅ Usuario logueado:", data);
-        this.selectedUser = { ...data }; // ✅ Evitar problemas de referencia
+        this.selectedUser = { ...data };
         this.loadUserPoems();
         this.loadUserRatings();
       },

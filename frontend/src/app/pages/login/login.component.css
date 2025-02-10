@@ -1,24 +1,211 @@
-body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f8f9fa; /* Color de fondo para la página */
-  }
+/* Reset general */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  overflow: hidden; /* Evita scroll */
+}
+
+/* Wrapper que cubre toda la pantalla */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Header */
+header {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor principal */
+.container-fluid {
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  width: 100%;
+}
+
+/* Sección Izquierda */
+.col-md-6:first-child {
+  background-color: whitesmoke;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: left;
+  padding: 50px;
+}
+
+.col-md-6:first-child h1 {
+  font-size: 6rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: black;
   
-  h1, h2 {
-    color: #000;
-  }
+}
+
+.btn-outline-dark {
+  border: 2px solid black;
+  font-size: 1.5rem;
+  padding: 12px 25px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn-outline-dark:hover {
+  background-color: black;
+  color: white;
+}
+
+/* Sección Derecha (Login) */
+.login-container {
+  background-color: #F5F1E5 !important;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+  box-shadow: -3px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Título */
+.login-container h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: black;
   
-  .bg-warning {
-    background-color: #fff3cd !important; /* Fondo amarillo suave */
+}
+
+/* Formulario */
+form {
+  width: 100%;
+  max-width: 400px;
+}
+
+form .form-control {
+  width: 100%;
+  padding: 15px;
+  font-size: 1rem;
+  border: 1px solid #c5c0b7;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  background-color: white;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+form .form-control:focus {
+  outline: none;
+  border-color: black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+/* Botón de inicio de sesión */
+.btn-dark {
+  width: 100%;
+  background-color: black;
+  color: white;
+  padding: 12px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-dark:disabled {
+  background-color: #a9a9a9;
+  cursor: not-allowed;
+}
+
+.btn-dark:hover {
+  background-color: #333333;
+}
+
+/* Footer fijo */
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .container-fluid {
+    flex-direction: column;
   }
-  
-  button.btn {
+
+  .col-md-6:first-child {
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .col-md-6:first-child h1 {
+    font-size: 4rem;
+  }
+
+  .btn-outline-dark {
     font-size: 1.2rem;
+    padding: 10px 20px;
   }
-  
-  footer {
-    margin-top: 2rem;
-    color: #6c757d;
+
+  .login-container {
+    padding: 30px;
   }
-  
+
+  .login-container h2 {
+    font-size: 1.8rem;
+  }
+
+  form .form-control {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .btn-dark {
+    font-size: 1rem;
+    padding: 10px;
+  }
+}

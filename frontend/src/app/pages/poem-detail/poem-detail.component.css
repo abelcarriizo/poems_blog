@@ -1,100 +1,212 @@
-    body {
-      background-color: #f8f9fa;
-      font-family: 'Plus Jakarta Sans', sans-serif;
-    }
+/* Reset general */
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: #F5F1E5;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
 
-    /* Header */
-    .header {
-      background-color: black;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 1.5rem;
-      font-weight: bold;
-    }
-    /* Sidebar */
-    .sidebar {
-      width: 80px;
-      height: 100vh;
-      background-color: #FDFBF6;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding-top: 20px;
-      position: fixed;
-      left: 0;
-      top: 0;
-      box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    }
+/* Header */
+.header {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: bold;
+  width: 100%;
+  position: relative;
+  z-index: 1000;
+  margin-left: 70px;
+}
 
-    .poem-box {
-      background-color: #FDFBF6;
-      border: 3px solid black;
-      border-radius: 12px;
-      padding: 20px;
-      margin-left: 100px;
-      width: 60%;
-    }
+/* Sidebar */
+.sidebar {
+  width: 100px;
+  height: 100vh;
+  background-color: #F5F1E5;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
 
-    .poem-title {
-      font-weight: bold;
-      font-size: 1.8rem;
-    }
+/* Contenedor Principal */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
 
-    .author-info {
-      background-color: black;
-      color: white;
-      padding: 10px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
+/* Contenedor de Poema y Reseñas */
+.container-fluid {
+  display: flex;
+  width: 100%;
+  margin-left: 120px;
+  padding: 40px;
+  justify-content: space-between;
+  flex-grow: 1;
+  overflow: auto;
+}
 
-    .poem-content {
-      font-size: 1.2rem;
-      line-height: 1.8;
-      font-weight: 500;
-    }
+/* Poema */
+.poem-container {
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 30px;
+  width: 60%;
+  height: auto;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
 
-    /* Reseñas */
-    .rating-box {
-      background-color: #FDFBF6;
-      border: 3px solid black;
-      border-radius: 12px;
-      padding: 20px;
-      margin-left: 20px;
-      width: 30%;
-    }
+/* Título del poema */
+.poem-title {
+  font-weight: bold;
+  font-size: 2rem;
+  border-bottom: 3px solid black;
+  padding-bottom: 10px;
+}
 
-    .review {
-      background-color: white;
-      border: 2px solid black;
-      border-radius: 8px;
-      margin-bottom: 10px;
-      padding: 10px;
-    }
+/* Autor y Género */
+.author-box {
+  display: flex;
+  justify-content: space-between;
+  background-color: #E6E6E6;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+}
 
-    /* Botón */
-    .opinion-btn {
-      background-color: black;
-      color: white;
-      padding: 12px 24px;
-      font-size: 1.2rem;
-      font-weight: bold;
-      border: 3px solid black;
-      border-radius: 8px;
-      transition: all 0.3s;
-    }
+.author-info, .genre-info {
+  flex: 1;
+  text-align: center;
+  padding: 5px;
+}
 
-    .opinion-btn:hover {
-      background-color: white;
-      color: black;
-    }
+/* Contenido del poema */
+.poem-content {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  font-weight: 500;
+  margin-top: 15px;
+}
 
-    /* Footer */
-    .footer {
-      background-color: black;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
-      margin-top: 40px;
-    }
+/* Contenedor de Reseñas */
+.rating-container {
+  width: 35%;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: calc(100vh - 120px);
+  overflow-y: auto;
+}
+
+/* Título de rating */
+.rating-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-bottom: 3px solid black;
+  padding-bottom: 10px;
+  width: 100%;
+  text-align: center;
+}
+
+/* Tarjeta de Reseña */
+.review {
+  background-color: #FDFBF6;
+  border: 2px solid black;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  padding: 15px;
+  width: 100%;
+}
+
+/* Botón */
+.opinion-btn {
+  background-color: black;
+  color: white;
+  padding: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: 3px solid black;
+  border-radius: 8px;
+  width: 100%;
+  text-align: center;
+  margin-top: 15px;
+  transition: all 0.3s;
+}
+
+.opinion-btn:hover {
+  background-color: white;
+  color: black;
+}
+
+/* Footer */
+.footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  width: 100%;
+  position: relative;
+  bottom: 0;
+  left: 0;
+}
+/* Sidebar fijo */
+.sidebar {
+  width: 80px; /* Mantiene el ancho actual */
+  height: 100vh;
+  background-color: #F5F1E5;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 0;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Iconos del sidebar */
+.sidebar-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.sidebar-icons i {
+  font-size: 26px;
+  color: black;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out, color 0.2s;
+}
+
+.sidebar-icons i:hover {
+  transform: scale(1.1);
+  color: #444;
+}
+
+/* Ajuste del contenido principal */
+.container-fluid {
+  margin-left: 90px; /* Se separa del sidebar */
+  width: calc(100% - 90px);
+  padding: 40px;
+}

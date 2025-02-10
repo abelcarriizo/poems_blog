@@ -1,58 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Poems Blog</title>
- 
-</head>
 <body>
-  <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
-    <!-- Sidebar -->
-    <div class="col-md-2 p-0 bg-light d-flex flex-column align-items-center sidebar">
-      <app-sidebar></app-sidebar>
+  <app-sidebar></app-sidebar>
+  <header class="header" href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">POEMS BLOG/</header>
+  <div class="container"> 
+    <div class="search-bar mb-4">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Buscar poemas..."
+        (input)="onSearch($event)"
+      />
     </div>
-
-    <!-- Contenido principal -->
-    <div class="col-md-9 d-flex flex-column align-items-center main-content">
-      <h1 class="mb-3 text-start w-100">POEMS BLOG/</h1>
-
-      <!-- Barra de búsqueda -->
-      <div class="search-bar w-100 mb-4">
-        <input
-          type="text"
-          class="form-control form-control-lg border-0 shadow-sm px-4"
-          placeholder="Buscar poemas..."
-          (input)="onSearch($event)"
-        />
-      </div>
-
-      <!-- Listado de poemas -->
-      <div class="row g-4 w-100">
-        <div class="col-md-4 col-sm-6" *ngFor="let poem of filteredPoems">
-          <div class="card shadow-sm p-3 rounded-4 poem-card" (click)="goToDetail(poem.id)">
-            <div class="card-body">
-              <h5 class="card-title fw-bold" style="font-size: 1.3rem;">{{ poem.title }}</h5>
-              <p class="card-text" style="font-size: 1rem;">{{ poem.description }}</p>
-              <p class="mb-0 text-muted small"><strong>Autor:</strong> {{ poem?.author_name }}</p>
-              <p class="card-text text-muted small"><strong>Creado:</strong> {{ poem.date_created | date }}</p>
-            </div>
-          </div>
+  <!-- Listado de poemas -->
+  <div class="row g-4 w-100">
+    <div class="col-md-4 col-sm-6" *ngFor="let poem of filteredPoems">
+      <div class="card shadow-sm p-3 rounded-4 poem-card" (click)="goToDetail(poem.id)">
+        <div class="card-body">
+          <h5 class="card-title fw-bold" style="font-size: 1.3rem;">{{ poem.title }}</h5>
+          <p class="card-text" style="font-size: 1rem;">{{ poem.description }}</p>
+          <p class="mb-0 text-muted small"><strong>Autor:</strong> {{ poem?.author_name }}</p>
+          <p class="card-text text-muted small"><strong>Creado:</strong> {{ poem.date_created | date }}</p>
         </div>
       </div>
     </div>
   </div>
-        <!-- Paginación -->
-        <div class="pagination d-flex justify-content-center mt-4">
-          <button class="btn btn-dark mx-2" (click)="goToPreviousPage()" [disabled]="currentPage === 1">
-            ⬅ Anterior
-          </button>
-          <span class="align-self-center">Página {{ currentPage }} de {{ totalPages }}</span>
-          <button class="btn btn-dark mx-2" (click)="goToNextPage()" [disabled]="currentPage === totalPages">
-            Siguiente ➡
-          </button>
-        </div>
-      
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Paginación -->
+    <div class="pagination">
+      <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">⬅ Anterior</button>
+      <span>Página {{ currentPage }} de {{ totalPages }}</span>
+      <button (click)="goToNextPage()" [disabled]="currentPage === totalPages">Siguiente ➡</button>
+    </div>
+  </div>
+  <footer class="footer">&copy;2024 POEMS BLOG/ EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</footer>
 </body>
-</html>

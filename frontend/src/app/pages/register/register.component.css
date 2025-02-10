@@ -1,111 +1,203 @@
-/* General */
-body, html {
+/* Reset general */
+html, body {
   margin: 0;
   padding: 0;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   height: 100%;
   display: flex;
+  flex-direction: column;
+  background-color: black;
+  overflow: hidden; /* Evita scroll */
 }
 
+/* Wrapper que cubre toda la pantalla */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+}
+
+/* Header */
+header {
+  background-color: black;
+  color: white;
+  padding: 15px 40px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+}
+
+nav a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Contenedor principal */
 .container-fluid {
   display: flex;
   flex-direction: row;
-  height: 100vh;
-  margin: 30px;
+  flex-grow: 1;
+  width: 100%;
 }
 
-/* Columna izquierda */
-.col-left {
-  background-color: #faf4eb;
+/* Sección Izquierda */
+.col-md-6:first-child {
+  background-color: whitesmoke;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 20px;
+  align-items: flex-start;
+  text-align: left;
+  padding: 50px;
 }
 
-.col-left h1 {
-  font-size: 4rem;
+.col-md-6:first-child h1 {
+  font-size: 6rem;
   font-weight: bold;
-  margin-bottom: 1rem;
-  color: #000000;
+  margin-bottom: 20px;
+  color: black;
 }
 
-.col-left button {
-  background-color: #e5dfd1;
-  color: #000000;
-  padding: 10px 20px;
-  font-size: 1rem;
-  border: none;
-  border-radius: 30px;
-  cursor: pointer;
-  box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+.btn-outline-dark {
+  border: 2px solid black;
+  font-size: 1.5rem;
+  padding: 12px 25px;
+  border-radius: 10px;
   transition: all 0.3s ease;
 }
 
-.col-left button:hover {
-  background-color: #d4c9b3;
+.btn-outline-dark:hover {
+  background-color: black;
+  color: white;
 }
 
-/* Columna derecha */
-.col-right {
-  background-color: #f9edbb;
+/* Sección Derecha */
+.login-container {
+  background-color: #F5F1E5 !important;
   flex: 1;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
+  padding: 50px;
+  box-shadow: -3px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-.col-right h2 {
+/* Título */
+.login-container h2 {
   font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 2rem;
-  color: #000000;
+  margin-bottom: 20px;
+  color: black;
 }
 
 /* Formulario */
-form {
-  width: 80%;
+.register-form {
+  width: 100%;
   max-width: 400px;
 }
 
-form .form-control {
+.register-form .form-control {
   width: 100%;
-  padding: 10px 15px;
+  padding: 15px;
   font-size: 1rem;
-  border: 1px solid #e5dfd1;
-  border-radius: 20px;
-  margin-bottom: 1rem;
+  border: 1px solid #c5c0b7;
+  border-radius: 25px;
+  margin-bottom: 15px;
+  background-color: white;
   box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.1);
 }
 
-form .form-control:focus {
+.register-form .form-control:focus {
   outline: none;
-  border-color: #c9b889;
-  box-shadow: 0 0 5px rgba(201, 184, 137, 0.5);
+  border-color: black;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-form button {
+/* Botón */
+.btn-dark {
   width: 100%;
-  background-color: #000000;
-  color: #ffffff;
-  padding: 10px 20px;
-  font-size: 1rem;
+  background-color: black;
+  color: white;
+  padding: 12px;
+  font-size: 1.2rem;
   border: none;
   border-radius: 30px;
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
-form button:disabled {
-  background-color: #a9a9a9;
-  cursor: not-allowed;
+.btn-dark:hover {
+  background-color: #333333;
 }
 
-form button:hover {
-  background-color: #333333;
+/* Footer */
+footer {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 15px;
+  font-size: 1rem;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+
+footer a {
+  color: white;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 1024px) {
+  .container-fluid {
+    flex-direction: column;
+  }
+
+  .col-md-6:first-child {
+    align-items: center;
+    text-align: center;
+    padding: 30px;
+  }
+
+  .col-md-6:first-child h1 {
+    font-size: 4rem;
+  }
+
+  .btn-outline-dark {
+    font-size: 1.2rem;
+    padding: 10px 20px;
+  }
+
+  .login-container {
+    padding: 30px;
+  }
+
+  .login-container h2 {
+    font-size: 1.8rem;
+  }
+
+  .register-form .form-control {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .btn-dark {
+    font-size: 1rem;
+    padding: 10px;
+  }
 }

@@ -10,6 +10,13 @@ body {
   align-items: center;
   min-height: 100vh;
 }
+.fullscreen-container {
+  height: 90vh; /* Casi toda la pantalla */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black; /* Para que se vea como en la maqueta */
+}
 
 /* Contenedor principal */
 .main-container {
@@ -41,9 +48,9 @@ header h1 {
 nav a {
   color: white;
   text-decoration: none;
-  margin-left: 20px;
+  margin-right: 20px;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 500;
 }
 
 nav a:hover {
@@ -52,12 +59,13 @@ nav a:hover {
 
 /* Contenedor de contenido */
 .container {
-  background-color: #F5F1E5;
+  background-color: #ffffff;
   color: black;
   border-radius: 20px;
   padding: 50px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 1200px;
+  max-width: 2000px;
+  height: 90%;
   width: 90%;
   display: flex;
   align-items: center;
@@ -81,11 +89,17 @@ nav a:hover {
 ul {
   line-height: 2;
   color: black;
-  font-size: 1.5rem;
   margin: 0;
   padding: 0;
   list-style-position: inside;
+  font-family: sans-serif;
+  
 }
+li {
+  font-size: xx-large;
+  justify-self: start;
+}
+
 
 .custom-btn {
   background-color: transparent;
@@ -145,7 +159,7 @@ footer a:hover {
     text-align: center;
   }
   .image-container {
-    justify-content: center;
+    justify-content:end;
     margin-top: 20px;
   }
   .custom-btn {
@@ -168,5 +182,7 @@ footer a:hover {
 
   nav a {
     font-size: 1rem;
+    margin-right: 2px;
+    
   }
 }

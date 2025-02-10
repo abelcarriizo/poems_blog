@@ -1,14 +1,13 @@
-<div class="container vh-100 d-flex flex-column justify-content-center align-items-center text-center">
-    <div>
-      <img
-        src="assets/images/404.png"
-        alt="Home Illustration"
-        class="img-fluid"
-        style="max-height: 400px;"
-      />
-  
-      <p class="lead text-muted">Oops... Parece que te has perdido en el océano digital.</p>
-      <button class="btn btn-primary mt-3" routerLink="/">Volver al Inicio</button>
-    </div>
+<body>
+  <header class="header" href="#" [routerLink]="['/']" routerLinkActive="router-link-active">POEMS BLOG/PERFIL DE USUARIO</header>
+
+  <div class="container-404 d-flex flex-column justify-content-center align-items-center text-center">
+    <img src="assets/images/404.png" alt="Error 404" class="error-image">
   </div>
-  
+
+  <footer class="footer">
+    <p>&copy;2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</p>
+  </footer>
+
+</body>
+

@@ -34,7 +34,7 @@ export class UserSettingsComponent implements OnInit {
     private ratingsService: RatingsService,
     private poemsService: PoemsService,
     private router: Router,
-    private cdRef: ChangeDetectorRef // ⬅️ Importamos ChangeDetectorRef para manejar cambios en la UI
+    private cdRef: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
@@ -50,27 +50,42 @@ export class UserSettingsComponent implements OnInit {
   loadUserData(): void {
     this.userService.getUserById(this.userId!).subscribe(
       (data) => {
-        this.user= data;
-        this.updateUserImage(); // ⬅️ Asegurar que la imagen se actualiza correctamente
+        this.user = data;
+        this.updateUserImage();
+        
+        // 🔥 Ahora cargamos los poemas y ratings después de obtener el usuario
+        this.loadUserPoems();
+        this.loadUserRatings();
       },
       (error) => console.error('❌ Error al cargar usuario:', error)
     );
   }
+
   loadUserPoems(): void {
+    if (!this.user.id) {
+        console.error("⚠ No se encontró el ID del usuario para cargar los poemas.");
+        return;
+    }
     this.poemsService.getPoemsbyUser(this.user.id).subscribe(
       (response) => {
+        console.log("✅ Poemas cargados:", response.items);
         this.poems = response.items;
       },
-      (error) => console.error('Error obteniendo los poemas:', error)
+      (error) => console.error('❌ Error obteniendo los poemas:', error)
     );
   }
 
   loadUserRatings(): void {
+    if (!this.user.id) {
+        console.error("⚠ No se encontró el ID del usuario para cargar los ratings.");
+        return;
+    }
     this.ratingsService.getRatingsByUserId(this.user.id).subscribe(
       (data) => {
+        console.log("✅ Ratings cargados:", data);
         this.ratings = Array.isArray(data) ? data : [];
       },
-      (error) => console.error('Error obteniendo ratings:', error)
+      (error) => console.error('❌ Error obteniendo ratings:', error)
     );
   }
 

@@ -1,30 +1,30 @@
-<!-- COMPONENTE HEADER -->
-<header class="header">
-  <h1>POEMS BLOG / PERFIL DE USUARIO</h1>
-</header>
-
+<header class="header" href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">POEMS BLOG/PERFIL DE USUARIO</header>
 <div class="container-fluid d-flex">
   <!-- Sidebar con perfil -->
-  <div class="profile-box p-4 text-center">
-    <div class="user-avatar mx-auto">
-      <img [src]="selectedUser.image_url" alt="Imagen de perfil" class="rounded-circle">
-    </div>
-    <h3 class="profile-name mt-3">{{ selectedUser.username || 'Usuario' }}</h3>
-    <p class="profile-bio">{{ selectedUser.description || 'No hay biografía disponible.' }}</p>
+<div class="profile-box p-4 text-center">
+  <div class="user-avatar mx-auto">
+    <img  [src]="selectedUser.image_url" alt="Imagen de perfil" class="rounded-circle">
   </div>
+  <h3 class="profile-name mt-3">{{ selectedUser.username || 'Usuario' }}</h3>
+  <p class="profile-bio">{{ selectedUser.description || 'No hay biografía disponible.' }}</p>
+  <p class="profile-stat"><strong>Poemas:</strong> {{ poems.length }}</p>
+  <p class="profile-stat"><strong>Ratings:</strong> {{ ratings.length }}</p>
+</div>
 
   <!-- Contenido principal -->
-  <div class="content flex-grow-1 p-4" style="background-color: #f8f9fa; border-radius: 10px; padding: 20px;">
+  <div class="content flex-grow-1 p-4 bg-white">
     <!-- Barra de búsqueda -->
     <div class="search-bar mb-3">
       <input type="text" class="form-control search-input" placeholder="BUSCAR POEMAS" (input)="onSearch($event)">
     </div>
 
-    <!-- Botones de selección con contador de ratings -->
+    <!-- Botones de selección -->
     <div class="btn-group w-100">
-      <button class="btn btn-toggle" [class.active]="viewing === 'poems'" (click)="viewPoems()">POEMAS<span class="badge bg-dark ms-2">{{ poems.length }}</span></button>
-      <button class="btn btn-toggle position-relative" [class.active]="viewing === 'ratings'" (click)="viewRatings()">
-        RATINGS <span class="badge bg-dark ms-2">{{ ratings.length }}</span>
+      <button class="btn btn-toggle" [class.active]="viewing === 'poems'" (click)="viewPoems()">POEMAS 
+        <span class="badge bg-dark ms-2">{{ poems.length }}</span>
+      </button>
+      <button class="btn btn-toggle" [class.active]="viewing === 'ratings'" (click)="viewRatings()">RATINGS 
+        <span class="badge bg-dark ms-2">{{ ratings.length }}</span>
       </button>
     </div>
 
@@ -61,6 +61,54 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE EDICIÓN DE POEMA -->
+<div id="editPoemModal" class="modal fade" tabindex="-1" aria-labelledby="editPoemModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Poema</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label>Título:</label>
+        <input type="text" class="form-control mb-3" [(ngModel)]="selectedPoem.title">
+        
+        <label>Descripción:</label>
+        <textarea class="form-control mb-3" rows="3" [(ngModel)]="selectedPoem.description"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="updatePoem()">Guardar Cambios</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL DE EDICIÓN DE RATING -->
+<div id="editRatingModal" class="modal fade" tabindex="-1" aria-labelledby="editRatingModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar Rating</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label>Calificación (1-5 estrellas):</label>
+        <select class="form-control mb-3" [(ngModel)]="selectedRating.stars">
+          <option *ngFor="let num of [1, 2, 3, 4, 5]" [value]="num">{{ num }}</option>
+        </select>
+
+        <label>Comentario:</label>
+        <textarea class="form-control mb-3" rows="3" [(ngModel)]="selectedRating.comment"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="updateRating()">Guardar Cambios</button>
       </div>
     </div>
   </div>

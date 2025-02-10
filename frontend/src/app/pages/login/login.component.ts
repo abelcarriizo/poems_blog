@@ -17,13 +17,6 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) {}
 
   /**
-   * Redirige a la vista pública de poemas
-   */
-  navigateToPoems() {
-    this.router.navigate(['/dashboard']); 
-  }
-
-  /**
    * Inicia sesión del usuario normal
    */
   login() {
