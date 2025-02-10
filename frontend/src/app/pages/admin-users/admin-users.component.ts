@@ -26,16 +26,22 @@ export class AdminUsersComponent {
     this.userService.getUsers(this.currentPage).subscribe(
       (response) => {
         console.log('👥 Usuarios recibidos:', response);
-        this.users = response.items || response;
-        this.filteredUsers = this.users;
-        this.totalPages = response.totalPages || 1;
   
-        // 🔍 Verificar si las imágenes son correctas
-        this.filteredUsers.forEach(user => console.log(`🖼 Imagen de ${user.username}: ${user.image_url}`));
+        this.users = response.items || [];  // Asegurar que los datos se carguen bien
+        this.filteredUsers = this.users;
+        
+        this.totalPages = response.pages || 1; // Usar "pages" en vez de "totalPages"
+  
+        console.log(`📄 Página actual: ${this.currentPage} / ${this.totalPages}`);
+  
+        if (this.users.length === 0) {
+          console.warn("⚠ No se encontraron usuarios en esta página.");
+        }
       },
       (error) => console.error('❌ Error al obtener usuarios:', error)
     );
   }
+  
   
   
 
