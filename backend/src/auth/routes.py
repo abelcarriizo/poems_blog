@@ -2,7 +2,6 @@ import os
 
 from src.models.user import User
 from .. import  db
-from ..utils import allowed_file
 from src.models import UserModel, AdminModel
 from src.mail.functions import sendMail
 from flask import Blueprint, app, jsonify, request, send_from_directory
@@ -41,17 +40,17 @@ def admin_login():
     email = request.json.get('email')
     password = request.json.get('password')
 
-    print(f"🔍 Intentando login con: {email}")  # Debug
+    print(f"🔍 Intentando login con: {email}")  
     admin = AdminModel.query.filter_by(email=email).first()
 
     if not admin:
-        print("❌ Administrador no encontrado")  # Debug
+        print("Administrador no encontrado")  
         return {'message': 'Invalid credentials'}, 401
 
-    print(f"✅ Administrador encontrado: {admin.email}")  # Debug
+    print(f"Administrador encontrado: {admin.email}")  
 
     if not admin.validate_pass(password):
-        print("❌ Contraseña incorrecta")  # Debug
+        print("Contraseña incorrecta")  
         return {'message': 'Invalid credentials'}, 401
 
     token = create_access_token(identity=str(admin.id), additional_claims={

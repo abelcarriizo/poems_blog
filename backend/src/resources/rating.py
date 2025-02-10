@@ -1,12 +1,12 @@
 from .. import db
-from src.models import RatingModel
+from src.models import RatingModel, PoemModel
 from src.utils import paginate
 from src.utils import sort_ratings_newest_to_oldest, sort_ratings_oldest_to_newest
 from src.utils import filter_ratings_by_user, filter_ratings_by_poem
 
 from flask import jsonify, request
 from flask_restful import Resource
-from flask_jwt_extended import jwt_required
+from flask_jwt_extended import get_jwt_identity, jwt_required
 
 class Rating(Resource):
   @jwt_required(optional=True)
@@ -58,7 +58,15 @@ class Ratings(Resource):
 
   @jwt_required()
   def post(self):
-    rating = RatingModel.from_json(request.get_json())
-    db.session.add(rating)
-    db.session.commit()
-    return rating.to_json(), 201
+      rating_data = request.get_json()
+      user_id = get_jwt_identity()
+  
+      # Verificar que el usuario no califique su propio poema
+      poem = db.session.query(PoemModel).get(rating_data['poem_id'])
+      if poem.author_id == user_id:
+          return jsonify({"error": "No puedes calificar tu propio poema."}), 403
+  
+      rating = RatingModel.from_json(rating_data)
+      db.session.add(rating)
+      db.session.commit()
+      return rating.to_json(), 201
