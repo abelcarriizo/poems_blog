@@ -26,9 +26,6 @@ export class PoemsService {
     return this.http.get<any>(this.apiUrl, { params: queryParams });
   }
 
-  /**
-   * Obtiene todos los poemas de un usuario específico.
-   */
   getPoemsbyUser(userId: number, page: number = 1): Observable<any> {
     const token = sessionStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -38,9 +35,7 @@ export class PoemsService {
     return this.http.get<any>(url, { headers });
   }
   
-  /**
-   * Crea un nuevo poema.
-   */
+
   createPoem(poemData: { title: string, description: string, content: string }): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -57,9 +52,6 @@ export class PoemsService {
     );
   }
 
-  /**
-   * Actualiza un poema existente.
-   */
   updatePoem(poemId: number, updatedPoem: { title?: string, description?: string, content?: string }): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -76,9 +68,6 @@ export class PoemsService {
     );
   }
 
-  /**
-   * Elimina un poema por su ID.
-   */
   deletePoem(poemId: number): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders();

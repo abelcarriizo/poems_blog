@@ -40,7 +40,7 @@ export class AdminPoemsComponent implements OnInit {
 
         if (response && response.items) {
           this.poems = response.items;
-          this.filteredPoems = [...this.poems];  // 🔹 Inicializar la lista filtrada con los poemas
+          this.filteredPoems = [...this.poems]; 
           this.totalPages = response.pages || 1;
           console.log(' Lista de poemas:', this.poems);
         } else {
@@ -117,9 +117,8 @@ export class AdminPoemsComponent implements OnInit {
       (error) => console.error(' Error al eliminar el poema:', error)
     );
   }
-            /**
-     * 📌 Abre el modal con los detalles del poema
-     */
+  // Abre el modal con los detalles del poema
+     
   viewPoemDetail(poemId: number): void {
     console.log(`🔍 Cargando detalles del poema con ID: ${poemId}`);
     this.poemsService.getPoemById(poemId).subscribe(
@@ -131,9 +130,7 @@ export class AdminPoemsComponent implements OnInit {
     );
   }
   
-  /**
-   * 📌 Abre el modal con Bootstrap
-   */
+  //Abre el modal con Bootstrap
   openModal(): void {
     const modalElement = document.getElementById('poemDetailModal');
     if (modalElement) {
@@ -142,9 +139,7 @@ export class AdminPoemsComponent implements OnInit {
     }
   }
   
-  /**
-   * 📌 Cierra el modal
-   */
+  //Cierra el modal
   closeModal(): void {
     if (this.modalInstance) {
       this.modalInstance.hide();

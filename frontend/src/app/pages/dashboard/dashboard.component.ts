@@ -30,7 +30,7 @@ export class DashboardComponent {
         this.totalAdmins = stats.total_admins;
       },
       (error) => {
-        console.error('❌ Error obteniendo estadísticas:', error);
+        console.error('Error obteniendo estadísticas:', error);
       }
     );
   }

@@ -26,7 +26,7 @@ export class UserSettingsComponent implements OnInit {
   poems: any[] = [];
   ratings: any[] = [];
   selectedFile: File | null = null;
-  userImageUrl: string = 'static/uploads/default-profile.png'; // Imagen por defecto
+  userImageUrl: string = 'static/uploads/default-profile.png';
 
   constructor(
     private userService: UserService,
@@ -52,12 +52,11 @@ export class UserSettingsComponent implements OnInit {
       (data) => {
         this.user = data;
         this.updateUserImage();
-        
-        // 🔥 Ahora cargamos los poemas y ratings después de obtener el usuario
+
         this.loadUserPoems();
         this.loadUserRatings();
       },
-      (error) => console.error('❌ Error al cargar usuario:', error)
+      (error) => console.error('Error al cargar usuario:', error)
     );
   }
 
@@ -68,49 +67,49 @@ export class UserSettingsComponent implements OnInit {
     }
     this.poemsService.getPoemsbyUser(this.user.id).subscribe(
       (response) => {
-        console.log("✅ Poemas cargados:", response.items);
+        console.log("Poemas cargados:", response.items);
         this.poems = response.items;
       },
-      (error) => console.error('❌ Error obteniendo los poemas:', error)
+      (error) => console.error('Error obteniendo los poemas:', error)
     );
   }
 
   loadUserRatings(): void {
     if (!this.user.id) {
-        console.error("⚠ No se encontró el ID del usuario para cargar los ratings.");
+        console.error(" No se encontró el ID del usuario para cargar los ratings.");
         return;
     }
     this.ratingsService.getRatingsByUserId(this.user.id).subscribe(
       (data) => {
-        console.log("✅ Ratings cargados:", data);
+        console.log("Ratings cargados:", data);
         this.ratings = Array.isArray(data) ? data : [];
       },
-      (error) => console.error('❌ Error obteniendo ratings:', error)
+      (error) => console.error('Error obteniendo ratings:', error)
     );
   }
 
   saveUserInfo(): void {
     this.userService.updateUser(this.userId!, this.user).subscribe(
-      () => alert('✅ Datos actualizados con éxito.'),
-      (error) => console.error('❌ Error al actualizar:', error)
+      () => alert('Datos actualizados con éxito.'),
+      (error) => console.error('Error al actualizar:', error)
     );
   }
 
   saveDescription(): void {
     this.userService.updateUser(this.userId!, { descripcion: this.user.descripcion }).subscribe(
-      () => alert('✅ Descripción guardada.'),
-      (error) => console.error('❌ Error al actualizar la descripción:', error)
+      () => alert('Descripción guardada.'),
+      (error) => console.error('Error al actualizar la descripción:', error)
     );
   }
 
   updatePassword(): void {
     if (!this.user.password) {
-      alert('⚠ Debes ingresar una nueva contraseña.');
+      alert('Debes ingresar una nueva contraseña.');
       return;
     }
     this.userService.updateUser(this.userId!, { password: this.user.password }).subscribe(
-      () => alert('✅ Contraseña actualizada.'),
-      (error) => console.error('❌ Error al actualizar contraseña:', error)
+      () => alert('Contraseña actualizada.'),
+      (error) => console.error('Error al actualizar contraseña:', error)
     );
   }
 
@@ -118,16 +117,14 @@ export class UserSettingsComponent implements OnInit {
     if (confirm('¿Estás seguro de eliminar tu cuenta? Esta acción es irreversible.')) {
       this.userService.deleteUser(this.userId!).subscribe(
         () => {
-          alert('❌ Cuenta eliminada.');
+          alert('Cuenta eliminada.');
           this.authService.logout();
           this.router.navigate(['/home']);
         },
-        (error) => console.error('❌ Error al eliminar usuario:', error)
+        (error) => console.error(' Error al eliminar usuario:', error)
       );
     }
   }
-
-  // ⬇⬇⬇ FUNCIONES PARA SUBIR Y MOSTRAR IMAGEN ⬇⬇⬇
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -137,13 +134,13 @@ export class UserSettingsComponent implements OnInit {
   }
   uploadImage(): void {
     if (!this.selectedFile) {
-      alert("⚠ Por favor selecciona un archivo.");
+      alert("Por favor selecciona un archivo.");
       return;
     }
   
     const userId = this.authService.getUserId();
     if (!userId) {
-      alert("⚠ Error: No se encontró el ID del usuario.");
+      alert("Error: No se encontró el ID del usuario.");
       return;
     }
   
@@ -152,22 +149,21 @@ export class UserSettingsComponent implements OnInit {
   
     this.userService.uploadUserImage(userId, formData).subscribe(
       (response) => {
-        alert("✅ Imagen subida correctamente.");
+        alert("Imagen subida correctamente.");
         
-        // 📌 Actualizamos `image_url` con el valor devuelto por Flask
         this.user.image_url = response.image_url;
-        console.log("📸 Nueva URL de la imagen:", this.user.image_url);  // 🔥 Depuración
+        console.log("Nueva URL de la imagen:", this.user.image_url); 
   
-        this.updateUserImage();  // 🔥 Llamamos a la función para actualizar la UI
+        this.updateUserImage();  
       },
-      (error) => console.error("❌ Error subiendo la imagen:", error)
+      (error) => console.error(" Error subiendo la imagen:", error)
     );
   }
   updateUserImage(): void {
     console.log("🔎 URL antes de actualizar:", this.user.image_url);
   
     if (this.user.image_url) {
-      // 🔹 Asegurarse de que la URL no está mal formateada
+
       if (this.user.image_url.startsWith("http")) {
         this.userImageUrl = `${this.user.image_url}?t=${new Date().getTime()}`;
       } else {

@@ -11,7 +11,7 @@ export class UserService {
   private url = 'http://localhost:5000/user';
 
   constructor(private http: HttpClient, private authservice: AuthService) {}
-   // Obtener usuarios con paginación
+ 
    getUsers(page: number = 1): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?page=${page}`);
   }

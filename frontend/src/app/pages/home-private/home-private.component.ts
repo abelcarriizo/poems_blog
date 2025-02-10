@@ -10,35 +10,35 @@ import { Router } from '@angular/router';
   styleUrl: './home-private.component.css'
 })
 export class HomePrivateComponent {
-  username: string | null = null; // Nombre del usuario
-  userId: number | null = null; // ID del usuario actual
-  poems: any[] = []; // Lista de poemas original
-  filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
-  currentPage: number = 1; // Página actual
-  totalPages: number = 1; // Total de páginas disponibles
+  username: string | null = null;
+  userId: number | null = null;
+  poems: any[] = []; 
+  filteredPoems: any[] = []; 
+  currentPage: number = 1; 
+  totalPages: number = 1; 
 
   constructor(private authService: AuthService, private poemsService: PoemsService, private router: Router) {}
 
   ngOnInit(): void {
-    this.username = this.authService.getUsername(); // Obtiene el nombre de usuario desde el token
-    this.userId = this.authService.getUserId(); // Obtiene el ID del usuario
-    this.loadPoems(); // Cargar los poemas
+    this.username = this.authService.getUsername();
+    this.userId = this.authService.getUserId();
+    this.loadPoems(); 
   }
 
   goToDetail(poemId: number): void {
-    this.router.navigate(['/poems', poemId]); // Redirige al detalle del poema con el id
+    this.router.navigate(['/poems', poemId]); 
   }
 
   goToProfile(): void {
     if (this.userId !== null) {
-      this.router.navigate(['/profile', this.userId]); // Redirige al perfil del usuario con su ID
+      this.router.navigate(['/profile', this.userId]);
     } else {
       console.error('No se encontró un ID de usuario.');
     }
   }
 
   loadPoems(page: number = 1): void {
-    console.log(`🚀 Cargando poemas - Página: ${page}`);
+    console.log(` Cargando poemas - Página: ${page}`);
   
     this.poemsService.getPoems({ page, per_page: 9 }).subscribe(
       (response) => {
@@ -47,14 +47,14 @@ export class HomePrivateComponent {
           return;
         }
   
-        console.log(`✅ Poemas cargados: ${response.items.length}, Página: ${page}`);
+        console.log(`Poemas cargados: ${response.items.length}, Página: ${page}`);
         this.poems = response.items;
         this.filteredPoems = this.poems;
         this.currentPage = response.current_page;
         this.totalPages = response.pages;
       },
       (error) => {
-        console.error("❌ Error al cargar los poemas:", error);
+        console.error("Error al cargar los poemas:", error);
       }
     );
   }
@@ -82,6 +82,6 @@ export class HomePrivateComponent {
 
   logout(): void {
     this.authService.logout();
-    window.location.href = '/login'; // Redirige al usuario a la página de inicio de sesión
+    window.location.href = '/login';
   }
 }

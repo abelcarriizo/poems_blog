@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   navigateToPoems() {
-    this.router.navigate(['/homepublic']); // Cambia 'poems' a la ruta deseada
+    this.router.navigate(['/homepublic']); 
   }
   registerForm: FormGroup;
 

@@ -1,15 +1,13 @@
-/* Reset general */
-html, body {
+body {
   margin: 0;
   padding: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  background-color: #F5F1E5; /* Fondo general */
+  background-color: #F5F1E5;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-/* Contenedor principal */
 .container {
   width: 90%;
   max-width: 1400px;
@@ -23,7 +21,6 @@ html, body {
   border-radius: 20px;
 }
 
-/* Header */
 .header {
   background-color: black;
   color: white;
@@ -35,7 +32,6 @@ html, body {
   border-radius: 0px;
 }
 
-/* Buscador */
 .search-bar {
   display: flex;
   justify-content: center;
@@ -54,7 +50,6 @@ html, body {
   background-color: white;
 }
 
-/* Contenedor de poemas */
 .poems-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -63,7 +58,6 @@ html, body {
   padding: 20px;
 }
 
-/* Tarjetas de poemas */
 .poem-card {
   background-color: white;
   padding: 20px;
@@ -98,7 +92,6 @@ html, body {
   margin-top: 10px;
 }
 
-/* Paginación */
 .pagination {
   display: flex;
   justify-content: center;
@@ -121,7 +114,7 @@ html, body {
   cursor: not-allowed;
 }
 
-/* Footer */
+
 .footer {
   background-color: black;
   color: white;
@@ -134,7 +127,6 @@ html, body {
   left: 0;
 }
 
-/* Responsividad */
 @media (max-width: 1024px) {
   .poems-container {
     grid-template-columns: repeat(2, 1fr);

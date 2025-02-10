@@ -7,7 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   selector: 'app-login',
   standalone: false,
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'] // Corregido: "styleUrls" en plural
+  styleUrls: ['./login.component.css'] 
 })
 export class LoginComponent {
   email: string = '';
@@ -16,9 +16,8 @@ export class LoginComponent {
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  /**
-   * Inicia sesión del usuario normal
-   */
+  //Inicia sesión del usuario normal
+   
   login() {
     if (!this.email || !this.password) {
       alert('Por favor, completa todos los campos.');
@@ -40,9 +39,8 @@ export class LoginComponent {
     });
   }
 
-  /**
-   * Inicia sesión como administrador
-   */
+  // Inicia sesión como administrador
+   
   adminLogin() {
     if (!this.email || !this.password) {
       alert('⚠ Por favor, completa todos los campos.');
@@ -69,9 +67,7 @@ export class LoginComponent {
   }
   
 
-  /**
-   * Guarda el token y extrae el userId desde el JWT
-   */
+  //Guarda el token y extrae el userId desde el JWT
   private saveSession(token: string) {
     sessionStorage.setItem('token', token);
     const decodedToken = this.jwtHelper.decodeToken(token);

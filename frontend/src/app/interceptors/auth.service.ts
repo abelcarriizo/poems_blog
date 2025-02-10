@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service'; // Asegúrate de que la ruta sea correcta
+import { AuthService } from '../services/auth.service'; 
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
-  private readonly apiUrl = 'http://localhost:5000'; // URL base del backend
+  private readonly apiUrl = 'http://localhost:5000'; 
 
   constructor(private authService: AuthService) {}
 

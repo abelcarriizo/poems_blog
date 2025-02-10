@@ -26,17 +26,16 @@ export class PoemDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Obtener el ID del poema desde la URL
     const poemId = this.route.snapshot.paramMap.get('id');
     if (poemId) {
-      this.loadPoemDetails(+poemId); // Convertir el ID a número y cargar detalles
-      this.loadPoemRatings(+poemId); // Cargar los ratings del poema
+      this.loadPoemDetails(+poemId); 
+      this.loadPoemRatings(+poemId); 
     }
   }
 
   goToRate(): void {
     if (this.poem && this.poem.id) {
-      this.router.navigate(['/rate', this.poem.id]); // Redirige a la ruta correcta
+      this.router.navigate(['/rate', this.poem.id]); 
     } else {
       console.error('Error: No se pudo obtener el ID del poema.');
     }

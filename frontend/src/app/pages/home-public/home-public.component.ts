@@ -8,10 +8,10 @@ import { PoemsService } from '../../services/poems.service';
   styleUrls: ['./home-public.component.css']
 })
 export class HomePublicComponent implements OnInit {
-  poems: any[] = []; // Lista de poemas
-  filteredPoems: any[] = []; // Lista de poemas filtrada para búsqueda
-  currentPage: number = 1; // Página actual
-  totalPages: number = 1; // Total de páginas disponibles
+  poems: any[] = [];
+  filteredPoems: any[] = [];
+  currentPage: number = 1;
+  totalPages: number = 1; 
 
   constructor(private poemsService: PoemsService) {}
 
@@ -48,14 +48,14 @@ export class HomePublicComponent implements OnInit {
           return;
         }
   
-        console.log(`✅ Poemas cargados: ${response.items.length}, Página: ${page}`);
+        console.log(`Poemas cargados: ${response.items.length}, Página: ${page}`);
         this.poems = response.items;
         this.filteredPoems = this.poems;
         this.currentPage = response.current_page;
         this.totalPages = response.pages;
       },
       (error) => {
-        console.error("❌ Error al cargar los poemas:", error);
+        console.error("Error al cargar los poemas:", error);
       }
     );
   }

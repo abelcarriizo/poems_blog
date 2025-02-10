@@ -1,5 +1,4 @@
 <body>
-  <!-- Header -->
   <header class="header" href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">POEMS BLOG/CREAR UN RATING</header>
 
   <!-- Contenedor Principal -->
@@ -32,7 +31,6 @@
       <div class="rating-container">
         <h3 class="rating-title">RATING:</h3>
 
-        <!-- ⭐ Estrellas clickeables -->
         <div class="d-flex gap-2 mb-3">
           <span *ngFor="let star of [1, 2, 3, 4, 5]" 
                 (click)="setRating(star)" 
@@ -48,10 +46,8 @@
           </span>
         </div>
 
-        <!-- Comentario -->
         <textarea class="form-control mt-3" placeholder="Realiza tu comentario." [(ngModel)]="userComment"></textarea>
 
-        <!-- Botón Guardar -->
         <button class="btn btn-dark mt-3 w-100 p-3" (click)="saveComment()">GUARDAR</button>
       </div>
     </div>

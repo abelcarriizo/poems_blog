@@ -39,7 +39,7 @@ export class AdminRatingsComponent implements OnInit {
 
         if (response && response.items) {
           this.ratings = response.items;
-          this.filteredRatings = [...this.ratings];  // Asegurar que filteredRatings tenga los datos correctos
+          this.filteredRatings = [...this.ratings];  
           console.log('✅ Ratings cargados:', this.ratings);
         } else {
           console.error('⚠ Respuesta inesperada:', response);
@@ -102,9 +102,7 @@ export class AdminRatingsComponent implements OnInit {
       (error) => console.error('❌ Error al eliminar el rating:', error)
     );
   }
-    /**
-   * 📌 Abre el modal con los detalles del rating
-   */
+    //Abre el modal con los detalles del rating
     viewRatingDetail(ratingId: number): void {
       console.log(`🔍 Cargando detalles del rating con ID: ${ratingId}`);
       this.ratingsService.getRatingsByPoemId(ratingId).subscribe(
@@ -116,9 +114,7 @@ export class AdminRatingsComponent implements OnInit {
       );
     }
   
-    /**
-     * 📌 Abre el modal con Bootstrap
-     */
+    //Abre el modal con Bootstrap
     openModal(modalId: string): void {
       const modalElement = document.getElementById(modalId);
       if (modalElement) {
@@ -127,9 +123,7 @@ export class AdminRatingsComponent implements OnInit {
       }
     }
   
-    /**
-     * 📌 Cierra el modal
-     */
+    //Cierra el modal
     closeModal(): void {
       if (this.modalInstance) {
         this.modalInstance.hide();

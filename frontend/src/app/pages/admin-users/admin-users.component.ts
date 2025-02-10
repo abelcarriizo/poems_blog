@@ -32,13 +32,13 @@ export class AdminUsersComponent {
         
         this.totalPages = response.pages || 1; // Usar "pages" en vez de "totalPages"
   
-        console.log(`📄 Página actual: ${this.currentPage} / ${this.totalPages}`);
+        console.log(` Página actual: ${this.currentPage} / ${this.totalPages}`);
   
         if (this.users.length === 0) {
           console.warn("⚠ No se encontraron usuarios en esta página.");
         }
       },
-      (error) => console.error('❌ Error al obtener usuarios:', error)
+      (error) => console.error(' Error al obtener usuarios:', error)
     );
   }
   
@@ -69,7 +69,7 @@ export class AdminUsersComponent {
     }
   }
   viewUserProfile(userId: number): void {
-    console.log(`🔍 Redirigiendo a /profile/${userId}`);
+    console.log(` Redirigiendo a /profile/${userId}`);
     this.router.navigate([`/profile/${userId}`]);
   }
   

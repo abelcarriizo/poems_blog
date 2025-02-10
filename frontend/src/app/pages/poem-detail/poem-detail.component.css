@@ -1,5 +1,4 @@
-/* Reset general */
-html, body {
+body {
   margin: 0;
   padding: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -10,7 +9,6 @@ html, body {
   flex-direction: column;
 }
 
-/* Header */
 .header {
   background-color: black;
   color: white;
@@ -24,7 +22,6 @@ html, body {
   margin-left: 70px;
 }
 
-/* Sidebar */
 .sidebar {
   width: 100px;
   height: 100vh;
@@ -39,7 +36,6 @@ html, body {
   box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Contenedor Principal */
 .main-content {
   flex-grow: 1;
   display: flex;
@@ -47,7 +43,6 @@ html, body {
   overflow: auto;
 }
 
-/* Contenedor de Poema y Reseñas */
 .container-fluid {
   display: flex;
   width: 100%;
@@ -58,7 +53,6 @@ html, body {
   overflow: auto;
 }
 
-/* Poema */
 .poem-container {
   background-color: white;
   border: 3px solid black;
@@ -70,7 +64,6 @@ html, body {
   overflow-y: auto;
 }
 
-/* Título del poema */
 .poem-title {
   font-weight: bold;
   font-size: 2rem;
@@ -78,7 +71,6 @@ html, body {
   padding-bottom: 10px;
 }
 
-/* Autor y Género */
 .author-box {
   display: flex;
   justify-content: space-between;
@@ -94,7 +86,6 @@ html, body {
   padding: 5px;
 }
 
-/* Contenido del poema */
 .poem-content {
   font-size: 1.4rem;
   line-height: 1.8;
@@ -102,7 +93,6 @@ html, body {
   margin-top: 15px;
 }
 
-/* Contenedor de Reseñas */
 .rating-container {
   width: 35%;
   background-color: white;
@@ -116,7 +106,6 @@ html, body {
   overflow-y: auto;
 }
 
-/* Título de rating */
 .rating-title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -126,7 +115,7 @@ html, body {
   text-align: center;
 }
 
-/* Tarjeta de Reseña */
+
 .review {
   background-color: #FDFBF6;
   border: 2px solid black;
@@ -136,7 +125,6 @@ html, body {
   width: 100%;
 }
 
-/* Botón */
 .opinion-btn {
   background-color: black;
   color: white;
@@ -156,7 +144,6 @@ html, body {
   color: black;
 }
 
-/* Footer */
 .footer {
   background-color: black;
   color: white;
@@ -168,9 +155,9 @@ html, body {
   bottom: 0;
   left: 0;
 }
-/* Sidebar fijo */
+
 .sidebar {
-  width: 80px; /* Mantiene el ancho actual */
+  width: 80px; 
   height: 100vh;
   background-color: #F5F1E5;
   position: fixed;
@@ -185,7 +172,6 @@ html, body {
   z-index: 1000;
 }
 
-/* Iconos del sidebar */
 .sidebar-icons {
   display: flex;
   flex-direction: column;
@@ -204,9 +190,8 @@ html, body {
   color: #444;
 }
 
-/* Ajuste del contenido principal */
 .container-fluid {
-  margin-left: 90px; /* Se separa del sidebar */
+  margin-left: 90px; 
   width: calc(100% - 90px);
   padding: 40px;
 }

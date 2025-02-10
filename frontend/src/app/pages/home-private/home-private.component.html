@@ -10,7 +10,7 @@
         (input)="onSearch($event)"
       />
     </div>
-  <!-- Listado de poemas -->
+
   <div class="row g-4 w-100">
     <div class="col-md-4 col-sm-6" *ngFor="let poem of filteredPoems">
       <div class="card shadow-sm p-3 rounded-4 poem-card" (click)="goToDetail(poem.id)">
@@ -23,7 +23,7 @@
       </div>
     </div>
   </div>
-    <!-- Paginación -->
+
     <div class="pagination">
       <button (click)="goToPreviousPage()" [disabled]="currentPage === 1">⬅ Anterior</button>
       <span>Página {{ currentPage }} de {{ totalPages }}</span>

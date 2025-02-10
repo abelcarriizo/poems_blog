@@ -11,13 +11,13 @@ import { Router } from '@angular/router';
 export class HomeComponent {
   constructor(private router: Router) {}
   navigateToPoems() {
-    this.router.navigate(['/homepublic']); // Cambia 'poems' a la ruta deseada
+    this.router.navigate(['/homepublic']); 
   }
   register() {
-    this.router.navigate(['/register']); // Cambia 'poems' a la ruta deseada
+    this.router.navigate(['/register']);
   }
   login() {
-    this.router.navigate(['/login']); // Cambia 'poems' a la ruta deseada
+    this.router.navigate(['/login']);
   }
 
 }

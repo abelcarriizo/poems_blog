@@ -68,7 +68,6 @@
     color: #007bff;
   }
   
-  /* Responsividad */
   @media (max-width: 1024px) {
     .ratings-container {
       grid-template-columns: repeat(2, 1fr);

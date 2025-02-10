@@ -16,9 +16,7 @@ export class RatingsService {
     return this.http.get<any>(`${this.baseUrl}`, { params });
   }
   
-  /**
-   * Obtiene las calificaciones de un poema por su ID con paginación.
-   */
+
   getRatingsByPoemId(poemId: number, page: number = 1): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders();
@@ -35,10 +33,6 @@ export class RatingsService {
     );
   }
 
-
-  /**
-   * Crea una nueva calificación para un poema.
-   */
   createRating(poemId: number, userId: number, stars: number, comment: string): Observable<any> {
     const body = { poem_id: poemId, author_id: userId, stars, comment };
 
@@ -52,9 +46,6 @@ export class RatingsService {
     );
   }
 
-  /**
-   * Actualiza una calificación existente por su ID.
-   */
   updateRating(ratingId: number, ratingData: any): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders();
@@ -71,10 +62,6 @@ export class RatingsService {
     );
   }
   
-
-  /**
-   * Elimina una calificación por su ID.
-   */
   getRatingsByUserId(userId: number, page: number = 1): Observable<any[]> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders();
@@ -84,21 +71,14 @@ export class RatingsService {
     }
   
     return this.http.get(`${this.baseUrl}?page=${page}&user_id=${userId}`, { headers }).pipe(
-      map((response: any) => response.items || []),  // ✅ Devuelve solo la lista
+      map((response: any) => response.items || []),
       catchError(error => {
-        console.error('❌ Error obteniendo ratings:', error);
+        console.error('Error obteniendo ratings:', error);
         return throwError(() => new Error('No se pudieron cargar las calificaciones.'));
       })
     );
   }
   
-  
-  
-  
-  
-  /**
-   * Elimina una calificación por ID.
-   */
   deleteRating(ratingId: number): Observable<any> {
     const token = sessionStorage.getItem('token');
     let headers = new HttpHeaders();

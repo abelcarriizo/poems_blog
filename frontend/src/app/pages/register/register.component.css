@@ -1,5 +1,4 @@
-/* Reset general */
-html, body {
+body {
   margin: 0;
   padding: 0;
   font-family: 'Plus Jakarta Sans', sans-serif;
@@ -7,10 +6,10 @@ html, body {
   display: flex;
   flex-direction: column;
   background-color: black;
-  overflow: hidden; /* Evita scroll */
+  overflow: hidden; 
 }
 
-/* Wrapper que cubre toda la pantalla */
+
 .main-container {
   display: flex;
   flex-direction: column;
@@ -18,7 +17,6 @@ html, body {
   height: 100vh;
 }
 
-/* Header */
 header {
   background-color: black;
   color: white;
@@ -40,7 +38,6 @@ nav a:hover {
   text-decoration: underline;
 }
 
-/* Contenedor principal */
 .container-fluid {
   display: flex;
   flex-direction: row;
@@ -48,7 +45,6 @@ nav a:hover {
   width: 100%;
 }
 
-/* Sección Izquierda */
 .col-md-6:first-child {
   background-color: whitesmoke;
   flex: 1;
@@ -80,7 +76,6 @@ nav a:hover {
   color: white;
 }
 
-/* Sección Derecha */
 .login-container {
   background-color: #F5F1E5 !important;
   flex: 1;
@@ -92,7 +87,6 @@ nav a:hover {
   box-shadow: -3px 0px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* Título */
 .login-container h2 {
   font-size: 2rem;
   font-weight: bold;
@@ -100,7 +94,7 @@ nav a:hover {
   color: black;
 }
 
-/* Formulario */
+
 .register-form {
   width: 100%;
   max-width: 400px;
@@ -123,7 +117,7 @@ nav a:hover {
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
-/* Botón */
+
 .btn-dark {
   width: 100%;
   background-color: black;
@@ -140,7 +134,6 @@ nav a:hover {
   background-color: #333333;
 }
 
-/* Footer */
 footer {
   background-color: black;
   color: white;
@@ -162,7 +155,6 @@ footer a:hover {
   text-decoration: underline;
 }
 
-/* Responsividad */
 @media (max-width: 1024px) {
   .container-fluid {
     flex-direction: column;

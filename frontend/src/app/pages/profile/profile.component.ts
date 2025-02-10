@@ -37,10 +37,10 @@ export class ProfileComponent implements OnInit {
       const userId = params.get('id');
       
       if (userId) {
-        console.log(`🔍 Cargando perfil del usuario con ID: ${userId}`);
+        console.log(`Cargando perfil del usuario con ID: ${userId}`);
         this.getUserProfileById(Number(userId));
       } else {
-        console.log("🔍 Cargando perfil del usuario logueado.");
+        console.log("Cargando perfil del usuario logueado.");
         this.getLoggedUserProfile();
       }
     });
@@ -49,24 +49,24 @@ export class ProfileComponent implements OnInit {
   getLoggedUserProfile(): void {
     this.authService.getUserData().subscribe(
       (data) => {
-        console.log("✅ Usuario logueado:", data);
+        console.log("Usuario logueado:", data);
         this.selectedUser = { ...data };
         this.loadUserPoems();
         this.loadUserRatings();
       },
-      (error) => console.error('❌ Error obteniendo datos del usuario logueado:', error)
+      (error) => console.error('Error obteniendo datos del usuario logueado:', error)
     );
   }
 
   getUserProfileById(userId: number): void {
     this.userService.getUserById(userId).subscribe(
       (data) => {
-        console.log("✅ Usuario seleccionado:", data);
+        console.log("Usuario seleccionado:", data);
         this.selectedUser = { ...data };
         this.loadUserPoems();
         this.loadUserRatings();
       },
-      (error) => console.error('❌ Error obteniendo datos del usuario seleccionado:', error)
+      (error) => console.error('Error obteniendo datos del usuario seleccionado:', error)
     );
   }
 
@@ -78,7 +78,7 @@ export class ProfileComponent implements OnInit {
         this.poems = response.items;
         this.filteredPoems = [...this.poems];
       },
-      (error) => console.error('❌ Error obteniendo los poemas:', error)
+      (error) => console.error('Error obteniendo los poemas:', error)
     );
   }
 
@@ -90,7 +90,7 @@ export class ProfileComponent implements OnInit {
         this.ratings = Array.isArray(data) ? data : [];
         this.filteredRatings = [...this.ratings];
       },
-      (error) => console.error('❌ Error obteniendo ratings:', error)
+      (error) => console.error('Error obteniendo ratings:', error)
     );
   }
 

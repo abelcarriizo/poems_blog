@@ -34,7 +34,7 @@ export class RateComponent implements OnInit {
     this.userId = this.authService.getUserId();
 
     if (!this.userId) {
-      console.error('❌ Usuario no autenticado');
+      console.error('Usuario no autenticado');
       alert('Debes iniciar sesión para calificar un poema.');
       this.router.navigate(['/login']);
       return;
@@ -43,12 +43,12 @@ export class RateComponent implements OnInit {
     if (this.poemId) {
       this.loadPoemDetails(this.poemId);
     } else {
-      console.error('❌ Error: ID de poema no encontrado en la URL');
+      console.error('Error: ID de poema no encontrado en la URL');
     }
   }
   setRating(star: number): void {
     this.rating = star; // Establece la calificación seleccionada
-    console.log(`🌟 Rating seleccionado: ${this.rating} estrellas`);
+    console.log(` Rating seleccionado: ${this.rating} estrellas`);
   }
 
   
@@ -57,10 +57,9 @@ export class RateComponent implements OnInit {
       (data) => {
         this.poem = data;
       },
-      (error) => console.error('❌ Error al cargar el poema:', error)
+      (error) => console.error(' Error al cargar el poema:', error)
     );
   }
-    // 🔥 Calcula el promedio de estrellas en el frontend
   calculateAverageRating(): void {
     if (this.ratings.length === 0) {
       this.averageRating = 0;
@@ -71,26 +70,26 @@ export class RateComponent implements OnInit {
   }
   saveComment(): void {
     if (!this.poemId || !this.userId) {
-      console.error('❌ Error: No se encontró el ID del poema o del usuario.');
+      console.error('Error: No se encontró el ID del poema o del usuario.');
       return;
     }
 
     if (!this.rating || this.rating < 1 || this.rating > 5) {
-      console.error('❌ Error: Selecciona una calificación entre 1 y 5.');
+      console.error('Error: Selecciona una calificación entre 1 y 5.');
       alert('Selecciona una calificación válida (1-5 estrellas).');
       return;
     }
 
-    console.log(`🚀 Enviando rating para el poema ${this.poemId} con ${this.rating} estrellas...`);
+    console.log(`Enviando rating para el poema ${this.poemId} con ${this.rating} estrellas...`);
 
     this.ratingsService.createRating(this.poemId, this.userId, this.rating, this.userComment).subscribe(
       (response) => {
-        console.log('✅ Rating enviado correctamente:', response);
+        console.log('Rating enviado correctamente:', response);
         alert('Tu calificación ha sido enviada.');
-        this.router.navigate(['/poems', this.poemId]); // Redirige a la página del poema
+        this.router.navigate(['/poems', this.poemId]);
       },
       (error) => {
-        console.error('❌ Error al enviar el rating:', error);
+        console.error('Error al enviar el rating:', error);
         alert('Hubo un error al enviar tu calificación.');
       }
     );

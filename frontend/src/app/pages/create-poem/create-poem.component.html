@@ -1,15 +1,14 @@
 <div class="container-fluid vh-100 d-flex">
-    <!-- Sidebar -->
+    
     <div class="sidebar">
       <app-sidebar></app-sidebar>
     </div>
   
-    <!-- Contenido principal -->
     <div class="main-content">
       <h1 class="mb-4" href="#" [routerLink]="['/dashboard']" routerLinkActive="router-link-active">POEMS BLOG/ CREAR POEMA</h1>
   
       <div class="row w-100">
-        <!-- Inputs principales -->
+
         <div class="col-md-8">
           <div class="form-group">
             <label class="fw-bold">TÍTULO:</label>
@@ -27,14 +26,12 @@
           </div>
         </div>
   
-        <!-- Sección de descripción -->
         <div class="col-md-4">
           <div class="form-group">
             <label class="fw-bold">DESCRIPCIÓN:</label>
             <textarea class="form-control" rows="8" [(ngModel)]="description" placeholder="Crea una descripción..."></textarea>
           </div>
   
-          <!-- Botón Guardar -->
           <button class="btn btn-save mt-3" (click)="savePoem()">
             <i class="bi bi-save-fill"></i> GUARDAR
           </button>

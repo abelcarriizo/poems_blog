@@ -51,7 +51,7 @@ export class CreatePoemComponent {
         this.router.navigate(['/dashboard']);
       },
       (error) => {
-        console.error('❌ Error al guardar el poema:', error);
+        console.error('Error al guardar el poema:', error);
         alert('Hubo un error al guardar tu poema.');
       }
     );

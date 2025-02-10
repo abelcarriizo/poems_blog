@@ -1,18 +1,16 @@
 <div class="main-container">
-  <!-- Header -->
   <header>
     <nav>
       <a href="#" [routerLink]="['/register']" routerLinkActive="router-link-active">REGISTRARSE</a>
     </nav>
   </header>
   <div class="container-fluid vh-100 d-flex">
-    <!-- Sección Izquierda -->
+
     <div class="col-md-6 d-flex flex-column justify-content-center align-items-start bg-light text-start p-5">
       <h1 class="display-1 fw-bold">Poems Blog/</h1>
       <button class="btn btn-outline-dark btn-lg mt-4" href="#" [routerLink]="['/homepublic']" routerLinkActive="router-link-active">DESCUBRE POEMAS</button>
     </div>
-  
-    <!-- Sección Derecha -->
+
     <div class="col-md-6 d-flex flex-column justify-content-center align-items-center bg-light p-5 shadow-lg login-container">
       <h2 class="fw-bold mb-4">¡BIENVENIDO!</h2>
       <form class="w-75" (ngSubmit)="login()">

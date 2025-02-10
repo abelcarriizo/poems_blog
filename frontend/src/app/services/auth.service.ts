@@ -7,26 +7,19 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:5000/auth'; // URL base para los endpoints del backend
-  private tokenKey = 'token'; // Clave para almacenar el token en localStorage
+  private baseUrl = 'http://localhost:5000/auth'; 
+  private tokenKey = 'token'; 
   private url = 'http://localhost:5000/user'; 
-  private jwtHelper = new JwtHelperService(); // Instancia para manejar JWT
+  private jwtHelper = new JwtHelperService(); 
 
   constructor(private http: HttpClient) {}
 
-  /**
-   * Verifica si el usuario está autenticado.
-   * @returns true si el usuario está autenticado y el token no ha expirado, false en caso contrario.
-   */
+
   isLoggedIn(): boolean {
     const token = sessionStorage.getItem(this.tokenKey);
     return !!token && !this.jwtHelper.isTokenExpired(token);
   }
 
-  /**
-   * Obtiene el ID del usuario decodificando el token.
-   * @returns El ID del usuario o null si no está disponible.
-   */
   getUserId(): number | null {
     const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
@@ -37,33 +30,21 @@ export class AuthService {
     return null;
   }
   
-
-  /**
-   * Obtiene el nombre de usuario decodificando el token.
-   * @returns El nombre de usuario o null si no está disponible.
-   */
   getUsername(): string | null {
     const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      return decodedToken?.username || null; // Cambia "username" según tu token
+      return decodedToken?.username || null; 
     }
     return null;
   }
 
-  /**
-   * Elimina el token y el ID del usuario del sessionStorage para cerrar sesión.
-   */
   logout(): void {
     sessionStorage.removeItem(this.tokenKey);
     sessionStorage.removeItem('userId');
   }
 
-  /**
-   * Envía datos de registro al backend.
-   * @param data Datos del usuario para registrar.
-   * @returns Observable con la respuesta del servidor.
-   */
+
   register(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/register`, data, {
       headers: new HttpHeaders({
@@ -72,67 +53,47 @@ export class AuthService {
     });
   }
 
-  /**
-   * Realiza el inicio de sesión enviando las credenciales al backend.
-   * @param credentials Contiene el correo y contraseña del usuario.
-   * @returns Observable con la respuesta del servidor.
-   */
   login(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login`, credentials);
   }
 
-  /**
-   * Realiza el inicio de sesión para administradores.
-   * @param credentials Contiene el correo y contraseña del administrador.
-   * @returns Observable con la respuesta del servidor.
-   */
   adminLogin(credentials: { email: string; password: string }): Observable<any> {
     return this.http.post(`${this.baseUrl}/login/admin`, credentials).pipe(
       catchError(error => {
-        console.error("❌ Error en la solicitud de adminLogin:", error);
+        console.error(" Error en la solicitud de adminLogin:", error);
         return throwError(() => new Error("Error en la autenticación del administrador"));
       })
     );
   }
   
 
-  /**
-   * Almacena el token JWT y el ID del usuario en sessionStorage.
-   * @param token El token JWT devuelto por el backend.
-   */
   saveToken(token: string): void {
-    console.log("🔹 Guardando token en sessionStorage:", token);
+    console.log("Guardando token en sessionStorage:", token);
     sessionStorage.setItem(this.tokenKey, token);
   
     try {
       const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log("🔍 Token decodificado:", decodedToken);
+      console.log("Token decodificado:", decodedToken);
   
       const userId = decodedToken?.id || decodedToken?.sub;
       if (userId) {
         sessionStorage.setItem('userId', userId.toString());
-        console.log("✅ userId almacenado:", userId);
+        console.log("userId almacenado:", userId);
       } else {
-        console.error('❌ Error: userId no encontrado en el token');
+        console.error('Error: userId no encontrado en el token');
       }
     } catch (error) {
-      console.error('❌ Error al decodificar el token:', error);
+      console.error('Error al decodificar el token:', error);
     }
   }
   
-  
-  
-  /**
-   * Obtiene el token JWT almacenado en sessionStorage.
-   * @returns El token JWT o null si no está almacenado.
-   */
   getToken(): string | null {
     return sessionStorage.getItem(this.tokenKey);
   }
 
   getUserData(): Observable<any> {
     const userId = this.getUserId();
-    const token = sessionStorage.getItem('token');  // 🔹 Obtener el token JWT
+    const token = sessionStorage.getItem('token'); 
   
     if (!token) {
       console.error('❌ No hay token disponible');
@@ -155,6 +116,5 @@ export class AuthService {
   
     return this.http.post<any>(`${this.baseUrl}/${userId}/upload-image`, formData);
   }
-  
   
 }

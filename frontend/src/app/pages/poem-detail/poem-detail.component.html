@@ -1,10 +1,7 @@
 <body>
-  <!-- Header -->
   <header class="header" href="#" [routerLink]="['/']" routerLinkActive="router-link-active">POEMS BLOG/VER POEMA</header>
 
-  <!-- Contenedor Principal -->
   <div class="main-content d-flex">
-    <!-- Sidebar -->
     <app-sidebar class="sidebar">
       <div class="sidebar-icons">
         <i class="bi bi-pencil"></i>
@@ -12,9 +9,7 @@
       </div>
     </app-sidebar>
 
-    <!-- Sección del Poema y Reseñas -->
     <div class="container-fluid d-flex flex-grow-1 p-4">
-      <!-- Poema -->
       <div class="poem-container">
         <h2 class="poem-title">{{ poem?.title }}</h2>
 
@@ -28,7 +23,6 @@
         </div>
       </div>
 
-      <!-- Reseñas -->
       <div class="rating-container">
         <h3 class="rating-title">RATING: ({{ averageRating ? averageRating.toFixed(2) : 'N/A' }} ⭐)</h3>
 
@@ -49,6 +43,5 @@
     </div>
   </div>
 
-  <!-- Footer -->
   <footer class="footer">©2024 POEMS BLOG / EL LUGAR DONDE LAS PALABRAS COBRAN VIDA.</footer>
 </body>
