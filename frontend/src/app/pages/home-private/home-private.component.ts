@@ -16,6 +16,7 @@ export class HomePrivateComponent {
   filteredPoems: any[] = []; 
   currentPage: number = 1; 
   totalPages: number = 1; 
+  sortOrder: string = 'least_rated';
 
   constructor(private authService: AuthService, private poemsService: PoemsService, private router: Router) {}
 
@@ -36,28 +37,35 @@ export class HomePrivateComponent {
       console.error('No se encontró un ID de usuario.');
     }
   }
-
   loadPoems(page: number = 1): void {
-    console.log(` Cargando poemas - Página: ${page}`);
+    console.log(`📌 Cargando poemas - Página: ${page}, Orden: ${this.sortOrder}`);
   
-    this.poemsService.getPoems({ page, per_page: 9 }).subscribe(
+    this.poemsService.getPoems({ page, per_page: 9, sort: this.sortOrder }).subscribe(
       (response) => {
-        if (!response || !response.items) {
+        console.log("📌 Respuesta completa del backend:", response);  // 🔍 Ver respuesta completa
+        console.log("📌 Poemas recibidos:", response.items); // 🔍 Ver si `items` tiene datos
+  
+        if (!response || !response.items || !Array.isArray(response.items)) {
           console.error("⚠️ Respuesta inválida del servidor:", response);
           return;
         }
   
-        console.log(`Poemas cargados: ${response.items.length}, Página: ${page}`);
+        console.log(`✅ Poemas cargados: ${response.items.length}, Página: ${page}`);
         this.poems = response.items;
-        this.filteredPoems = this.poems;
+        this.filteredPoems = [...this.poems];  // Asegurar que `filteredPoems` recibe los datos correctamente
+        console.log("📌 filteredPoems actualizado:", this.filteredPoems);
+        
         this.currentPage = response.current_page;
         this.totalPages = response.pages;
       },
       (error) => {
-        console.error("Error al cargar los poemas:", error);
+        console.error("❌ Error al cargar los poemas:", error);
       }
     );
   }
+  
+  
+  
 
   onSearch(event: Event): void {
     const query = (event.target as HTMLInputElement).value.toLowerCase();
@@ -79,6 +87,15 @@ export class HomePrivateComponent {
       this.loadPoems(this.currentPage - 1);
     }
   }
+  changeSorting(event: Event): void {
+    const target = event.target as HTMLSelectElement; 
+    const selectedValue = target.value; 
+    
+    console.log("Cambiando orden a:", selectedValue);
+    this.sortOrder = selectedValue;
+    this.loadPoems();  
+  }
+  
 
   logout(): void {
     this.authService.logout();

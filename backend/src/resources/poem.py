@@ -34,40 +34,79 @@ class Poem(Resource):
     return '', 204
 
 class Poems(Resource):
-  @jwt_required(optional=True)
-  def get(self):
-      query = db.session.query(PoemModel, func.count(RatingModel.id).label('rating_count')) \
-                        .outerjoin(RatingModel, PoemModel.id == RatingModel.poem_id) \
-                        .group_by(PoemModel.id)
+    @jwt_required(optional=True)
+    def get(self):
+      print("🚀 Flask recibió la petición GET /poems")  
+      
+      query = db.session.query(PoemModel)
   
-      # Obtener parámetros de ordenamiento
-      sort_order = request.args.get('sort', 'least_rated')
+      # Obtener parámetros
+      user_id = request.args.get('user_id', type=int)
+      sort_order = request.args.get('sort', 'newest')
+      page = request.args.get('page', 1, type=int)
+      per_page = request.args.get('per_page', 9, type=int)
   
-      # Ordenar por cantidad de calificaciones (prioridad a los menos calificados)
+      print(f"🔍 Parámetros recibidos en Flask:")
+      print(f"   user_id: {user_id}")
+      print(f"   sort_order: {sort_order}")
+      print(f"   page: {page}, per_page: {per_page}")
+  
+      # Verificar que los parámetros son correctos
+      if page < 1 or per_page < 1:
+          print(" Error: Parámetros inválidos")
+          return jsonify({"message": "Error: Parámetros inválidos"}), 422
+  
+      if user_id:
+          print(f"🔎 Filtrando por author_id={user_id}...")
+          query = query.filter(PoemModel.author_id == user_id)  
+  
+      # Ordenar los resultados según la opción seleccionada
       if sort_order == 'least_rated':
-          query = query.order_by('rating_count', PoemModel.date_created.asc())  # Primero los menos calificados
+          print("🔄 Ordenando por menos calificados primero...")
+          query = query.outerjoin(RatingModel, PoemModel.id == RatingModel.poem_id) \
+                       .group_by(PoemModel.id) \
+                       .order_by(func.count(RatingModel.id).asc(), PoemModel.date_created.asc())  
       elif sort_order == 'most_rated':
-          query = query.order_by('rating_count', PoemModel.date_created.desc())  # Primero los más calificados
+          print("🔄 Ordenando por más calificados primero...")
+          query = query.outerjoin(RatingModel, PoemModel.id == RatingModel.poem_id) \
+                       .group_by(PoemModel.id) \
+                       .order_by(func.count(RatingModel.id).desc(), PoemModel.date_created.desc())  
       elif sort_order == 'newest':
-          query = query.order_by(PoemModel.date_created.desc())  # Más recientes primero
+          print("🔄 Ordenando por más reciente primero...")
+          query = query.order_by(PoemModel.date_created.desc())  
       elif sort_order == 'oldest':
-          query = query.order_by(PoemModel.date_created.asc())  # Más antiguos primero
+          print("🔄 Ordenando por más antiguo primero...")
+          query = query.order_by(PoemModel.date_created.asc())  
   
-      results = [{"id": poem.id, "title": poem.title, "rating_count": rating_count} for poem, rating_count in query.all()]
-      return jsonify(results)
+      # Verificar si hay resultados
+      try:
+          total_results = query.count()
+          print(f"✅ Total de poemas encontrados: {total_results}")
+  
+          if total_results == 0:
+              print("⚠️ No hay poemas para este usuario.")
+              return jsonify({"message": "No hay poemas disponibles"}), 200
+  
+          # Aplicar paginación
+          paginated_data = paginate(query)
+          return jsonify(paginated_data)
+  
+      except Exception as e:
+          print(f"⚠️ Error ejecutando la consulta: {str(e)}")
+          return jsonify({"message": "Error en la consulta", "error": str(e)}), 422
 
-  @jwt_required()
-  def post(self):
-    user_id = get_jwt_identity()  # Obtener ID del usuario autenticado
+    @jwt_required()
+    def post(self):
+      user_id = get_jwt_identity()  # Obtener ID del usuario autenticado
 
-    # Contar cuántos ratings ha hecho el usuario
-    rating_count = db.session.query(RatingModel).filter_by(author_id=user_id).count()
+      # Contar cuántos ratings ha hecho el usuario
+      rating_count = db.session.query(RatingModel).filter_by(author_id=user_id).count()
 
-    if rating_count < 5:
-        return jsonify({"error": "Debes calificar al menos 5 poemas antes de subir uno nuevo."}), 403
+      if rating_count < 5:
+          return jsonify({"error": "Debes calificar al menos 5 poemas antes de subir uno nuevo."}), 403
 
-    poem = PoemModel.from_json(request.get_json())
-    poem.author_id = user_id  # Asignar autor
-    db.session.add(poem)
-    db.session.commit()
-    return poem.to_json(), 201
+      poem = PoemModel.from_json(request.get_json())
+      poem.author_id = user_id  
+      db.session.add(poem)
+      db.session.commit()
+      return poem.to_json(), 201
