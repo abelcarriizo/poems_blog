@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
 })
 export class RatingsService {
   private baseUrl = 'http://localhost:5000/ratings';
-
+  private apiUrl = 'http://localhost:5000/rating';
   constructor(private http: HttpClient, private authService: AuthService) {}
 
   getRatings(params: { page: number; per_page: number; sort?: string }) {
@@ -87,7 +87,7 @@ export class RatingsService {
       headers = headers.set('Authorization', `Bearer ${token}`);
     }
   
-    return this.http.delete(`${this.baseUrl}/${ratingId}`, { headers }).pipe(
+    return this.http.delete(`${this.apiUrl}/${ratingId}`, { headers }).pipe(
       catchError(error => {
         console.error('Error eliminando rating:', error);
         return throwError(() => new Error('No se pudo eliminar la calificación.'));

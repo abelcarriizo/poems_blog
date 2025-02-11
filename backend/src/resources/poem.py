@@ -97,16 +97,35 @@ class Poems(Resource):
 
     @jwt_required()
     def post(self):
-      user_id = get_jwt_identity()  # Obtener ID del usuario autenticado
+        user_id = get_jwt_identity()  # Obtiene el ID del usuario logueado
 
-      # Contar cuántos ratings ha hecho el usuario
-      rating_count = db.session.query(RatingModel).filter_by(author_id=user_id).count()
+        # Verificar cuántos ratings ha subido el usuario
+        rating_count = db.session.query(RatingModel).filter_by(author_id=user_id).count()
 
-      if rating_count < 5:
-          return jsonify({"error": "Debes calificar al menos 5 poemas antes de subir uno nuevo."}), 403
+        if rating_count < 5:
+            return {"message": "Debes calificar al menos 5 poemas antes de crear uno."}, 403
 
-      poem = PoemModel.from_json(request.get_json())
-      poem.author_id = user_id  
-      db.session.add(poem)
-      db.session.commit()
-      return poem.to_json(), 201
+        # Obtener datos del poema desde el cuerpo de la solicitud
+        data = request.get_json()
+        title = data.get("title")
+        description = data.get("description")
+        content = data.get("content")
+        genre = data.get("genre")
+
+        if not title or not content or not genre:
+            return {"message": "El título, contenido y género son obligatorios."}, 400
+
+        poem_data = {
+            "title": title,
+            "description": description,
+            "content": content,
+            "author_id": user_id,
+            "genre": genre
+        }
+
+        # Crear un nuevo poema
+        new_poem = PoemModel.from_json(poem_data)
+        db.session.add(new_poem)
+        db.session.commit()
+
+        return {"message": "Poema creado exitosamente", "poem": new_poem.to_json()}, 201

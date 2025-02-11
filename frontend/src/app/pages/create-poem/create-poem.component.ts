@@ -11,10 +11,14 @@ import { Router } from '@angular/router';
   styleUrl: './create-poem.component.css'
 })
 export class CreatePoemComponent {
-  title: string = '';
-  genre: string = '';
-  description: string = '';
-  content: string = '';
+  poem = {
+    title: '',
+    genre: '',
+    description: '',
+    content: ''
+  };
+
+  message: string = '';
   userId: number | null = null;
 
   constructor(
@@ -31,29 +35,31 @@ export class CreatePoemComponent {
     }
   }
 
-  savePoem(): void {
-    if (!this.title || !this.genre || !this.description || !this.content) {
-      alert('Todos los campos son obligatorios.');
+  savePoem() {
+    if (!this.poem.title || !this.poem.content || !this.poem.genre) {
+      alert('⚠️ El título, el contenido y el género son obligatorios.');
       return;
     }
 
     const poemData = {
-      title: this.title,
-      genre: this.genre,
-      description: this.description,
-      content: this.content,
-      author_id: this.userId
+      ...this.poem,
+      author_id: this.userId // Asegurarse de enviar el autor
     };
 
-    this.poemsService.createPoem(poemData).subscribe(
-      () => {
-        alert('Poema guardado con éxito');
+    this.poemsService.createPoem(poemData).subscribe({
+      next: (response) => {
+        console.log('✅ Poema creado:', response);
+        alert('✅ Poema creado exitosamente.');
         this.router.navigate(['/dashboard']);
       },
-      (error) => {
-        console.error('Error al guardar el poema:', error);
-        alert('Hubo un error al guardar tu poema.');
+      error: (error) => {
+        if (error.status === 403) {
+          alert('❌ Debes calificar al menos 5 poemas antes de poder crear uno.');
+        } else {
+          console.error('❌ Error:', error);
+          alert(error.message || '❌ No se pudo crear el poema.');
+        }
       }
-    );
+    });
   }
 }

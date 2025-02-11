@@ -28,14 +28,29 @@ export class PoemsService {
       return this.http.get<any>(`${this.apiUrl}?page=${page}&user_id=${userId}`);
     }
   
-    createPoem(poemData: { title: string, description: string, content: string }): Observable<any> {
-      return this.http.post(this.apiUrl, poemData).pipe(
+    
+    createPoem(poemData: { title: string; description: string; content: string }): Observable<any> {
+      const token = sessionStorage.getItem('token');
+  
+      if (!token) {
+        console.error('❌ No hay token disponible.');
+        return throwError(() => new Error('No estás autenticado.'));
+      }
+  
+      const headers = new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      });
+  
+      return this.http.post(this.apiUrl, poemData, { headers }).pipe(
         catchError(error => {
-          console.error('Error creando poema:', error);
-          return throwError(() => new Error('No se pudo crear el poema.'));
+          console.error('❌ Error creando poema:', error);
+          return throwError(() => new Error(error.error.message || 'No se pudo crear el poema.'));
         })
       );
     }
+    
+    
   
     updatePoem(poemId: number, updatedPoem: { title?: string, description?: string, content?: string }): Observable<any> {
       return this.http.put(`${this.Url}/${poemId}`, updatedPoem).pipe(
