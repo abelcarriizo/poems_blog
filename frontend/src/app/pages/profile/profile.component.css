@@ -117,13 +117,13 @@ body {
 .footer {
   background-color: black;
   color: white;
+  background-color: black;
+  color: white;
   text-align: center;
   padding: 15px;
   font-size: 1rem;
   width: 100%;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  margin-top: auto;
 }
 .user-avatar {
   width: 200px;

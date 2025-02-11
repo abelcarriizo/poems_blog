@@ -24,7 +24,7 @@
       </div>
 
       <div class="rating-container">
-        <h3 class="rating-title">RATING: ({{ averageRating ? averageRating.toFixed(2) : 'N/A' }} ⭐)</h3>
+        <h3 class="rating-title">RATINGS :{{ averageRating ? averageRating.toFixed(2) : 'N/A' }} ⭐</h3>
 
         <div *ngIf="ratings.length > 0; else noRatings">
           <div *ngFor="let rating of ratings" class="review">

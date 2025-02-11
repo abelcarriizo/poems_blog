@@ -64,11 +64,14 @@ export class PoemDetailComponent implements OnInit {
   loadPoemRatings(id: number): void {
     this.ratingsService.getRatingsByPoemId(id).subscribe(
       (response) => {
+        console.log("📊 Ratings recibidos:", response.items);
         this.ratings = response.items;
+        this.calculateAverageRating();
       },
       (error) => {
         console.error('Error al cargar los ratings:', error);
       }
     );
   }
+  
 }
