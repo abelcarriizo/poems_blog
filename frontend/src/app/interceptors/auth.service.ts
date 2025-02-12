@@ -31,9 +31,7 @@ export class AuthInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
-  /**
-   * Determina si la solicitud es a un endpoint público (login o register).
-   */
+  // Determina si la solicitud es a un endpoint público
   private isPublicEndpoint(url: string): boolean {
     const publicEndpoints = [
       `${this.apiUrl}/auth/login`,

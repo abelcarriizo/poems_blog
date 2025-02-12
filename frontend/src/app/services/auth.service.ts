@@ -23,9 +23,21 @@ export class AuthService {
   getUserId(): number | null {
     const token = sessionStorage.getItem(this.tokenKey);
     if (token) {
-      const decodedToken = this.jwtHelper.decodeToken(token);
-      console.log('Token decodificado:', decodedToken); // 🔍 Verificación
-      return decodedToken?.id ? Number(decodedToken.id) : null;
+      try {
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        console.log('Token decodificado:', decodedToken); 
+  
+        const userId = decodedToken?.sub || decodedToken?.id;
+        if (userId) {
+          return Number(userId);
+        } else {
+          console.error('Error: userId no encontrado en el token');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return null;
+      }
     }
     return null;
   }
@@ -66,7 +78,6 @@ export class AuthService {
     );
   }
   
-
   saveToken(token: string): void {
     console.log("Guardando token en sessionStorage:", token);
     sessionStorage.setItem(this.tokenKey, token);
@@ -75,17 +86,20 @@ export class AuthService {
       const decodedToken = this.jwtHelper.decodeToken(token);
       console.log("Token decodificado:", decodedToken);
   
-      const userId = decodedToken?.id || decodedToken?.sub;
+      // Asegurarse de obtener el `sub` correctamente
+      const userId = decodedToken?.sub ? Number(decodedToken.sub) : null;
+      
       if (userId) {
         sessionStorage.setItem('userId', userId.toString());
-        console.log("userId almacenado:", userId);
+        console.log("userId almacenado en sessionStorage:", userId);
       } else {
-        console.error('Error: userId no encontrado en el token');
+        console.error(' Error: userId no encontrado en el token');
       }
     } catch (error) {
-      console.error('Error al decodificar el token:', error);
+      console.error(' Error al decodificar el token:', error);
     }
   }
+  
   
   getToken(): string | null {
     return sessionStorage.getItem(this.tokenKey);
@@ -96,7 +110,7 @@ export class AuthService {
     const token = sessionStorage.getItem('token'); 
   
     if (!token) {
-      console.error('❌ No hay token disponible');
+      console.error('No hay token disponible');
       return throwError(() => new Error('No hay token disponible.'));
     }
   
@@ -104,7 +118,7 @@ export class AuthService {
   
     return this.http.get(`${this.url}/${userId}`, { headers }).pipe(
       catchError(error => {
-        console.error('❌ Error obteniendo datos del usuario:', error);
+        console.error('Error obteniendo datos del usuario:', error);
         return throwError(() => new Error('No se pudo obtener la información del usuario.'));
       })
     );
@@ -116,5 +130,7 @@ export class AuthService {
   
     return this.http.post<any>(`${this.baseUrl}/${userId}/upload-image`, formData);
   }
-  
+
+
 }
+

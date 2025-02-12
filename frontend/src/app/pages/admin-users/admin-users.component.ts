@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-admin-users',
@@ -14,23 +15,44 @@ export class AdminUsersComponent {
   filteredUsers: any[] = [];
   currentPage: number = 1;
   totalPages: number = 1;
+  userId: number | null = null;
+  user: any = {};
+  
 
-  constructor(private userService: UserService, private router: Router) {}
+  constructor(private userService: UserService,
+     private router: Router, 
+     private authService:AuthService,
+     private route: ActivatedRoute) {}
 
-  ngOnInit(): void {
-    this.loadUsers();
-  }
+     ngOnInit(): void {
+      this.loadUsers();
+    
+      const paramUserId = this.route.snapshot.paramMap.get('userId');
+    
+      if (paramUserId) {
+        this.userId = +paramUserId;
+      } else {
+        this.userId = this.authService.getUserId(); 
+      }
+    
+      console.log(" Usuario seleccionado:", this.userId);
+    
+      if (this.userId) {
+        this.loadUserData();
+      }
+    }
+    
 
   // Cargar usuarios con paginación
   loadUsers(): void {
     this.userService.getUsers(this.currentPage).subscribe(
       (response) => {
-        console.log('👥 Usuarios recibidos:', response);
+        console.log('Usuarios recibidos:', response);
   
-        this.users = response.items || [];  // Asegurar que los datos se carguen bien
+        this.users = response.items || [];  
         this.filteredUsers = this.users;
         
-        this.totalPages = response.pages || 1; // Usar "pages" en vez de "totalPages"
+        this.totalPages = response.pages || 1; 
   
         console.log(` Página actual: ${this.currentPage} / ${this.totalPages}`);
   
@@ -42,7 +64,15 @@ export class AdminUsersComponent {
     );
   }
   
-  
+  loadUserData(): void {
+    this.userService.getUserById(this.userId!).subscribe(
+      (data) => {
+        console.log("Datos del usuario cargados:", data);
+        this.user = data;
+      },
+      (error) => console.error(" Error al obtener datos del usuario:", error)
+    );
+  }
   
 
   // Filtrar usuarios en la búsqueda
@@ -69,8 +99,9 @@ export class AdminUsersComponent {
     }
   }
   viewUserProfile(userId: number): void {
-    console.log(` Redirigiendo a /profile/${userId}`);
-    this.router.navigate([`/profile/${userId}`]);
-  }
+    console.log(`🔍 Redirigiendo a /settings/${userId}`);
+    this.router.navigate([`/settings/${userId}`]);
+    }
+    
   
 }

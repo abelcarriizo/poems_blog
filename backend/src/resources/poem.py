@@ -95,15 +95,20 @@ class Poems(Resource):
           print(f"⚠️ Error ejecutando la consulta: {str(e)}")
           return jsonify({"message": "Error en la consulta", "error": str(e)}), 422
 
+    
     @jwt_required()
     def post(self):
         user_id = get_jwt_identity()  # Obtiene el ID del usuario logueado
 
         # Verificar cuántos ratings ha subido el usuario
         rating_count = db.session.query(RatingModel).filter_by(author_id=user_id).count()
+        
+        # Verificar cuantos poemas hay en la base de datos
+        poem_count = db.session.query(PoemModel).count()
 
-        if rating_count < 5:
-            return {"message": "Debes calificar al menos 5 poemas antes de crear uno."}, 403
+        if poem_count > 5:
+            if rating_count < 5:
+                return {"message": "Debes calificar al menos 5 poemas antes de crear uno."}, 403
 
         # Obtener datos del poema desde el cuerpo de la solicitud
         data = request.get_json()

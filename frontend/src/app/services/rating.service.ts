@@ -18,14 +18,7 @@ export class RatingsService {
   
 
   getRatingsByPoemId(poemId: number, page: number = 1): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    let headers = new HttpHeaders();
-
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-
-    return this.http.get(`${this.baseUrl}?page=${page}&poem_id=${poemId}`, { headers }).pipe(
+    return this.http.get(`${this.baseUrl}?page=${page}&poem_id=${poemId}`).pipe(
       catchError(error => {
         console.error('Error obteniendo ratings:', error);
         return throwError(() => new Error('No se pudieron cargar las calificaciones.'));
@@ -47,14 +40,7 @@ export class RatingsService {
   }
 
   updateRating(ratingId: number, ratingData: any): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    let headers = new HttpHeaders();
-  
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-  
-    return this.http.put(`${this.baseUrl}/${ratingId}`, ratingData, { headers }).pipe(
+    return this.http.put(`${this.baseUrl}/${ratingId}`, ratingData).pipe(
       catchError(error => {
         console.error('Error actualizando rating:', error);
         return throwError(() => new Error('No se pudo actualizar la calificación.'));
@@ -63,14 +49,7 @@ export class RatingsService {
   }
   
   getRatingsByUserId(userId: number, page: number = 1): Observable<any[]> {
-    const token = sessionStorage.getItem('token');
-    let headers = new HttpHeaders();
-  
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-  
-    return this.http.get(`${this.baseUrl}?page=${page}&user_id=${userId}`, { headers }).pipe(
+    return this.http.get(`${this.baseUrl}?page=${page}&user_id=${userId}`).pipe(
       map((response: any) => response.items || []),
       catchError(error => {
         console.error('Error obteniendo ratings:', error);
@@ -80,14 +59,7 @@ export class RatingsService {
   }
   
   deleteRating(ratingId: number): Observable<any> {
-    const token = sessionStorage.getItem('token');
-    let headers = new HttpHeaders();
-  
-    if (token) {
-      headers = headers.set('Authorization', `Bearer ${token}`);
-    }
-  
-    return this.http.delete(`${this.apiUrl}/${ratingId}`, { headers }).pipe(
+    return this.http.delete(`${this.apiUrl}/${ratingId}`).pipe(
       catchError(error => {
         console.error('Error eliminando rating:', error);
         return throwError(() => new Error('No se pudo eliminar la calificación.'));

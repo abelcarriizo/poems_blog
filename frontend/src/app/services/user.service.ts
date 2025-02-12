@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
 
@@ -12,7 +12,7 @@ export class UserService {
 
   constructor(private http: HttpClient, private authservice: AuthService) {}
  
-   getUsers(page: number = 1): Observable<any> {
+  getUsers(page: number = 1): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}?page=${page}`);
   }
   getUserById(id: number): Observable<any> {

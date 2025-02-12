@@ -15,25 +15,27 @@ import { UserSettingsComponent } from './pages/user-settings/user-settings.compo
 import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminPoemsComponent } from './pages/admin-poems/admin-poems.component';
 import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'create-poem', component: CreatePoemComponent },
+  { path: 'create-poem', component: CreatePoemComponent, canActivate:[AuthGuard] },
   { path: 'home', component: HomeComponent }, 
   { path: 'login', component: LoginComponent },
   { path: 'homepublic', component: HomePublicComponent },
-  { path: 'dashboard', component: HomePrivateComponent },
-  { path: 'poems/:id', component: PoemDetailComponent },
-  { path: 'panel', component: DashboardComponent },
-  { path: 'rate', component: RateComponent },
-  { path: 'rate/:id', component: RateComponent },
-  { path: 'profile', component: ProfileComponent },
-  { path: 'profile/:id', component: ProfileComponent },
-  { path: 'settings', component: UserSettingsComponent },
-  { path: 'users', component: AdminUsersComponent },
-  { path: 'poems-users', component: AdminPoemsComponent },
-  { path: 'rate-users', component: AdminRatingsComponent },
+  { path: 'dashboard', component: HomePrivateComponent, canActivate:[AuthGuard]},
+  { path: 'poems/:id', component: PoemDetailComponent, canActivate:[AuthGuard]},
+  { path: 'panel', component: DashboardComponent, canActivate:[AuthGuard]},
+  { path: 'rate', component: RateComponent, canActivate:[AuthGuard]},
+  { path: 'rate/:id', component: RateComponent, canActivate:[AuthGuard]},
+  { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
+  { path: 'profile/:id', component: ProfileComponent, canActivate:[AuthGuard]},
+  { path: 'settings', component: UserSettingsComponent, canActivate:[AuthGuard]},
+  { path: 'settings/:id', component: UserSettingsComponent, canActivate:[AuthGuard]},
+  { path: 'users', component: AdminUsersComponent, canActivate:[AuthGuard] },
+  { path: 'poems-users', component: AdminPoemsComponent, canActivate:[AuthGuard] },
+  { path: 'rate-users', component: AdminRatingsComponent, canActivate:[AuthGuard]},
   { path: '**', component: NotFoundComponent }
 
 ];

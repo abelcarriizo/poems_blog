@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { catchError, Observable, throwError } from 'rxjs';
 
 @Injectable({
@@ -32,19 +32,9 @@ export class PoemsService {
     createPoem(poemData: { title: string; description: string; content: string }): Observable<any> {
       const token = sessionStorage.getItem('token');
   
-      if (!token) {
-        console.error('❌ No hay token disponible.');
-        return throwError(() => new Error('No estás autenticado.'));
-      }
-  
-      const headers = new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      });
-  
-      return this.http.post(this.apiUrl, poemData, { headers }).pipe(
+      return this.http.post(this.apiUrl, poemData).pipe(
         catchError(error => {
-          console.error('❌ Error creando poema:', error);
+          console.error(' Error creando poema:', error);
           return throwError(() => new Error(error.error.message || 'No se pudo crear el poema.'));
         })
       );

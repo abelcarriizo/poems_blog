@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { UserService } from '../../services/user.service';
 import { RatingsService } from '../../services/rating.service';
@@ -34,25 +34,46 @@ export class UserSettingsComponent implements OnInit {
     private ratingsService: RatingsService,
     private poemsService: PoemsService,
     private router: Router,
-    private cdRef: ChangeDetectorRef 
+    private route: ActivatedRoute,
+    private cdRef: ChangeDetectorRef
   ) {}
-
   ngOnInit(): void {
-    this.userId = this.authService.getUserId();
+    // Intentar obtener el userId de la URL
+    const paramUserId = this.router.url.split('/settings/')[1];
+  
+    if (paramUserId) {
+      this.userId = Number(paramUserId);
+      console.log(`Usuario seleccionado desde la URL: ${this.userId}`);
+    } else {
+      this.userId = this.authService.getUserId(); // Si no hay parámetro, usa el usuario logueado
+      console.log(`Usando userId del usuario logueado: ${this.userId}`);
+    }
+  
     if (this.userId) {
+      console.log(`Cargando datos para userId: ${this.userId}`);
       this.loadUserData();
     } else {
-      alert('Debes iniciar sesión para acceder a la configuración.');
+      console.error('No se encontró userId válido.');
       this.router.navigate(['/login']);
     }
   }
+  
+  resetUserData(): void {
+    this.user = {}; 
+    this.poems = [];
+    this.ratings = [];
+    this.selectedFile = null;
+    this.userImageUrl = 'static/uploads/default-profile.png';
+    this.cdRef.detectChanges(); 
+  }
 
   loadUserData(): void {
-    this.userService.getUserById(this.userId!).subscribe(
+    if (!this.userId) return;
+
+    this.userService.getUserById(this.userId).subscribe(
       (data) => {
         this.user = data;
         this.updateUserImage();
-
         this.loadUserPoems();
         this.loadUserRatings();
       },
@@ -61,11 +82,11 @@ export class UserSettingsComponent implements OnInit {
   }
 
   loadUserPoems(): void {
-    if (!this.user.id) {
-        console.error("⚠ No se encontró el ID del usuario para cargar los poemas.");
-        return;
+    if (!this.userId) {
+      console.error("⚠ No se encontró el ID del usuario para cargar los poemas.");
+      return;
     }
-    this.poemsService.getPoemsbyUser(this.user.id).subscribe(
+    this.poemsService.getPoemsbyUser(this.userId).subscribe(
       (response) => {
         console.log("Poemas cargados:", response.items);
         this.poems = response.items;
@@ -75,11 +96,11 @@ export class UserSettingsComponent implements OnInit {
   }
 
   loadUserRatings(): void {
-    if (!this.user.id) {
-        console.error(" No se encontró el ID del usuario para cargar los ratings.");
-        return;
+    if (!this.userId) {
+      console.error(" No se encontró el ID del usuario para cargar los ratings.");
+      return;
     }
-    this.ratingsService.getRatingsByUserId(this.user.id).subscribe(
+    this.ratingsService.getRatingsByUserId(this.userId).subscribe(
       (data) => {
         console.log("Ratings cargados:", data);
         this.ratings = Array.isArray(data) ? data : [];
@@ -132,38 +153,31 @@ export class UserSettingsComponent implements OnInit {
       this.selectedFile = input.files[0];
     }
   }
+
   uploadImage(): void {
     if (!this.selectedFile) {
       alert("Por favor selecciona un archivo.");
       return;
     }
   
-    const userId = this.authService.getUserId();
-    if (!userId) {
-      alert("Error: No se encontró el ID del usuario.");
-      return;
-    }
-  
     const formData = new FormData();
     formData.append('file', this.selectedFile);
   
-    this.userService.uploadUserImage(userId, formData).subscribe(
+    this.userService.uploadUserImage(this.userId!, formData).subscribe(
       (response) => {
         alert("Imagen subida correctamente.");
-        
         this.user.image_url = response.image_url;
         console.log("Nueva URL de la imagen:", this.user.image_url); 
-  
         this.updateUserImage();  
       },
       (error) => console.error(" Error subiendo la imagen:", error)
     );
   }
+
   updateUserImage(): void {
     console.log("🔎 URL antes de actualizar:", this.user.image_url);
   
     if (this.user.image_url) {
-
       if (this.user.image_url.startsWith("http")) {
         this.userImageUrl = `${this.user.image_url}?t=${new Date().getTime()}`;
       } else {
@@ -176,10 +190,7 @@ export class UserSettingsComponent implements OnInit {
     console.log("🔄 URL final de la imagen en Angular:", this.userImageUrl);
     this.cdRef.detectChanges();
   }
-  
-  
-  
-  
+
   getUserImage(): string {
     return this.userImageUrl;
   }

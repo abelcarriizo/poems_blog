@@ -129,7 +129,7 @@ export class ProfileComponent implements OnInit {
 
   updatePoem(): void {
     this.poemsService.updatePoem(this.selectedPoem.id, this.selectedPoem).subscribe(() => {
-      alert("✅ Poema actualizado correctamente");
+      alert("Poema actualizado correctamente");
       this.loadUserPoems();
       this.closeModal('editPoemModal');
     });
@@ -137,7 +137,7 @@ export class ProfileComponent implements OnInit {
 
   updateRating(): void {
     this.ratingsService.updateRating(this.selectedRating.id, this.selectedRating).subscribe(() => {
-      alert("✅ Rating actualizado correctamente");
+      alert("Rating actualizado correctamente");
       this.loadUserRatings();
       this.closeModal('editRatingModal');
     });
@@ -154,7 +154,7 @@ export class ProfileComponent implements OnInit {
     if (this.poemToDelete !== null) {
       this.poemsService.deletePoem(this.poemToDelete).subscribe(() => {
         this.poems = this.poems.filter(poem => poem.id !== this.poemToDelete);
-        alert("🗑 Poema eliminado correctamente");
+        alert("Poema eliminado correctamente");
         this.poemToDelete = null;
       });
     }
@@ -171,7 +171,7 @@ export class ProfileComponent implements OnInit {
     if (this.ratingToDelete !== null) {
       this.ratingsService.deleteRating(this.ratingToDelete).subscribe(() => {
         this.ratings = this.ratings.filter(rating => rating.id !== this.ratingToDelete);
-        alert("🗑 Rating eliminado correctamente");
+        alert("Rating eliminado correctamente");
         this.ratingToDelete = null;
       });
     }
