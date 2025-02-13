@@ -40,7 +40,7 @@ export class RatingsService {
   }
 
   updateRating(ratingId: number, ratingData: any): Observable<any> {
-    return this.http.put(`${this.baseUrl}/${ratingId}`, ratingData).pipe(
+    return this.http.put(`${this.apiUrl}/${ratingId}`, ratingData).pipe(
       catchError(error => {
         console.error('Error actualizando rating:', error);
         return throwError(() => new Error('No se pudo actualizar la calificación.'));

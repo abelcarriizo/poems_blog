@@ -35,19 +35,19 @@ export class AdminRatingsComponent implements OnInit {
 
     this.ratingsService.getRatings(params).subscribe(
       (response) => {
-        console.log('📊 Respuesta de la API:', response);
+        console.log('Respuesta de la API:', response);
 
         if (response && response.items) {
           this.ratings = response.items;
           this.filteredRatings = [...this.ratings];  
-          console.log('✅ Ratings cargados:', this.ratings);
+          console.log('Ratings cargados:', this.ratings);
         } else {
           console.error('⚠ Respuesta inesperada:', response);
           this.ratings = [];
           this.filteredRatings = [];
         }
       },
-      (error) => console.error('❌ Error al obtener los ratings:', error)
+      (error) => console.error('Error al obtener los ratings:', error)
     );
   }
 
@@ -97,17 +97,17 @@ export class AdminRatingsComponent implements OnInit {
       () => {
         this.ratings = this.ratings.filter(rating => rating.id !== ratingId);
         this.filteredRatings = this.filteredRatings.filter(rating => rating.id !== ratingId);
-        console.log('🗑 Rating eliminado');
+        console.log('Rating eliminado');
       },
-      (error) => console.error('❌ Error al eliminar el rating:', error)
+      (error) => console.error('Error al eliminar el rating:', error)
     );
   }
     //Abre el modal con los detalles del rating
     viewRatingDetail(ratingId: number): void {
-      console.log(`🔍 Cargando detalles del rating con ID: ${ratingId}`);
+      console.log(`Cargando detalles del rating con ID: ${ratingId}`);
       this.ratingsService.getRatingsByPoemId(ratingId).subscribe(
         (rating) => {
-          this.selectedRating = rating.items ? rating.items[0] : rating; // ✅ Almacenar el rating en selectedRating
+          this.selectedRating = rating.items ? rating.items[0] : rating; 
           this.openModal('ratingDetailModal');
         },
         (error) => console.error('Error al obtener detalles del rating:', error)

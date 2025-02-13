@@ -38,28 +38,28 @@ export class HomePrivateComponent {
     }
   }
   loadPoems(page: number = 1): void {
-    console.log(`📌 Cargando poemas - Página: ${page}, Orden: ${this.sortOrder}`);
+    console.log(`Cargando poemas - Página: ${page}, Orden: ${this.sortOrder}`);
   
     this.poemsService.getPoems({ page, per_page: 9, sort: this.sortOrder }).subscribe(
       (response) => {
-        console.log("📌 Respuesta completa del backend:", response);  // 🔍 Ver respuesta completa
-        console.log("📌 Poemas recibidos:", response.items); // 🔍 Ver si `items` tiene datos
+        console.log("Respuesta completa del backend:", response);  // 🔍 Ver respuesta completa
+        console.log("Poemas recibidos:", response.items); // 🔍 Ver si `items` tiene datos
   
         if (!response || !response.items || !Array.isArray(response.items)) {
           console.error("⚠️ Respuesta inválida del servidor:", response);
           return;
         }
   
-        console.log(`✅ Poemas cargados: ${response.items.length}, Página: ${page}`);
+        console.log(`Poemas cargados: ${response.items.length}, Página: ${page}`);
         this.poems = response.items;
         this.filteredPoems = [...this.poems];  // Asegurar que `filteredPoems` recibe los datos correctamente
-        console.log("📌 filteredPoems actualizado:", this.filteredPoems);
+        console.log("filteredPoems actualizado:", this.filteredPoems);
         
         this.currentPage = response.current_page;
         this.totalPages = response.pages;
       },
       (error) => {
-        console.error("❌ Error al cargar los poemas:", error);
+        console.error("Error al cargar los poemas:", error);
       }
     );
   }

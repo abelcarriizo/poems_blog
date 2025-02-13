@@ -39,7 +39,7 @@ export class HomePublicComponent implements OnInit {
   }
 
   loadPoems(page: number = 1): void {
-    console.log(`🚀 Cargando poemas - Página: ${page}`);
+    console.log(`Cargando poemas - Página: ${page}`);
   
     this.poemsService.getPoems({ page, per_page: 9 }).subscribe(
       (response) => {

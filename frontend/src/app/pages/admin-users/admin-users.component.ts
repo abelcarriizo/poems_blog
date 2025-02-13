@@ -57,7 +57,7 @@ export class AdminUsersComponent {
         console.log(` Página actual: ${this.currentPage} / ${this.totalPages}`);
   
         if (this.users.length === 0) {
-          console.warn("⚠ No se encontraron usuarios en esta página.");
+          console.warn("No se encontraron usuarios en esta página.");
         }
       },
       (error) => console.error(' Error al obtener usuarios:', error)
@@ -99,7 +99,7 @@ export class AdminUsersComponent {
     }
   }
   viewUserProfile(userId: number): void {
-    console.log(`🔍 Redirigiendo a /settings/${userId}`);
+    console.log(`Redirigiendo a /settings/${userId}`);
     this.router.navigate([`/settings/${userId}`]);
     }
     

@@ -16,6 +16,7 @@ import { AdminUsersComponent } from './pages/admin-users/admin-users.component';
 import { AdminPoemsComponent } from './pages/admin-poems/admin-poems.component';
 import { AdminRatingsComponent } from './pages/admin-ratings/admin-ratings.component';
 import { AuthGuard } from './guards/auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 const routes: Routes = [
   { path: 'register', component: RegisterComponent },
@@ -26,16 +27,16 @@ const routes: Routes = [
   { path: 'homepublic', component: HomePublicComponent },
   { path: 'dashboard', component: HomePrivateComponent, canActivate:[AuthGuard]},
   { path: 'poems/:id', component: PoemDetailComponent, canActivate:[AuthGuard]},
-  { path: 'panel', component: DashboardComponent, canActivate:[AuthGuard]},
+  { path: 'panel', component: DashboardComponent, canActivate:[AdminGuard]},
   { path: 'rate', component: RateComponent, canActivate:[AuthGuard]},
   { path: 'rate/:id', component: RateComponent, canActivate:[AuthGuard]},
   { path: 'profile', component: ProfileComponent, canActivate:[AuthGuard] },
   { path: 'profile/:id', component: ProfileComponent, canActivate:[AuthGuard]},
   { path: 'settings', component: UserSettingsComponent, canActivate:[AuthGuard]},
   { path: 'settings/:id', component: UserSettingsComponent, canActivate:[AuthGuard]},
-  { path: 'users', component: AdminUsersComponent, canActivate:[AuthGuard] },
-  { path: 'poems-users', component: AdminPoemsComponent, canActivate:[AuthGuard] },
-  { path: 'rate-users', component: AdminRatingsComponent, canActivate:[AuthGuard]},
+  { path: 'users', component: AdminUsersComponent, canActivate:[AdminGuard] },
+  { path: 'poems-users', component: AdminPoemsComponent, canActivate:[AdminGuard] },
+  { path: 'rate-users', component: AdminRatingsComponent, canActivate:[AdminGuard]},
   { path: '**', component: NotFoundComponent }
 
 ];

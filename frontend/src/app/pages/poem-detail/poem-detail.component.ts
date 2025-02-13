@@ -11,8 +11,8 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./poem-detail.component.css']
 })
 export class PoemDetailComponent implements OnInit {
-  poem: any = null; // Almacena los detalles del poema
-  ratings: any[] = []; // Almacena los ratings asociados al poema
+  poem: any = null; 
+  ratings: any[] = []; 
   hoverRating: number = 0; 
   averageRating: number = 0; 
   isAdmin: boolean = false; 
@@ -64,7 +64,7 @@ export class PoemDetailComponent implements OnInit {
   loadPoemRatings(id: number): void {
     this.ratingsService.getRatingsByPoemId(id).subscribe(
       (response) => {
-        console.log("📊 Ratings recibidos:", response.items);
+        console.log("Ratings recibidos:", response.items);
         this.ratings = response.items;
         this.calculateAverageRating();
       },

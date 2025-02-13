@@ -83,7 +83,7 @@ export class UserSettingsComponent implements OnInit {
 
   loadUserPoems(): void {
     if (!this.userId) {
-      console.error("⚠ No se encontró el ID del usuario para cargar los poemas.");
+      console.error("No se encontró el ID del usuario para cargar los poemas.");
       return;
     }
     this.poemsService.getPoemsbyUser(this.userId).subscribe(
@@ -175,7 +175,7 @@ export class UserSettingsComponent implements OnInit {
   }
 
   updateUserImage(): void {
-    console.log("🔎 URL antes de actualizar:", this.user.image_url);
+    console.log(" URL antes de actualizar:", this.user.image_url);
   
     if (this.user.image_url) {
       if (this.user.image_url.startsWith("http")) {
@@ -187,7 +187,7 @@ export class UserSettingsComponent implements OnInit {
       this.userImageUrl = 'http://localhost:5000/static/uploads/default-avatar.jpg';
     }
   
-    console.log("🔄 URL final de la imagen en Angular:", this.userImageUrl);
+    console.log("URL final de la imagen en Angular:", this.userImageUrl);
     this.cdRef.detectChanges();
   }
 

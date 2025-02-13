@@ -29,7 +29,7 @@ export class LoginComponent {
         if (response.token) {
           this.saveSession(response.token);
           alert('Inicio de sesión exitoso');
-          this.router.navigate(['/dashboard']); // Redirigir al home privado
+          this.router.navigate(['/dashboard']); 
         }
       },
       error: (err) => {
@@ -43,25 +43,25 @@ export class LoginComponent {
    
   adminLogin() {
     if (!this.email || !this.password) {
-      alert('⚠ Por favor, completa todos los campos.');
+      alert('Por favor, completa todos los campos.');
       return;
     }
   
     this.authService.adminLogin({ email: this.email, password: this.password }).subscribe({
       next: (response) => {
-        console.log("✅ Respuesta del backend en login:", response);  
+        console.log("Respuesta del backend en login:", response);  
   
         if (response.token) {  
           this.saveSession(response.token);
-          alert('✅ Inicio de sesión exitoso');
+          alert('Inicio de sesión exitoso');
           this.router.navigate(['/panel']); 
         } else {
-          console.error("❌ Error: No se recibió un token en la respuesta");
+          console.error("Error: No se recibió un token en la respuesta");
         }
       },
       error: (err) => {
-        console.error('❌ Error al iniciar sesión como administrador:', err);
-        alert('❌ Credenciales inválidas.');
+        console.error('Error al iniciar sesión como administrador:', err);
+        alert('Credenciales inválidas.');
       }
     });
   }

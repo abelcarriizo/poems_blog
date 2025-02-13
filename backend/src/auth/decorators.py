@@ -17,7 +17,7 @@ def admin_required(fn):
             return {'message': 'Only admins can access this resource'}, 403
     return wrapper
 
-# Cargar la identidad del usuario (ID)
+# Cargar la identidad del usuario 
 @jwt.user_identity_loader
 def user_identity_lookup(identity):
     return str(identity) 

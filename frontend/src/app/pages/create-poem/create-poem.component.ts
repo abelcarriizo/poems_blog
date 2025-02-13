@@ -43,21 +43,21 @@ export class CreatePoemComponent {
 
     const poemData = {
       ...this.poem,
-      author_id: this.userId // Asegurarse de enviar el autor
+      author_id: this.userId 
     };
 
     this.poemsService.createPoem(poemData).subscribe({
       next: (response) => {
-        console.log('✅ Poema creado:', response);
-        alert('✅ Poema creado exitosamente.');
+        console.log('Poema creado:', response);
+        alert('Poema creado exitosamente.');
         this.router.navigate(['/dashboard']);
       },
       error: (error) => {
         if (error.status === 403) {
-          alert('❌ Debes calificar al menos 5 poemas antes de poder crear uno.');
+          alert('Debes calificar al menos 5 poemas antes de poder crear uno.');
         } else {
-          console.error('❌ Error:', error);
-          alert(error.message || '❌ No se pudo crear el poema.');
+          console.error('Error:', error);
+          alert(error.message || 'No se pudo crear el poema.');
         }
       }
     });

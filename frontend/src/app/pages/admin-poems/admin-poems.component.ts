@@ -44,7 +44,7 @@ export class AdminPoemsComponent implements OnInit {
           this.totalPages = response.pages || 1;
           console.log(' Lista de poemas:', this.poems);
         } else {
-          console.error('⚠ Respuesta inesperada:', response);
+          console.error('Respuesta inesperada:', response);
           this.poems = [];
           this.filteredPoems = [];
         }
