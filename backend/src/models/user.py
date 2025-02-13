@@ -1,7 +1,7 @@
 from .. import db
 from werkzeug.security import generate_password_hash, check_password_hash
 
-class User(db.Model):  # 🔹 Debe llamarse 'User' aquí
+class User(db.Model): 
     __tablename__ = 'Users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -31,10 +31,9 @@ class User(db.Model):  # 🔹 Debe llamarse 'User' aquí
 
     def to_json(self):
         if self.image_url and not self.image_url.startswith("/static/uploads/"):
-            # Si la imagen es un nombre de archivo (ejemplo: "foto.jpg"), agregamos el ID del usuario
             image_path = f"/static/uploads/{self.id}/{self.image_url}"
         elif not self.image_url or self.image_url == "/static/uploads/default-avatar.jpg":
-            # ✅ Asignar la imagen por defecto dentro de la carpeta del usuario
+            # Asignar la imagen por defecto dentro de la carpeta del usuario
             image_path = f"/static/uploads/{self.id}/default-avatar.jpg"
         else:
             image_path = self.image_url

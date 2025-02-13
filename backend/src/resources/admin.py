@@ -51,7 +51,7 @@ class Admins(Resource):
 class AdminStats(Resource):
     @jwt_required()
     def get(self):
-        """🔹 Retorna las estadísticas de la plataforma."""
+        """Retorna las estadísticas de la plataforma."""
         total_users = User.query.count()
         total_poems = Poem.query.count()
         total_ratings = Rating.query.count()

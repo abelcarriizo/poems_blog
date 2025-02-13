@@ -38,7 +38,7 @@ class Ratings(Resource):
     # Filtrar por parámetros opcionales en la URL
     user_id = request.args.get('user_id', type=int)
     poem_id = request.args.get('poem_id', type=int)
-    sort_order = request.args.get('sort', 'newest')  # 'newest' o 'oldest'
+    sort_order = request.args.get('sort', 'newest')
 
     # Aplicar filtraciones
     if user_id:

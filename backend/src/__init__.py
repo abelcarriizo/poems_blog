@@ -17,8 +17,8 @@ def create_app():
 
     app = Flask(__name__, static_url_path='/static', static_folder='../static')
 
-    # 🔥 Verifica que la configuración de rutas está correcta
-    print("📁 Archivos estáticos servidos desde:", os.path.abspath(app.static_folder))
+    # Verifica que la configuración de rutas está correcta
+    print("Archivos estáticos servidos desde:", os.path.abspath(app.static_folder))
   
 
     load_dotenv()  # Carga las variables de entorno
@@ -52,7 +52,7 @@ def create_app():
     api.add_resource(UserImageUpload, '/users/<int:user_id>/upload-image')
 
 
-    api.init_app(app)  # Carga la aplicación en la API de Flask Restful
+    api.init_app(app)  
 
     # Configuración de JWT
     app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET_KEY")

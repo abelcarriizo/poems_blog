@@ -10,14 +10,13 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authService: AuthService) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken(); // Obtener el token desde sessionStorage
+    const token = this.authService.getToken();
 
-    // Si la petición es a login o register, NO agregar el token
     if (this.isPublicEndpoint(req.url)) {
       return next.handle(req);
     }
 
-    // Si la petición es protegida y el usuario tiene token, agregarlo
+    // Si la petición es protegida y el usuario tiene token
     if (token) {
       const clonedRequest = req.clone({
         setHeaders: {
@@ -26,8 +25,6 @@ export class AuthInterceptor implements HttpInterceptor {
       });
       return next.handle(clonedRequest);
     }
-
-    // Si la solicitud requiere autenticación pero no hay token, continuar sin modificarla
     return next.handle(req);
   }
 

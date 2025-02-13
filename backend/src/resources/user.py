@@ -9,7 +9,7 @@ from src.models import UserModel
 from src.utils import paginate
 from src.auth.decorators import admin_required
 
-# 📌 Definir la carpeta donde se guardan las imágenes
+# Carpeta donde se guardan las imágenes
 UPLOAD_FOLDER = os.path.join(os.getcwd(), 'static/uploads/')
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)  # Asegurar que la carpeta existe
 
@@ -63,11 +63,11 @@ class UserImageUpload(Resource):
     def post(self, user_id):
         """ Manejar la carga de imágenes de perfil """
         if 'file' not in request.files:
-            return {'message': '❌ No se envió ningún archivo'}, 400
+            return {'message': 'No se envió ningún archivo'}, 400
 
         file = request.files['file']
         if file.filename == '':
-            return {'message': '❌ No se seleccionó un archivo'}, 400
+            return {'message': 'No se seleccionó un archivo'}, 400
 
         if file and allowed_file(file.filename):
             filename_ext = file.filename.rsplit('.', 1)[-1].lower()
@@ -79,25 +79,25 @@ class UserImageUpload(Resource):
             filepath = os.path.join(user_folder, filename)
             file.save(filepath)
 
-            # ✅ Guardamos el nuevo nombre de archivo en la BD
+            # Guardamos el nuevo nombre de archivo en la BD
             user = UserModel.query.get(user_id)
             if user:
                 user.image_url = f"/static/uploads/{user_id}/{filename}"
                 db.session.commit()
                 
-                print(f"📸 Imagen guardada en: {user.image_url}")  # 🔥 Depuración
+                print(f"Imagen guardada en: {user.image_url}")  
                 
                 return {
-                    'message': '✅ Imagen subida con éxito',
+                    'message': ' Imagen subida con éxito',
                     'image_url': f"http://localhost:5000{user.image_url}"
                 }, 200
             else:
-                return {'message': '❌ Usuario no encontrado'}, 404
+                return {'message': 'Usuario no encontrado'}, 404
         else:
-            return {'message': '❌ Tipo de archivo no permitido'}, 400
+            return {'message': 'Tipo de archivo no permitido'}, 400
 
 
-# 📌 Blueprint para servir imágenes correctamente
+# Blueprint para servir imágenes 
 users = Blueprint('users', __name__)
 from werkzeug.utils import safe_join
 from flask import send_from_directory
@@ -109,10 +109,10 @@ def serve_uploaded_file(user_id, filename):
     user_folder = os.path.join(os.getcwd(), 'backend', 'static', 'uploads', str(user_id))
     filepath = safe_join(user_folder, filename)
 
-    print(f"🔎 Intentando acceder a: {filepath}")  # 🔥 Depuración
+    print(f"Intentando acceder a: {filepath}") 
 
     if not os.path.isfile(filepath):
-        print("❌ Imagen no encontrada en el servidor")
-        return jsonify({'message': '❌ Imagen no encontrada'}), 404
+        print("Imagen no encontrada en el servidor")
+        return jsonify({'message': 'Imagen no encontrada'}), 404
 
     return send_from_directory(user_folder, filename)

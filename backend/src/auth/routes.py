@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 # Crear el Blueprint para las rutas de autenticación
 auth = Blueprint('auth', __name__, url_prefix='/auth')
 image = Blueprint('users', __name__, url_prefix='/users')
-# **Ruta de Login para Usuarios**
+# Ruta de Login para Usuarios
 @auth.route('/login', methods=['POST'])
 def login():
     email = request.json.get('email')
@@ -34,7 +34,7 @@ def login():
 
 
 
-# **Ruta de Login para Administradores**
+# Ruta de Login para Administradores
 @auth.route('/login/admin', methods=['POST'])
 def admin_login():
     email = request.json.get('email')
@@ -62,7 +62,7 @@ def admin_login():
     return {"id": str(admin.id), "email": admin.email, "token": token}, 200
 
 
-# **Ruta de Registro para Usuarios**
+#Ruta de Registro para Usuarios
 @auth.route('/register', methods=['POST'])
 def register():
     # Obtener datos del cuerpo de la solicitud
@@ -80,10 +80,9 @@ def register():
         
         # Enviar un correo de bienvenida
         sent = sendMail([user.email], "Welcome!", 'register', user=user)
-        if not sent:  # Verificar si el envío falló
+        if not sent: 
             return {'message': 'Error sending email'}, 500
     except Exception as error:
-        # En caso de error, revertir la transacción
         db.session.rollback()
         return {'message': str(error)}, 409
 
