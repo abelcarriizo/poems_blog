@@ -37,10 +37,6 @@ export class RegisterComponent {
         (response) => {
           console.log('Registro exitoso:', response);
           alert('Registro completado. ¡Ahora puedes iniciar sesión!');
-        },
-        (error) => {
-          console.error('Error durante el registro:', error);
-          alert('Hubo un error al registrarte. Por favor, intenta nuevamente.');
         }
       );
     } else {

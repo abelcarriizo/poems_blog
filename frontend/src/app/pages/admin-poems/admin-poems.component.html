@@ -9,7 +9,7 @@
     </div>
   
     <div class="poems-container">
-      <div *ngFor="let poem of filteredPoems" class="poem-card" (click)="viewPoemDetail(poem.id)">
+      <div *ngFor="let poem of filteredPoems" class="poem-card">
         <h3>{{ poem.title }}</h3>
         <p>{{ poem.description }}</p>
         <div class="poem-footer">

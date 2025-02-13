@@ -116,20 +116,7 @@ export class AdminPoemsComponent implements OnInit {
       },
       (error) => console.error(' Error al eliminar el poema:', error)
     );
-  }
-  // Abre el modal con los detalles del poema
-     
-  viewPoemDetail(poemId: number): void {
-    console.log(`🔍 Cargando detalles del poema con ID: ${poemId}`);
-    this.poemsService.getPoemById(poemId).subscribe(
-      (poem) => {
-        this.selectedPoem = poem; 
-        this.openModal();
-      },
-      (error) => console.error('Error al obtener detalles del poema:', error)
-    );
-  }
-  
+  }  
   //Abre el modal con Bootstrap
   openModal(): void {
     const modalElement = document.getElementById('poemDetailModal');
